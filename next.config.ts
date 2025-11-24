@@ -1,7 +1,16 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-	/* config options here */
+	typedRoutes: true,
+	async redirects() {
+		return [
+			{
+				source: "/wyniki",
+				destination: "/wyniki/1",
+				permanent: true,
+			},
+		];
+	},
 };
 
 export default nextConfig;

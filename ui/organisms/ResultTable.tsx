@@ -1,14 +1,8 @@
 import { ResultTableRow } from "@/ui/molecues/ResultTableRow";
+import { Result } from "../../types";
 
 type ResultTableProps = {
-	results: Array<{
-		gameImageUrl: string;
-		gameName: string;
-		firstPlayer: string;
-		numberOfPlayers: number;
-		date: string;
-		time: string;
-	}>;
+	results: Result[];
 };
 
 export const ResultTable = ({ results }: ResultTableProps) => {
@@ -25,15 +19,15 @@ export const ResultTable = ({ results }: ResultTableProps) => {
 				</tr>
 			</thead>
 			<tbody>
-				{results.map((result, index) => (
+				{results.map((result) => (
 					<ResultTableRow
-						key={index}
-						gameImageUrl={result.gameImageUrl}
-						gameName={result.gameName}
-						firstPlayer={result.firstPlayer}
-						numberOfPlayers={result.numberOfPlayers}
+						key={result._id}
+						gameImageUrl={result.game.imgUrl}
+						gameName={result.game.name}
+						firstPlayer={result.scores[0]?.user.name || ""}
+						numberOfPlayers={result.scores.length}
 						date={result.date}
-						time={result.time}
+						time={String(result.playingTime)}
 					/>
 				))}
 			</tbody>
