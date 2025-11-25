@@ -1,6 +1,9 @@
+"use client";
 import { GameImage } from "@/ui/atoms/GameImage";
+import { useRouter } from "next/navigation";
 
 type ResultTableRowProps = {
+	id: string;
 	gameImageUrl: string;
 	gameName: string;
 	firstPlayer: string;
@@ -10,6 +13,7 @@ type ResultTableRowProps = {
 };
 
 export const ResultTableRow = ({
+	id,
 	gameImageUrl,
 	gameName,
 	firstPlayer,
@@ -17,8 +21,10 @@ export const ResultTableRow = ({
 	date,
 	time,
 }: ResultTableRowProps) => {
+	const router = useRouter();
+
 	return (
-		<tr className="m-4 border-b">
+		<tr className="m-4 border-b" onClick={() => router.push(`/wynik/${id}`)}>
 			<td className="px-6 py-4 whitespace-nowrap">
 				<GameImage src={gameImageUrl} alt={gameName} />
 			</td>

@@ -22,6 +22,7 @@ export const ResultTable = ({ results }: ResultTableProps) => {
 				{results.map((result) => (
 					<ResultTableRow
 						key={result._id}
+						id={result._id}
 						gameImageUrl={result.game.imgUrl}
 						gameName={result.game.name}
 						firstPlayer={result.scores[0]?.user.name || ""}
