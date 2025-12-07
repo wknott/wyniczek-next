@@ -1,8 +1,8 @@
 import { ResultTableRow } from "@/ui/molecues/ResultTableRow";
-import { Result } from "../../types";
+import { ResultsGetListQuery } from "@/gql/graphql";
 
 type ResultTableProps = {
-	results: Result[];
+	results: ResultsGetListQuery["results"]["items"];
 };
 
 export const ResultTable = ({ results }: ResultTableProps) => {
@@ -21,13 +21,13 @@ export const ResultTable = ({ results }: ResultTableProps) => {
 			<tbody>
 				{results.map((result) => (
 					<ResultTableRow
-						key={result._id}
-						id={result._id}
-						gameImageUrl={result.game.imgUrl}
+						key={result.id}
+						id={result.id}
+						gameImageUrl={result.game?.imgUrl || ""}
 						gameName={result.game.name}
-						firstPlayer={result.scores[0]?.user.name || ""}
-						numberOfPlayers={result.scores.length}
-						date={result.date}
+						firstPlayer={result?.scores?.[0]?.player?.name || ""}
+						numberOfPlayers={result?.scores?.length || 0}
+						date={result.createdAt as string}
 						time={String(result.playingTime)}
 					/>
 				))}

@@ -1,8 +1,9 @@
-query ResultsGetList {
-    results(skip: 0, take: 10) {
+query ResultsGetList($skip: Int, $take: Int) {
+    results(skip: $skip, take: $take) {
         items {
             id
             createdAt
+            playingTime
             game {
                 name
                 imgUrl
