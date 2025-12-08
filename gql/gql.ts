@@ -15,18 +15,18 @@ import * as types from './graphql';
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
-    "query GetGamesForInfiniteScroll($skip: Int!, $take: Int!) {\n  games(skip: $skip, take: $take, sortBy: LAST_PLAYED) {\n    items {\n      id\n      name\n      thumbnailUrl\n      latestResult {\n        createdAt\n        scores {\n          player {\n            name\n          }\n        }\n      }\n    }\n    total\n  }\n}": typeof types.GetGamesForInfiniteScrollDocument,
+    "query GetGamesForInfiniteScroll($skip: Int!, $take: Int!, $sortBy: GameSortBy!) {\n  games(skip: $skip, take: $take, sortBy: $sortBy) {\n    items {\n      id\n      name\n      thumbnailUrl\n      latestResult {\n        createdAt\n        scores {\n          player {\n            name\n          }\n        }\n      }\n    }\n    total\n  }\n}": typeof types.GetGamesForInfiniteScrollDocument,
     "query ResultsGetList($skip: Int, $take: Int) {\n  results(skip: $skip, take: $take) {\n    items {\n      id\n      createdAt\n      playingTime\n      game {\n        name\n        imgUrl\n      }\n      scores {\n        player {\n          name\n        }\n      }\n    }\n    total\n  }\n}": typeof types.ResultsGetListDocument,
 };
 const documents: Documents = {
-    "query GetGamesForInfiniteScroll($skip: Int!, $take: Int!) {\n  games(skip: $skip, take: $take, sortBy: LAST_PLAYED) {\n    items {\n      id\n      name\n      thumbnailUrl\n      latestResult {\n        createdAt\n        scores {\n          player {\n            name\n          }\n        }\n      }\n    }\n    total\n  }\n}": types.GetGamesForInfiniteScrollDocument,
+    "query GetGamesForInfiniteScroll($skip: Int!, $take: Int!, $sortBy: GameSortBy!) {\n  games(skip: $skip, take: $take, sortBy: $sortBy) {\n    items {\n      id\n      name\n      thumbnailUrl\n      latestResult {\n        createdAt\n        scores {\n          player {\n            name\n          }\n        }\n      }\n    }\n    total\n  }\n}": types.GetGamesForInfiniteScrollDocument,
     "query ResultsGetList($skip: Int, $take: Int) {\n  results(skip: $skip, take: $take) {\n    items {\n      id\n      createdAt\n      playingTime\n      game {\n        name\n        imgUrl\n      }\n      scores {\n        player {\n          name\n        }\n      }\n    }\n    total\n  }\n}": types.ResultsGetListDocument,
 };
 
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "query GetGamesForInfiniteScroll($skip: Int!, $take: Int!) {\n  games(skip: $skip, take: $take, sortBy: LAST_PLAYED) {\n    items {\n      id\n      name\n      thumbnailUrl\n      latestResult {\n        createdAt\n        scores {\n          player {\n            name\n          }\n        }\n      }\n    }\n    total\n  }\n}"): typeof import('./graphql').GetGamesForInfiniteScrollDocument;
+export function graphql(source: "query GetGamesForInfiniteScroll($skip: Int!, $take: Int!, $sortBy: GameSortBy!) {\n  games(skip: $skip, take: $take, sortBy: $sortBy) {\n    items {\n      id\n      name\n      thumbnailUrl\n      latestResult {\n        createdAt\n        scores {\n          player {\n            name\n          }\n        }\n      }\n    }\n    total\n  }\n}"): typeof import('./graphql').GetGamesForInfiniteScrollDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

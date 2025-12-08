@@ -1,5 +1,5 @@
-query GetGamesForInfiniteScroll($skip: Int!, $take: Int!) {
-  games(skip: $skip, take: $take, sortBy: LAST_PLAYED) {
+query GetGamesForInfiniteScroll($skip: Int!, $take: Int!, $sortBy: GameSortBy!) {
+  games(skip: $skip, take: $take, sortBy: $sortBy) {
     items {
       id
       name

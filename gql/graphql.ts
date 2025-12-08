@@ -254,6 +254,7 @@ export type UpdateResultInput = {
 export type GetGamesForInfiniteScrollQueryVariables = Exact<{
   skip: Scalars['Int']['input'];
   take: Scalars['Int']['input'];
+  sortBy: GameSortBy;
 }>;
 
 
@@ -287,8 +288,8 @@ export class TypedDocumentString<TResult, TVariables>
 }
 
 export const GetGamesForInfiniteScrollDocument = new TypedDocumentString(`
-    query GetGamesForInfiniteScroll($skip: Int!, $take: Int!) {
-  games(skip: $skip, take: $take, sortBy: LAST_PLAYED) {
+    query GetGamesForInfiniteScroll($skip: Int!, $take: Int!, $sortBy: GameSortBy!) {
+  games(skip: $skip, take: $take, sortBy: $sortBy) {
     items {
       id
       name
