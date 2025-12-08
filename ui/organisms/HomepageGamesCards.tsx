@@ -3,7 +3,7 @@ import { GetGamesForInfiniteScrollDocument } from "@/gql/graphql";
 import { GameCard } from "@/ui/molecues/GameCard";
 
 export const HomepageGamesCards = async () => {
-    const { games } = await executeGraphql(GetGamesForInfiniteScrollDocument, { skip: 0, take: 20 });
+    const { games } = await executeGraphql(GetGamesForInfiniteScrollDocument, { skip: 0, take: 10 });
 
     return (
         <div className="flex flex-wrap gap-4 justify-center items-center">

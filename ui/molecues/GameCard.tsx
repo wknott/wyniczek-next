@@ -14,7 +14,7 @@ export const GameCard = ({ id, name, thumbnailUrl, latestResult }: GameCardProps
     const createdAt = new Date(latestResult?.createdAt as string).toLocaleString("pl-PL", { dateStyle: "short" });
 
     return (
-        <Card key={id} className="flex-grow-1">
+        <Card key={id} className="flex-grow-1 md:flex-grow-0 md:w-xs">
             <Card.Header>
                 <div className="flex items-center gap-4">
                     <Avatar size="lg">
