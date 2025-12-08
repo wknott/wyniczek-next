@@ -251,6 +251,14 @@ export type UpdateResultInput = {
   userId?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type GetGamesForInfiniteScrollQueryVariables = Exact<{
+  skip: Scalars['Int']['input'];
+  take: Scalars['Int']['input'];
+}>;
+
+
+export type GetGamesForInfiniteScrollQuery = { games: { total: number, items: Array<{ id: string, name: string, thumbnailUrl?: string | null, latestResult?: { createdAt: unknown, scores?: Array<{ player?: { name: string } | null }> | null } | null }> } };
+
 export type ResultsGetListQueryVariables = Exact<{
   skip?: InputMaybe<Scalars['Int']['input']>;
   take?: InputMaybe<Scalars['Int']['input']>;
@@ -278,6 +286,26 @@ export class TypedDocumentString<TResult, TVariables>
   }
 }
 
+export const GetGamesForInfiniteScrollDocument = new TypedDocumentString(`
+    query GetGamesForInfiniteScroll($skip: Int!, $take: Int!) {
+  games(skip: $skip, take: $take, sortBy: LAST_PLAYED) {
+    items {
+      id
+      name
+      thumbnailUrl
+      latestResult {
+        createdAt
+        scores {
+          player {
+            name
+          }
+        }
+      }
+    }
+    total
+  }
+}
+    `) as unknown as TypedDocumentString<GetGamesForInfiniteScrollQuery, GetGamesForInfiniteScrollQueryVariables>;
 export const ResultsGetListDocument = new TypedDocumentString(`
     query ResultsGetList($skip: Int, $take: Int) {
   results(skip: $skip, take: $take) {
