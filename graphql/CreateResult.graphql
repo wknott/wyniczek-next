@@ -1,0 +1,26 @@
+mutation CreateResult($input: CreateResultInput!) {
+  createResult(createResultInput: $input) {
+    id
+    createdAt
+    playingTime
+    game {
+      id
+      name
+    }
+    scores {
+      id
+      player {
+        id
+        name
+      }
+      points {
+        id
+        value
+        pointCategory {
+          id
+          name
+        }
+      }
+    }
+  }
+}

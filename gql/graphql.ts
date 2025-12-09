@@ -251,6 +251,13 @@ export type UpdateResultInput = {
   userId?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type CreateResultMutationVariables = Exact<{
+  input: CreateResultInput;
+}>;
+
+
+export type CreateResultMutation = { createResult: { id: string, createdAt: unknown, playingTime?: number | null, game: { id: string, name: string }, scores?: Array<{ id: string, player?: { id: string, name: string } | null, points?: Array<{ id: string, value?: number | null, pointCategory: { id: string, name: string } }> | null }> | null } };
+
 export type GetGamesForInfiniteScrollQueryVariables = Exact<{
   skip: Scalars['Int']['input'];
   take: Scalars['Int']['input'];
@@ -259,6 +266,16 @@ export type GetGamesForInfiniteScrollQueryVariables = Exact<{
 
 
 export type GetGamesForInfiniteScrollQuery = { games: { total: number, items: Array<{ id: string, name: string, thumbnailUrl?: string | null, latestResult?: { createdAt: unknown, scores?: Array<{ player?: { name: string } | null }> | null } | null }> } };
+
+export type GetGamesForScoringQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetGamesForScoringQuery = { games: { items: Array<{ id: string, name: string, thumbnailUrl?: string | null, pointCategories?: Array<{ id: string, name: string }> | null }> } };
+
+export type GetPlayersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetPlayersQuery = { players: Array<{ id: string, name: string }> };
 
 export type ResultsGetListQueryVariables = Exact<{
   skip?: InputMaybe<Scalars['Int']['input']>;
@@ -287,6 +304,34 @@ export class TypedDocumentString<TResult, TVariables>
   }
 }
 
+export const CreateResultDocument = new TypedDocumentString(`
+    mutation CreateResult($input: CreateResultInput!) {
+  createResult(createResultInput: $input) {
+    id
+    createdAt
+    playingTime
+    game {
+      id
+      name
+    }
+    scores {
+      id
+      player {
+        id
+        name
+      }
+      points {
+        id
+        value
+        pointCategory {
+          id
+          name
+        }
+      }
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<CreateResultMutation, CreateResultMutationVariables>;
 export const GetGamesForInfiniteScrollDocument = new TypedDocumentString(`
     query GetGamesForInfiniteScroll($skip: Int!, $take: Int!, $sortBy: GameSortBy!) {
   games(skip: $skip, take: $take, sortBy: $sortBy) {
@@ -307,6 +352,29 @@ export const GetGamesForInfiniteScrollDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<GetGamesForInfiniteScrollQuery, GetGamesForInfiniteScrollQueryVariables>;
+export const GetGamesForScoringDocument = new TypedDocumentString(`
+    query GetGamesForScoring {
+  games(take: 100, sortBy: ALPHABETICAL) {
+    items {
+      id
+      name
+      thumbnailUrl
+      pointCategories {
+        id
+        name
+      }
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<GetGamesForScoringQuery, GetGamesForScoringQueryVariables>;
+export const GetPlayersDocument = new TypedDocumentString(`
+    query GetPlayers {
+  players {
+    id
+    name
+  }
+}
+    `) as unknown as TypedDocumentString<GetPlayersQuery, GetPlayersQueryVariables>;
 export const ResultsGetListDocument = new TypedDocumentString(`
     query ResultsGetList($skip: Int, $take: Int) {
   results(skip: $skip, take: $take) {
