@@ -3,17 +3,21 @@ import { type GameSortBy, GetGamesForInfiniteScrollDocument } from "@/gql/graphq
 import { GameCard } from "@/ui/molecues/GameCard";
 
 interface HomepageGamesCardsProps {
-    sortBy?: GameSortBy;
+	sortBy?: GameSortBy;
 }
 
 export const HomepageGamesCards = async ({ sortBy = "LAST_PLAYED" }: HomepageGamesCardsProps) => {
-    const { games } = await executeGraphql(GetGamesForInfiniteScrollDocument, { skip: 0, take: 50, sortBy });
+	const { games } = await executeGraphql(GetGamesForInfiniteScrollDocument, {
+		skip: 0,
+		take: 50,
+		sortBy,
+	});
 
-    return (
-        <div className="flex flex-wrap gap-4 justify-center items-center">
-            {games.items.map((game) => (
-                <GameCard key={game.id} {...game} />
-            ))}
-        </div>
-    )
-}
+	return (
+		<div className="flex flex-wrap items-center justify-center gap-4">
+			{games.items.map((game) => (
+				<GameCard key={game.id} {...game} />
+			))}
+		</div>
+	);
+};

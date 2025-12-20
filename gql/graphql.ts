@@ -258,6 +258,8 @@ export type CreateResultMutationVariables = Exact<{
 
 export type CreateResultMutation = { createResult: { id: string, createdAt: unknown, playingTime?: number | null, game: { id: string, name: string }, scores?: Array<{ id: string, player?: { id: string, name: string } | null, points?: Array<{ id: string, value?: number | null, pointCategory: { id: string, name: string } }> | null }> | null } };
 
+export type GameCardDataFragment = { id: string, name: string, thumbnailUrl?: string | null, latestResult?: { createdAt: unknown, scores?: Array<{ player?: { name: string, id: string } | null }> | null } | null };
+
 export type GetGamesForInfiniteScrollQueryVariables = Exact<{
   skip: Scalars['Int']['input'];
   take: Scalars['Int']['input'];
@@ -303,7 +305,22 @@ export class TypedDocumentString<TResult, TVariables>
     return this.value;
   }
 }
-
+export const GameCardDataFragmentDoc = new TypedDocumentString(`
+    fragment GameCardData on Game {
+  id
+  name
+  thumbnailUrl
+  latestResult {
+    createdAt
+    scores {
+      player {
+        name
+        id
+      }
+    }
+  }
+}
+    `, {"fragmentName":"GameCardData"}) as unknown as TypedDocumentString<GameCardDataFragment, unknown>;
 export const CreateResultDocument = new TypedDocumentString(`
     mutation CreateResult($input: CreateResultInput!) {
   createResult(createResultInput: $input) {
@@ -336,23 +353,25 @@ export const GetGamesForInfiniteScrollDocument = new TypedDocumentString(`
     query GetGamesForInfiniteScroll($skip: Int!, $take: Int!, $sortBy: GameSortBy!) {
   games(skip: $skip, take: $take, sortBy: $sortBy) {
     items {
-      id
-      name
-      thumbnailUrl
-      latestResult {
-        createdAt
-        scores {
-          player {
-            name
-            id
-          }
-        }
-      }
+      ...GameCardData
     }
     total
   }
 }
-    `) as unknown as TypedDocumentString<GetGamesForInfiniteScrollQuery, GetGamesForInfiniteScrollQueryVariables>;
+    fragment GameCardData on Game {
+  id
+  name
+  thumbnailUrl
+  latestResult {
+    createdAt
+    scores {
+      player {
+        name
+        id
+      }
+    }
+  }
+}`) as unknown as TypedDocumentString<GetGamesForInfiniteScrollQuery, GetGamesForInfiniteScrollQueryVariables>;
 export const GetGamesForScoringDocument = new TypedDocumentString(`
     query GetGamesForScoring {
   games(take: 100, sortBy: ALPHABETICAL) {

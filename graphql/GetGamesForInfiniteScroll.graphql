@@ -1,19 +1,23 @@
-query GetGamesForInfiniteScroll($skip: Int!, $take: Int!, $sortBy: GameSortBy!) {
-    games(skip: $skip, take: $take, sortBy: $sortBy) {
-        items {
-            id
-            name
-            thumbnailUrl
-            latestResult {
-                createdAt
-                scores {
-                    player {
-                        name
-                        id
-                    }
-                }
-            }
-        }
-        total
+fragment GameCardData on Game {
+  id
+  name
+  thumbnailUrl
+  latestResult {
+    createdAt
+    scores {
+      player {
+        name
+        id
+      }
     }
+  }
+}
+
+query GetGamesForInfiniteScroll($skip: Int!, $take: Int!, $sortBy: GameSortBy!) {
+  games(skip: $skip, take: $take, sortBy: $sortBy) {
+    items {
+      ...GameCardData
+    }
+    total
+  }
 }
