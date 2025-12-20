@@ -1,0 +1,12 @@
+import Link from "next/link";
+import Image from "next/image";
+
+export const Header = () => (
+	<header className="sticky top-0 z-10 border-b border-slate-700/50">
+		<div className="flex items-center justify-between px-4 py-4">
+			<Link href="/">
+				<Image src="/header-logo.svg" alt="Wynniczek" width={160} height={56} />
+			</Link>
+		</div>
+	</header>
+);

@@ -1,18 +1,19 @@
 query GetGamesForInfiniteScroll($skip: Int!, $take: Int!, $sortBy: GameSortBy!) {
-  games(skip: $skip, take: $take, sortBy: $sortBy) {
-    items {
-      id
-      name
-      thumbnailUrl
-      latestResult {
-        createdAt
-        scores {
-          player {
+    games(skip: $skip, take: $take, sortBy: $sortBy) {
+        items {
+            id
             name
-          }
+            thumbnailUrl
+            latestResult {
+                createdAt
+                scores {
+                    player {
+                        name
+                        id
+                    }
+                }
+            }
         }
-      }
+        total
     }
-    total
-  }
 }
