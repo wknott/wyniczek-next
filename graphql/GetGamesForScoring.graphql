@@ -8,6 +8,8 @@ query GetGamesForScoring {
         id
         name
       }
+      minPlayers
+      maxPlayers
     }
   }
 }

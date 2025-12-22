@@ -272,7 +272,7 @@ export type GetGamesForInfiniteScrollQuery = { games: { total: number, items: Ar
 export type GetGamesForScoringQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetGamesForScoringQuery = { games: { items: Array<{ id: string, name: string, thumbnailUrl?: string | null, pointCategories?: Array<{ id: string, name: string }> | null }> } };
+export type GetGamesForScoringQuery = { games: { items: Array<{ id: string, name: string, thumbnailUrl?: string | null, minPlayers: number, maxPlayers: number, pointCategories?: Array<{ id: string, name: string }> | null }> } };
 
 export type GetPlayersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -383,6 +383,8 @@ export const GetGamesForScoringDocument = new TypedDocumentString(`
         id
         name
       }
+      minPlayers
+      maxPlayers
     }
   }
 }

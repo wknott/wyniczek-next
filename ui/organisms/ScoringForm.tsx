@@ -39,7 +39,13 @@ export const ScoringForm = ({ games, players }: ScoringFormProps) => {
 					<Input type="hidden" name={`categories[]`} value={category.id} key={category.id} />
 				))}
 			{selectedGame && pointCategories && (
-				<ScoringTable pointCategories={pointCategories} players={players} />
+				<ScoringTable
+					key={selectedGame.id}
+					pointCategories={pointCategories}
+					players={players}
+					minPlayers={selectedGame.minPlayers}
+					maxPlayers={selectedGame.maxPlayers}
+				/>
 			)}
 			<TextField className="w-full max-w-64" name="playingTime" type="number">
 				<Label>Czas rozgrywki (min)</Label>

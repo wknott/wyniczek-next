@@ -19,11 +19,9 @@ const ScoringPage = async () => {
 	const players = playersData.players;
 
 	return (
-		<>
-			<Suspense fallback={null}>
-				<ScoringForm games={games} players={players} />
-			</Suspense>
-		</>
+		<Suspense fallback={null}>
+			<ScoringForm games={games} players={players} />
+		</Suspense>
 	);
 };
 

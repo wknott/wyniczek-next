@@ -8,12 +8,21 @@ import { Chip, Input } from "@heroui/react";
 interface ScoringTableProps {
 	pointCategories: Pick<PointCategory, "id" | "name">[];
 	players: Pick<Player, "id" | "name">[];
+	minPlayers?: number | null;
+	maxPlayers?: number | null;
 }
 
 const DEFAULT_NUMBER_OF_PLAYERS = 2;
 
-export const ScoringTable = ({ pointCategories, players }: ScoringTableProps) => {
-	const [numberOfPlayers, setNumberOfPlayers] = useState(DEFAULT_NUMBER_OF_PLAYERS);
+export const ScoringTable = ({
+	pointCategories,
+	players,
+	minPlayers,
+	maxPlayers,
+}: ScoringTableProps) => {
+	const [numberOfPlayers, setNumberOfPlayers] = useState(
+		Math.max(DEFAULT_NUMBER_OF_PLAYERS, minPlayers || 0),
+	);
 
 	return (
 		<div
@@ -26,6 +35,8 @@ export const ScoringTable = ({ pointCategories, players }: ScoringTableProps) =>
 				players={players}
 				numberOfPlayers={numberOfPlayers}
 				setNumberOfPlayers={setNumberOfPlayers}
+				minPlayers={minPlayers}
+				maxPlayers={maxPlayers}
 			/>
 			{pointCategories.map((category) => (
 				<React.Fragment key={category.id}>

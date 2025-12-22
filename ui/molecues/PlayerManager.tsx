@@ -9,12 +9,16 @@ interface PlayerManagerProps {
 	players: Pick<Player, "id" | "name">[];
 	numberOfPlayers: number;
 	setNumberOfPlayers: (num: number) => void;
+	minPlayers?: number | null;
+	maxPlayers?: number | null;
 }
 
 export const PlayerManager = ({
 	players,
 	numberOfPlayers,
 	setNumberOfPlayers,
+	minPlayers,
+	maxPlayers,
 }: PlayerManagerProps) => {
 	const searchParams = useSearchParams();
 
@@ -26,6 +30,7 @@ export const PlayerManager = ({
 			<div className="flex justify-center gap-5">
 				<Button
 					isIconOnly
+					isDisabled={!!maxPlayers && numberOfPlayers >= maxPlayers}
 					onPress={() => {
 						setNumberOfPlayers(numberOfPlayers + 1);
 					}}
@@ -35,6 +40,7 @@ export const PlayerManager = ({
 				<Button
 					isIconOnly
 					variant="danger"
+					isDisabled={numberOfPlayers <= (minPlayers || 1)}
 					onPress={() => {
 						setNumberOfPlayers(numberOfPlayers - 1);
 					}}
