@@ -27,6 +27,4 @@ const parseFormDataToCreateResultInput = (formData: FormData): CreateResultInput
 
 export async function createResult(formData: FormData) {
 	return await createResultAction(parseFormDataToCreateResultInput(formData));
-	// mutate data
-	// revalidate the cache
 }

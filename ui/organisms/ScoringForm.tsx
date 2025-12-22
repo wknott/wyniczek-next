@@ -49,14 +49,13 @@ export const ScoringForm = ({ games, players }: ScoringFormProps) => {
 			)}
 			<TextField className="w-full max-w-64" name="playingTime" type="number">
 				<Label>Czas rozgrywki (min)</Label>
-				<Input className="text-base" />
+				<Input className="text-base" required type="number" />
 			</TextField>
 			<div className="pt-4 pb-8">
-				<Button type="submit" className="w-full">
+				<Button type="submit" className="w-full" isDisabled={isPending || !selectedGameId}>
 					Dodaj wynik
 				</Button>
 			</div>
-			{JSON.stringify(state)}
 		</form>
 	);
 };

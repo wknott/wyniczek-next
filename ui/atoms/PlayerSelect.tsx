@@ -19,6 +19,7 @@ export const PlayerSelect = ({
 			name={name}
 			aria-label="player-select"
 			defaultValue={defaultValue}
+			isRequired
 		>
 			<Select.Trigger>
 				<Select.Value></Select.Value>

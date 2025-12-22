@@ -37,6 +37,7 @@ export const GameSelect = ({ games }: GameSelectProps) => {
 			onChange={handleChange}
 			name="gameId"
 			aria-label="gameId"
+			isRequired
 		>
 			<Select.Trigger>
 				<Select.Value />
