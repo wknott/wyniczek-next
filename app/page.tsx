@@ -11,8 +11,8 @@ export default async function Home({ searchParams }: PageProps) {
 	const { sortBy = "LAST_PLAYED" } = await searchParams;
 
 	return (
-		<main className="flex min-h-screen flex-col items-center p-2 sm:p-4 md:p-6 max-w-7xl mx-auto">
-			<div className="w-full flex justify-end mb-4">
+		<main className="mx-auto flex min-h-screen max-w-7xl flex-col items-center p-2 sm:p-4 md:p-6">
+			<div className="mb-4 flex w-full justify-end">
 				<Suspense fallback={null}>
 					<SortSelect defaultValue={sortBy} />
 				</Suspense>

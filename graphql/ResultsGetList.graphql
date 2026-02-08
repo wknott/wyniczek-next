@@ -1,22 +1,22 @@
 query ResultsGetList($skip: Int, $take: Int) {
-    results(skip: $skip, take: $take) {
-        items {
-            id
-            createdAt
-            playingTime
-            game {
-                name
-                thumbnailUrl
-            }
-            scores {
-                player {
-                    name
-                }
-                points {
-                    value
-                }
-            }
-        }
-        total
-    }
+	results(skip: $skip, take: $take) {
+		items {
+			id
+			createdAt
+			playingTime
+			game {
+				name
+				thumbnailUrl
+			}
+			scores {
+				player {
+					name
+				}
+				points {
+					value
+				}
+			}
+		}
+		total
+	}
 }

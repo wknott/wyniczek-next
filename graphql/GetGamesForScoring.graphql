@@ -1,15 +1,15 @@
 query GetGamesForScoring {
-  games(take: 100, sortBy: ALPHABETICAL) {
-    items {
-      id
-      name
-      thumbnailUrl
-      pointCategories {
-        id
-        name
-      }
-      minPlayers
-      maxPlayers
-    }
-  }
+	games(take: 100, sortBy: ALPHABETICAL) {
+		items {
+			id
+			name
+			thumbnailUrl
+			pointCategories {
+				id
+				name
+			}
+			minPlayers
+			maxPlayers
+		}
+	}
 }

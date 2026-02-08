@@ -26,11 +26,7 @@ export const ScoringTable = ({
 
 	const [scores, setScores] = useState<Record<string, Record<number, number>>>({});
 
-	const handleScoreChange = (
-		categoryId: string,
-		playerIndex: number,
-		value: string,
-	) => {
+	const handleScoreChange = (categoryId: string, playerIndex: number, value: string) => {
 		const numValue = value === "" ? 0 : parseFloat(value);
 		setScores((prev) => ({
 			...prev,
@@ -86,7 +82,7 @@ export const ScoringTable = ({
 			{[...Array(numberOfPlayers).keys()].map((_, index) => (
 				<Chip
 					key={`sum-${index}`}
-					className="flex justify-center items-center font-bold text-lg"
+					className="flex items-center justify-center text-lg font-bold"
 					color="accent"
 					variant="soft"
 				>
