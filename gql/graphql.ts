@@ -285,7 +285,7 @@ export type ResultsGetListQueryVariables = Exact<{
 }>;
 
 
-export type ResultsGetListQuery = { results: { total: number, items: Array<{ id: string, createdAt: unknown, playingTime?: number | null, game: { name: string, imgUrl?: string | null }, scores?: Array<{ player?: { name: string } | null }> | null }> } };
+export type ResultsGetListQuery = { results: { total: number, items: Array<{ id: string, createdAt: unknown, playingTime?: number | null, game: { name: string, thumbnailUrl?: string | null }, scores?: Array<{ player?: { name: string } | null, points?: Array<{ value?: number | null }> | null }> | null }> } };
 
 export class TypedDocumentString<TResult, TVariables>
   extends String
@@ -406,11 +406,14 @@ export const ResultsGetListDocument = new TypedDocumentString(`
       playingTime
       game {
         name
-        imgUrl
+        thumbnailUrl
       }
       scores {
         player {
           name
+        }
+        points {
+          value
         }
       }
     }

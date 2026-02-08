@@ -6,11 +6,14 @@ query ResultsGetList($skip: Int, $take: Int) {
             playingTime
             game {
                 name
-                imgUrl
+                thumbnailUrl
             }
             scores {
                 player {
                     name
+                }
+                points {
+                    value
                 }
             }
         }
