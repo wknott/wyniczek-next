@@ -16,7 +16,7 @@ export const GameCard = ({ id, name, thumbnailUrl, latestResult }: GameCardDataF
 						<Avatar.Image src={thumbnailUrl || ""} />
 					</Avatar>
 					<Card.Title className="text-2xl font-bold">{name}</Card.Title>
-					<Button asChild isIconOnly className="ml-auto shrink-0">
+					<Button isIconOnly className="ml-auto shrink-0">
 						<Link
 							href={{
 								pathname: "/result/new/",
