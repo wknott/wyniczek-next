@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@heroui/react";
+import { Button, ButtonGroup } from "@heroui/react";
 import { PersonXmark, PersonPlus } from "@gravity-ui/icons";
 import { PlayerSelect } from "@/ui/atoms/PlayerSelect";
 import { Player } from "@/gql/graphql";
@@ -28,25 +28,28 @@ export const PlayerManager = ({
 	return (
 		<>
 			<div className="flex justify-center gap-5">
-				<Button
-					isIconOnly
-					isDisabled={!!maxPlayers && numberOfPlayers >= maxPlayers}
-					onPress={() => {
-						setNumberOfPlayers(numberOfPlayers + 1);
-					}}
-				>
-					<PersonPlus />
-				</Button>
-				<Button
-					isIconOnly
-					variant="danger"
-					isDisabled={numberOfPlayers <= (minPlayers || 1)}
-					onPress={() => {
-						setNumberOfPlayers(numberOfPlayers - 1);
-					}}
-				>
-					<PersonXmark />
-				</Button>
+				<ButtonGroup fullWidth>
+					<Button
+						isIconOnly
+						isDisabled={!!maxPlayers && numberOfPlayers >= maxPlayers}
+						onPress={() => {
+							setNumberOfPlayers(numberOfPlayers + 1);
+						}}
+						variant="primary"
+					>
+						<PersonPlus />
+					</Button>
+					<Button
+						isIconOnly
+						variant="danger"
+						isDisabled={numberOfPlayers <= (minPlayers || 1)}
+						onPress={() => {
+							setNumberOfPlayers(numberOfPlayers - 1);
+						}}
+					>
+						<PersonXmark />
+					</Button>
+				</ButtonGroup>
 			</div>
 			{players &&
 				[...Array(numberOfPlayers).keys()].map((_, index) => (

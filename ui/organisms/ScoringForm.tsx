@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useMemo, useTransition, useActionState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useMemo, useActionState } from "react";
+import { useSearchParams } from "next/navigation";
 import { Button, Input, Label, TextField } from "@heroui/react";
 import type { GetGamesForScoringQuery, GetPlayersQuery } from "@/gql/graphql";
 import { GameSelect } from "@/ui/atoms/GameSelect";
@@ -18,7 +18,7 @@ interface ScoringFormProps {
 
 export const ScoringForm = ({ games, players }: ScoringFormProps) => {
 	const searchParams = useSearchParams();
-	const [state, action, isPending] = useActionState((_prevState: unknown, formData: FormData) => {
+	const [_, action, isPending] = useActionState((_prevState: unknown, formData: FormData) => {
 		return createResult(formData);
 	}, null);
 
@@ -47,7 +47,7 @@ export const ScoringForm = ({ games, players }: ScoringFormProps) => {
 					maxPlayers={selectedGame.maxPlayers}
 				/>
 			)}
-			<TextField className="w-full max-w-64" name="playingTime" type="number">
+			<TextField className="w-full" name="playingTime" type="number">
 				<Label>Czas rozgrywki (min)</Label>
 				<Input className="text-base" required type="number" />
 			</TextField>
