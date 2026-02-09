@@ -1,0 +1,27 @@
+query GetResultById($id: String!) {
+	result(id: $id) {
+		id
+		createdAt
+		playingTime
+		game {
+			id
+			name
+			thumbnailUrl
+		}
+		scores {
+			id
+			player {
+				id
+				name
+			}
+			points {
+				id
+				value
+				pointCategory {
+					id
+					name
+				}
+			}
+		}
+	}
+}

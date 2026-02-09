@@ -308,6 +308,28 @@ export type GetPlayersQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetPlayersQuery = { players: Array<{ id: string; name: string }> };
 
+export type GetResultByIdQueryVariables = Exact<{
+	id: Scalars["String"]["input"];
+}>;
+
+export type GetResultByIdQuery = {
+	result?: {
+		id: string;
+		createdAt: unknown;
+		playingTime?: number | null;
+		game: { id: string; name: string; thumbnailUrl?: string | null };
+		scores?: Array<{
+			id: string;
+			player?: { id: string; name: string } | null;
+			points?: Array<{
+				id: string;
+				value?: number | null;
+				pointCategory: { id: string; name: string };
+			}> | null;
+		}> | null;
+	} | null;
+};
+
 export type ResultsGetListQueryVariables = Exact<{
 	skip?: InputMaybe<Scalars["Int"]["input"]>;
 	take?: InputMaybe<Scalars["Int"]["input"]>;
@@ -445,6 +467,35 @@ export const GetPlayersDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<GetPlayersQuery, GetPlayersQueryVariables>;
+export const GetResultByIdDocument = new TypedDocumentString(`
+    query GetResultById($id: String!) {
+  result(id: $id) {
+    id
+    createdAt
+    playingTime
+    game {
+      id
+      name
+      thumbnailUrl
+    }
+    scores {
+      id
+      player {
+        id
+        name
+      }
+      points {
+        id
+        value
+        pointCategory {
+          id
+          name
+        }
+      }
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<GetResultByIdQuery, GetResultByIdQueryVariables>;
 export const ResultsGetListDocument = new TypedDocumentString(`
     query ResultsGetList($skip: Int, $take: Int) {
   results(skip: $skip, take: $take) {

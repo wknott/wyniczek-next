@@ -7,6 +7,14 @@ export const Header = () => (
 			<Link href="/">
 				<Image src="/header-logo.svg" alt="Wynniczek" width={160} height={56} />
 			</Link>
+			<nav className="flex gap-4">
+				<Link
+					href={"/history" as any}
+					className="text-sm font-medium transition-colors hover:text-blue-500"
+				>
+					Historia
+				</Link>
+			</nav>
 		</div>
 	</header>
 );
