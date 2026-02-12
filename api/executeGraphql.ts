@@ -14,14 +14,12 @@ export const executeGraphql = async <TResult, TVariables>(
 
 	const res = await fetch(process.env.GRAPHQL_URL, {
 		method: "POST",
-		cache: "no-store",
 		body: JSON.stringify({
 			query,
 			variables,
 		}),
 		headers: {
 			"Content-Type": "application/json",
-			"Cache-Control": "no-store",
 		},
 	});
 

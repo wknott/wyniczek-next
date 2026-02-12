@@ -1,6 +1,10 @@
 import { ResultsList } from "@/ui/organisms/ResultsList";
+import { connection } from "next/server";
 import { getResultsPage } from "./actions";
+
 export default async function HistoryPage() {
+	await connection();
+
 	const initialData = await getResultsPage(0);
 	return (
 		<main className="mx-auto flex min-h-screen max-w-6xl flex-col items-center gap-6 p-2 sm:p-4 md:p-6">
