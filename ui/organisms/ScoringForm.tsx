@@ -1,8 +1,8 @@
 "use client";
 
 import { useMemo, useActionState } from "react";
-import { useSearchParams } from "next/navigation";
-import { Button, Input, Label, TextField } from "@heroui/react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Button, Input, Label, Spinner, TextField } from "@heroui/react";
 import type { GetGamesForScoringQuery, GetPlayersQuery } from "@/gql/graphql";
 import { GameSelect } from "@/ui/atoms/GameSelect";
 import { ScoringTable } from "@/ui/molecues/ScoringTable";
@@ -18,8 +18,13 @@ interface ScoringFormProps {
 
 export const ScoringForm = ({ games, players }: ScoringFormProps) => {
 	const searchParams = useSearchParams();
-	const [_, action, isPending] = useActionState((_prevState: unknown, formData: FormData) => {
-		return createResult(formData);
+	const router = useRouter();
+
+	const [_, action, isPending] = useActionState(async (_prevState: unknown, formData: FormData) => {
+		const { id } = await createResult(formData);
+		router.push(`/result/${id}`);
+
+		return;
 	}, null);
 
 	const selectedGameId = searchParams.get("gameId") || "";
@@ -52,7 +57,8 @@ export const ScoringForm = ({ games, players }: ScoringFormProps) => {
 				<Input className="text-base" required type="number" />
 			</TextField>
 			<div className="pt-4 pb-8">
-				<Button type="submit" className="w-full" isDisabled={isPending || !selectedGameId}>
+				<Button type="submit" className="w-full" isDisabled={!selectedGameId} isPending={isPending}>
+					{isPending ? <Spinner color="current" size="sm" /> : null}
 					Dodaj wynik
 				</Button>
 			</div>
