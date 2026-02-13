@@ -1,5 +1,5 @@
 "use client";
-import { Card, Avatar, Button, ButtonGroup } from "@heroui/react";
+import { Card, Avatar, Button, ButtonGroup, Chip } from "@heroui/react";
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "@gravity-ui/icons";
 import Link from "next/link";
@@ -33,6 +33,7 @@ export const ResultsList = ({ initialData, onPageChange }: ResultsListProps) => 
 	const [currentPage, setCurrentPage] = useState(1);
 	const [isLoading, setIsLoading] = useState(false);
 	const totalPages = Math.ceil(data.total / itemsPerPage);
+
 	const handlePageChange = async (newPage: number) => {
 		setIsLoading(true);
 		setCurrentPage(newPage);
@@ -44,6 +45,7 @@ export const ResultsList = ({ initialData, onPageChange }: ResultsListProps) => 
 			setIsLoading(false);
 		}
 	};
+
 	return (
 		<div className="flex flex-col gap-4">
 			{isLoading && <div className="text-center">Ładowanie...</div>}
@@ -51,14 +53,12 @@ export const ResultsList = ({ initialData, onPageChange }: ResultsListProps) => 
 			{!isLoading &&
 				data.items.map((result) => (
 					<Link key={result.id} href={`/result/${result.id}`} className="block hover:no-underline">
-						<Card className="p-4 transition-all hover:scale-101 hover:shadow-lg">
+						<Card className="hover:bg-separator p-4 transition-all hover:shadow-lg">
 							<div className="flex gap-4">
-								{result.game.thumbnailUrl && (
-									<Avatar size="lg">
-										<Avatar.Image src={result.game.thumbnailUrl} />
-									</Avatar>
-								)}
-								<div className="flex flex-1 flex-col justify-between">
+								<Avatar size="lg">
+									<Avatar.Image src={result.game.thumbnailUrl || ""} />
+								</Avatar>
+								<div className="flex flex-1 flex-col gap-1 lg:flex-row lg:gap-8">
 									<div>
 										<h3 className="text-lg font-semibold">{result.game.name}</h3>
 										<p className="text-sm">
@@ -71,10 +71,12 @@ export const ResultsList = ({ initialData, onPageChange }: ResultsListProps) => 
 									</div>
 									<div className="flex flex-wrap gap-3">
 										{result.scores?.map((score, idx) => (
-											<div key={idx} className="rounded-lg border px-3 py-2 text-sm">
-												<div className="font-semibold">{score.player?.name || "Nieznany"}</div>
-												<div>{score.points?.map((p) => p.value ?? "-").join(", ") || "-"}</div>
-											</div>
+											<Chip key={idx} className="flex gap-2 font-semibold">
+												<span>{score.player?.name || "Nieznany"}</span>
+												<span>
+													{score?.points?.reduce((a, b) => a + +(b.value || 0), 0) ?? "-"}
+												</span>
+											</Chip>
 										))}
 									</div>
 								</div>
