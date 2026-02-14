@@ -1,6 +1,6 @@
 import { Avatar, Button, Card, Chip } from "@heroui/react";
 import Link from "next/link";
-import { Plus } from "@gravity-ui/icons";
+import { Plus, Calendar, PersonFill } from "@gravity-ui/icons";
 import { GameCardDataFragment } from "@/gql/graphql";
 
 export const GameCard = ({ id, name, thumbnailUrl, latestResult }: GameCardDataFragment) => {
@@ -9,35 +9,36 @@ export const GameCard = ({ id, name, thumbnailUrl, latestResult }: GameCardDataF
 	});
 
 	return (
-		<Card key={id} className="flex-grow-1 md:w-xs">
-			<Card.Header>
-				<div className="flex items-center gap-4">
-					<Avatar size="lg">
-						<Avatar.Image src={thumbnailUrl || ""} />
-					</Avatar>
-					<Card.Title className="text-2xl font-bold">{name}</Card.Title>
-					<Button isIconOnly className="ml-auto shrink-0">
-						<Link
-							href={{
-								pathname: "/result/new/",
-								query: {
-									gameId: id,
-									players: latestResult?.scores?.map((s) => s?.player?.id || "") || "",
-								},
-							}}
-						>
-							<Plus />
-						</Link>
-					</Button>
+		<Card key={id}>
+			<Card.Header className="flex flex-row items-center gap-4">
+				<Avatar size="lg">
+					<Avatar.Image src={thumbnailUrl || ""} />
+				</Avatar>
+				<div>
+					<Card.Title className="text-lg font-bold">{name}</Card.Title>
+					<Card.Description className="mt-2 flex gap-2">
+						<Chip>
+							<Calendar className="mr-1" /> <strong>{createdAt}</strong>
+						</Chip>
+						<Chip>
+							<PersonFill className="mr-1" />
+							<strong>{latestResult?.scores?.[0]?.player?.name}</strong>
+						</Chip>
+					</Card.Description>
 				</div>
-				<Card.Description className="mt-2">
-					Ostatnia rozgrywka: <strong>{createdAt}</strong>
-					<br />
-					Rozpoczynający:
-					<Chip className="ml-2">
-						<strong>{latestResult?.scores?.[0]?.player?.name}</strong>
-					</Chip>
-				</Card.Description>
+				<Button isIconOnly className="ml-auto shrink-0">
+					<Link
+						href={{
+							pathname: "/result/new/",
+							query: {
+								gameId: id,
+								players: latestResult?.scores?.map((s) => s?.player?.id || "") || "",
+							},
+						}}
+					>
+						<Plus />
+					</Link>
+				</Button>
 			</Card.Header>
 		</Card>
 	);

@@ -14,7 +14,7 @@ export const HomepageGamesCards = async ({ sortBy = "LAST_PLAYED" }: HomepageGam
 	});
 
 	return (
-		<div className="flex flex-wrap items-center justify-center gap-4">
+		<div className="grid grid-cols-1 items-center justify-center gap-4 md:grid-cols-2 lg:grid-cols-3">
 			{games.items.map((game) => (
 				<GameCard key={game.id} {...game} />
 			))}
