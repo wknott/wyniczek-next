@@ -2,7 +2,7 @@
 
 import { useMemo, useActionState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Button, Input, Label, Spinner, TextField } from "@heroui/react";
+import { Button, Input, Label, Spinner, TextField, toast } from "@heroui/react";
 import type { GetGamesForScoringQuery, GetPlayersQuery } from "@/gql/graphql";
 import { GameSelect } from "@/ui/atoms/GameSelect";
 import { ScoringTable } from "@/ui/molecues/ScoringTable";
@@ -22,6 +22,7 @@ export const ScoringForm = ({ games, players }: ScoringFormProps) => {
 
 	const [_, action, isPending] = useActionState(async (_prevState: unknown, formData: FormData) => {
 		const { id } = await createResult(formData);
+		toast("Wynik został poprawnie zapisany!", { variant: "success" });
 		router.push(`/result/${id}`);
 
 		return;
