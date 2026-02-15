@@ -46,13 +46,17 @@ export const GamesList = ({ initialData, onPageChange }: GamesListProps) => {
                     {data.items.map((game) => (
                         <Card key={game.id} className="p-4 transition-all hover:bg-slate-800/40 hover:shadow-xl">
                             <div className="flex gap-4">
-                                <Avatar size="lg" className="shrink-0">
-                                    <Avatar.Image src={game.thumbnailUrl || ""} />
-                                </Avatar>
-                                <div className="flex flex-1 flex-col gap-2">
+                                <Link href={{ pathname: `/games/${game.id}` }} className="shrink-0 transition-transform hover:scale-105 active:scale-95">
+                                    <Avatar size="lg">
+                                        <Avatar.Image src={game.thumbnailUrl || ""} />
+                                    </Avatar>
+                                </Link>
+                                <div className="flex flex-1 flex-col gap-2 overflow-hidden">
                                     <div className="flex items-start justify-between gap-2">
-                                        <div>
-                                            <h3 className="text-lg font-bold leading-tight">{game.name}</h3>
+                                        <div className="overflow-hidden">
+                                            <Link href={{ pathname: `/games/${game.id}` }} className="block hover:text-accent transition-colors">
+                                                <h3 className="truncate text-lg font-bold leading-tight">{game.name}</h3>
+                                            </Link>
                                             {!!game.lastPlayedAt && (
                                                 <p className="text-xs text-slate-400">
                                                     Ostatnio grane:{" "}

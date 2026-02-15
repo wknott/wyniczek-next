@@ -1,0 +1,17 @@
+query GetGameById($id: String!) {
+	game(id: $id) {
+		id
+		name
+		thumbnailUrl
+		minPlayers
+		maxPlayers
+		bggRank
+		bggWeight
+		lastPlayedAt
+		inCollection
+		pointCategories {
+			id
+			name
+		}
+	}
+}

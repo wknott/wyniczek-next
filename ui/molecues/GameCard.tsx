@@ -11,11 +11,15 @@ export const GameCard = ({ id, name, thumbnailUrl, latestResult }: GameCardDataF
 	return (
 		<Card key={id}>
 			<Card.Header className="flex flex-row items-center gap-4">
-				<Avatar size="lg">
-					<Avatar.Image src={thumbnailUrl || ""} />
-				</Avatar>
-				<div>
-					<Card.Title className="text-lg font-bold">{name}</Card.Title>
+				<Link href={{ pathname: `/games/${id}` }} className="shrink-0 transition-transform hover:scale-105 active:scale-95">
+					<Avatar size="lg">
+						<Avatar.Image src={thumbnailUrl || ""} />
+					</Avatar>
+				</Link>
+				<div className="flex-1 overflow-hidden">
+					<Link href={{ pathname: `/games/${id}` }} className="block hover:text-primary transition-colors">
+						<Card.Title className="truncate text-lg font-bold">{name}</Card.Title>
+					</Link>
 					<Card.Description className="mt-2 flex gap-2">
 						<Chip>
 							<Calendar className="mr-1" /> <strong>{createdAt}</strong>

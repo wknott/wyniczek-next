@@ -1,0 +1,11 @@
+mutation SyncGameWithBgg($id: String!) {
+	syncGameWithBgg(id: $id) {
+		id
+		name
+		thumbnailUrl
+		minPlayers
+		maxPlayers
+		bggRank
+		bggWeight
+	}
+}

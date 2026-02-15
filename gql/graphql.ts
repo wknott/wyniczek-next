@@ -40,6 +40,7 @@ export type BggGameStats = {
 
 export type CreateGameInput = {
   bggId?: InputMaybe<Scalars['Int']['input']>;
+  inCollection?: InputMaybe<Scalars['Boolean']['input']>;
   name: Scalars['String']['input'];
   pointCategoryNames?: InputMaybe<Array<Scalars['String']['input']>>;
   userId: Scalars['String']['input'];
@@ -73,6 +74,7 @@ export type Game = {
   bggWeight?: Maybe<Scalars['Float']['output']>;
   id: Scalars['String']['output'];
   imgUrl?: Maybe<Scalars['String']['output']>;
+  inCollection: Scalars['Boolean']['output'];
   lastPlayedAt?: Maybe<Scalars['DateTime']['output']>;
   latestResult?: Maybe<Result>;
   maxPlayers: Scalars['Int']['output'];
@@ -96,6 +98,7 @@ export type Mutation = {
   removeResult: Result;
   syncAllGamesWithBgg: Array<Game>;
   syncGameWithBgg: Game;
+  updateGameCollectionStatus: Game;
   updateResult: Result;
 };
 
@@ -127,6 +130,12 @@ export type MutationRemoveResultArgs = {
 
 export type MutationSyncGameWithBggArgs = {
   id: Scalars['String']['input'];
+};
+
+
+export type MutationUpdateGameCollectionStatusArgs = {
+  id: Scalars['String']['input'];
+  inCollection: Scalars['Boolean']['input'];
 };
 
 
@@ -184,6 +193,7 @@ export type QueryGameArgs = {
 
 
 export type QueryGamesArgs = {
+  includeNotInCollection?: InputMaybe<Scalars['Boolean']['input']>;
   skip?: InputMaybe<Scalars['Int']['input']>;
   sortBy?: InputMaybe<GameSortBy>;
   take?: InputMaybe<Scalars['Int']['input']>;
@@ -272,16 +282,24 @@ export type CreateResultMutationVariables = Exact<{
 
 export type CreateResultMutation = { createResult: { id: string, createdAt: unknown, playingTime?: number | null, game: { id: string, name: string }, scores?: Array<{ id: string, player?: { id: string, name: string } | null, points?: Array<{ id: string, value?: number | null, pointCategory: { id: string, name: string } }> | null }> | null } };
 
-export type GameCardDataFragment = { id: string, name: string, thumbnailUrl?: string | null, latestResult?: { createdAt: unknown, scores?: Array<{ player?: { name: string, id: string } | null }> | null } | null };
+export type GetGameByIdQueryVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type GetGameByIdQuery = { game?: { id: string, name: string, thumbnailUrl?: string | null, minPlayers: number, maxPlayers: number, bggRank?: number | null, bggWeight?: number | null, lastPlayedAt?: unknown | null, inCollection: boolean, pointCategories?: Array<{ id: string, name: string }> | null } | null };
+
+export type GameCardDataFragment = { id: string, name: string, thumbnailUrl?: string | null, inCollection: boolean, latestResult?: { createdAt: unknown, scores?: Array<{ player?: { name: string, id: string } | null }> | null } | null };
 
 export type GetGamesForInfiniteScrollQueryVariables = Exact<{
   skip: Scalars['Int']['input'];
   take: Scalars['Int']['input'];
   sortBy: GameSortBy;
+  includeNotInCollection?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
 
-export type GetGamesForInfiniteScrollQuery = { games: { total: number, items: Array<{ id: string, name: string, thumbnailUrl?: string | null, latestResult?: { createdAt: unknown, scores?: Array<{ player?: { name: string, id: string } | null }> | null } | null }> } };
+export type GetGamesForInfiniteScrollQuery = { games: { total: number, items: Array<{ id: string, name: string, thumbnailUrl?: string | null, inCollection: boolean, latestResult?: { createdAt: unknown, scores?: Array<{ player?: { name: string, id: string } | null }> | null } | null }> } };
 
 export type GetGamesForScoringQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -292,10 +310,11 @@ export type GetGamesListQueryVariables = Exact<{
   skip?: InputMaybe<Scalars['Int']['input']>;
   take?: InputMaybe<Scalars['Int']['input']>;
   sortBy?: InputMaybe<GameSortBy>;
+  includeNotInCollection?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
 
-export type GetGamesListQuery = { games: { total: number, items: Array<{ id: string, name: string, thumbnailUrl?: string | null, minPlayers: number, maxPlayers: number, bggRank?: number | null, bggWeight?: number | null, lastPlayedAt?: unknown | null }> } };
+export type GetGamesListQuery = { games: { total: number, items: Array<{ id: string, name: string, thumbnailUrl?: string | null, minPlayers: number, maxPlayers: number, bggRank?: number | null, bggWeight?: number | null, lastPlayedAt?: unknown | null, inCollection: boolean }> } };
 
 export type GetPlayersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -323,6 +342,21 @@ export type SearchBggGamesQueryVariables = Exact<{
 
 
 export type SearchBggGamesQuery = { searchBggGames: Array<{ bggId: string, name: string }> };
+
+export type SyncGameWithBggMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type SyncGameWithBggMutation = { syncGameWithBgg: { id: string, name: string, thumbnailUrl?: string | null, minPlayers: number, maxPlayers: number, bggRank?: number | null, bggWeight?: number | null } };
+
+export type UpdateGameCollectionStatusMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+  inCollection: Scalars['Boolean']['input'];
+}>;
+
+
+export type UpdateGameCollectionStatusMutation = { updateGameCollectionStatus: { id: string, inCollection: boolean } };
 
 export class TypedDocumentString<TResult, TVariables>
   extends String
@@ -356,6 +390,7 @@ export const GameCardDataFragmentDoc = new TypedDocumentString(`
       }
     }
   }
+  inCollection
 }
     `, {"fragmentName":"GameCardData"}) as unknown as TypedDocumentString<GameCardDataFragment, unknown>;
 export const CreateGameDocument = new TypedDocumentString(`
@@ -402,9 +437,33 @@ export const CreateResultDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<CreateResultMutation, CreateResultMutationVariables>;
+export const GetGameByIdDocument = new TypedDocumentString(`
+    query GetGameById($id: String!) {
+  game(id: $id) {
+    id
+    name
+    thumbnailUrl
+    minPlayers
+    maxPlayers
+    bggRank
+    bggWeight
+    lastPlayedAt
+    inCollection
+    pointCategories {
+      id
+      name
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<GetGameByIdQuery, GetGameByIdQueryVariables>;
 export const GetGamesForInfiniteScrollDocument = new TypedDocumentString(`
-    query GetGamesForInfiniteScroll($skip: Int!, $take: Int!, $sortBy: GameSortBy!) {
-  games(skip: $skip, take: $take, sortBy: $sortBy) {
+    query GetGamesForInfiniteScroll($skip: Int!, $take: Int!, $sortBy: GameSortBy!, $includeNotInCollection: Boolean) {
+  games(
+    skip: $skip
+    take: $take
+    sortBy: $sortBy
+    includeNotInCollection: $includeNotInCollection
+  ) {
     items {
       ...GameCardData
     }
@@ -424,6 +483,7 @@ export const GetGamesForInfiniteScrollDocument = new TypedDocumentString(`
       }
     }
   }
+  inCollection
 }`) as unknown as TypedDocumentString<GetGamesForInfiniteScrollQuery, GetGamesForInfiniteScrollQueryVariables>;
 export const GetGamesForScoringDocument = new TypedDocumentString(`
     query GetGamesForScoring {
@@ -443,8 +503,13 @@ export const GetGamesForScoringDocument = new TypedDocumentString(`
 }
     `) as unknown as TypedDocumentString<GetGamesForScoringQuery, GetGamesForScoringQueryVariables>;
 export const GetGamesListDocument = new TypedDocumentString(`
-    query GetGamesList($skip: Int, $take: Int, $sortBy: GameSortBy) {
-  games(skip: $skip, take: $take, sortBy: $sortBy) {
+    query GetGamesList($skip: Int, $take: Int, $sortBy: GameSortBy, $includeNotInCollection: Boolean) {
+  games(
+    skip: $skip
+    take: $take
+    sortBy: $sortBy
+    includeNotInCollection: $includeNotInCollection
+  ) {
     items {
       id
       name
@@ -454,6 +519,7 @@ export const GetGamesListDocument = new TypedDocumentString(`
       bggRank
       bggWeight
       lastPlayedAt
+      inCollection
     }
     total
   }
@@ -528,3 +594,24 @@ export const SearchBggGamesDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<SearchBggGamesQuery, SearchBggGamesQueryVariables>;
+export const SyncGameWithBggDocument = new TypedDocumentString(`
+    mutation SyncGameWithBgg($id: String!) {
+  syncGameWithBgg(id: $id) {
+    id
+    name
+    thumbnailUrl
+    minPlayers
+    maxPlayers
+    bggRank
+    bggWeight
+  }
+}
+    `) as unknown as TypedDocumentString<SyncGameWithBggMutation, SyncGameWithBggMutationVariables>;
+export const UpdateGameCollectionStatusDocument = new TypedDocumentString(`
+    mutation UpdateGameCollectionStatus($id: String!, $inCollection: Boolean!) {
+  updateGameCollectionStatus(id: $id, inCollection: $inCollection) {
+    id
+    inCollection
+  }
+}
+    `) as unknown as TypedDocumentString<UpdateGameCollectionStatusMutation, UpdateGameCollectionStatusMutationVariables>;

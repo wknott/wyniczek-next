@@ -11,10 +11,11 @@ fragment GameCardData on Game {
 			}
 		}
 	}
+	inCollection
 }
 
-query GetGamesForInfiniteScroll($skip: Int!, $take: Int!, $sortBy: GameSortBy!) {
-	games(skip: $skip, take: $take, sortBy: $sortBy) {
+query GetGamesForInfiniteScroll($skip: Int!, $take: Int!, $sortBy: GameSortBy!, $includeNotInCollection: Boolean) {
+	games(skip: $skip, take: $take, sortBy: $sortBy, includeNotInCollection: $includeNotInCollection) {
 		items {
 			...GameCardData
 		}

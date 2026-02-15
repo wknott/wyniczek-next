@@ -1,5 +1,5 @@
-query GetGamesList($skip: Int, $take: Int, $sortBy: GameSortBy) {
-	games(skip: $skip, take: $take, sortBy: $sortBy) {
+query GetGamesList($skip: Int, $take: Int, $sortBy: GameSortBy, $includeNotInCollection: Boolean) {
+	games(skip: $skip, take: $take, sortBy: $sortBy, includeNotInCollection: $includeNotInCollection) {
 		items {
 			id
 			name
@@ -9,6 +9,7 @@ query GetGamesList($skip: Int, $take: Int, $sortBy: GameSortBy) {
 			bggRank
 			bggWeight
 			lastPlayedAt
+			inCollection
 		}
 		total
 	}

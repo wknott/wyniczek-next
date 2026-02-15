@@ -1,0 +1,6 @@
+mutation UpdateGameCollectionStatus($id: String!, $inCollection: Boolean!) {
+	updateGameCollectionStatus(id: $id, inCollection: $inCollection) {
+		id
+		inCollection
+	}
+}
