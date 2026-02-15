@@ -288,6 +288,15 @@ export type GetGamesForScoringQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetGamesForScoringQuery = { games: { items: Array<{ id: string, name: string, thumbnailUrl?: string | null, minPlayers: number, maxPlayers: number, pointCategories?: Array<{ id: string, name: string }> | null }> } };
 
+export type GetGamesListQueryVariables = Exact<{
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  sortBy?: InputMaybe<GameSortBy>;
+}>;
+
+
+export type GetGamesListQuery = { games: { total: number, items: Array<{ id: string, name: string, thumbnailUrl?: string | null, minPlayers: number, maxPlayers: number, bggRank?: number | null, bggWeight?: number | null, lastPlayedAt?: unknown | null }> } };
+
 export type GetPlayersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -433,6 +442,23 @@ export const GetGamesForScoringDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<GetGamesForScoringQuery, GetGamesForScoringQueryVariables>;
+export const GetGamesListDocument = new TypedDocumentString(`
+    query GetGamesList($skip: Int, $take: Int, $sortBy: GameSortBy) {
+  games(skip: $skip, take: $take, sortBy: $sortBy) {
+    items {
+      id
+      name
+      thumbnailUrl
+      minPlayers
+      maxPlayers
+      bggRank
+      bggWeight
+      lastPlayedAt
+    }
+    total
+  }
+}
+    `) as unknown as TypedDocumentString<GetGamesListQuery, GetGamesListQueryVariables>;
 export const GetPlayersDocument = new TypedDocumentString(`
     query GetPlayers {
   players {

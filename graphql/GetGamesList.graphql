@@ -1,0 +1,15 @@
+query GetGamesList($skip: Int, $take: Int, $sortBy: GameSortBy) {
+	games(skip: $skip, take: $take, sortBy: $sortBy) {
+		items {
+			id
+			name
+			thumbnailUrl
+			minPlayers
+			maxPlayers
+			bggRank
+			bggWeight
+			lastPlayedAt
+		}
+		total
+	}
+}

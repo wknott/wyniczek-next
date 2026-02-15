@@ -15,6 +15,12 @@ export const Header = () => (
 					Historia
 				</Link>
 				<Link
+					href={"/games" as any}
+					className="text-sm font-medium transition-colors hover:text-blue-500"
+				>
+					Gry
+				</Link>
+				<Link
 					href={"/add-game" as any}
 					className="text-sm font-medium transition-colors hover:text-blue-500"
 				>
