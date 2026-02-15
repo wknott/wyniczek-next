@@ -14,6 +14,12 @@ export const Header = () => (
 				>
 					Historia
 				</Link>
+				<Link
+					href={"/add-game" as any}
+					className="text-sm font-medium transition-colors hover:text-blue-500"
+				>
+					Dodaj grę
+				</Link>
 			</nav>
 		</div>
 	</header>

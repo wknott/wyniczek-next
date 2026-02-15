@@ -1,0 +1,6 @@
+query SearchBggGames($query: String!) {
+	searchBggGames(query: $query) {
+		bggId
+		name
+	}
+}
