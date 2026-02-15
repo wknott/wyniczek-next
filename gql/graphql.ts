@@ -258,6 +258,13 @@ export type CreateGameMutationVariables = Exact<{
 
 export type CreateGameMutation = { createGame: { id: string, name: string } };
 
+export type CreatePlayerMutationVariables = Exact<{
+  input: CreatePlayerInput;
+}>;
+
+
+export type CreatePlayerMutation = { createPlayer: { id: string, name: string } };
+
 export type CreateResultMutationVariables = Exact<{
   input: CreateResultInput;
 }>;
@@ -350,6 +357,14 @@ export const CreateGameDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<CreateGameMutation, CreateGameMutationVariables>;
+export const CreatePlayerDocument = new TypedDocumentString(`
+    mutation CreatePlayer($input: CreatePlayerInput!) {
+  createPlayer(createPlayerInput: $input) {
+    id
+    name
+  }
+}
+    `) as unknown as TypedDocumentString<CreatePlayerMutation, CreatePlayerMutationVariables>;
 export const CreateResultDocument = new TypedDocumentString(`
     mutation CreateResult($input: CreateResultInput!) {
   createResult(createResultInput: $input) {

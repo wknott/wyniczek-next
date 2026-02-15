@@ -16,6 +16,7 @@ import * as types from './graphql';
  */
 type Documents = {
     "mutation CreateGame($input: CreateGameInput!) {\n  createGame(createGameInput: $input) {\n    id\n    name\n  }\n}": typeof types.CreateGameDocument,
+    "mutation CreatePlayer($input: CreatePlayerInput!) {\n  createPlayer(createPlayerInput: $input) {\n    id\n    name\n  }\n}": typeof types.CreatePlayerDocument,
     "mutation CreateResult($input: CreateResultInput!) {\n  createResult(createResultInput: $input) {\n    id\n    createdAt\n    playingTime\n    game {\n      id\n      name\n    }\n    scores {\n      id\n      player {\n        id\n        name\n      }\n      points {\n        id\n        value\n        pointCategory {\n          id\n          name\n        }\n      }\n    }\n  }\n}": typeof types.CreateResultDocument,
     "fragment GameCardData on Game {\n  id\n  name\n  thumbnailUrl\n  latestResult {\n    createdAt\n    scores {\n      player {\n        name\n        id\n      }\n    }\n  }\n}\n\nquery GetGamesForInfiniteScroll($skip: Int!, $take: Int!, $sortBy: GameSortBy!) {\n  games(skip: $skip, take: $take, sortBy: $sortBy) {\n    items {\n      ...GameCardData\n    }\n    total\n  }\n}": typeof types.GameCardDataFragmentDoc,
     "query GetGamesForScoring {\n  games(take: 100, sortBy: ALPHABETICAL) {\n    items {\n      id\n      name\n      thumbnailUrl\n      pointCategories {\n        id\n        name\n      }\n      minPlayers\n      maxPlayers\n    }\n  }\n}": typeof types.GetGamesForScoringDocument,
@@ -26,6 +27,7 @@ type Documents = {
 };
 const documents: Documents = {
     "mutation CreateGame($input: CreateGameInput!) {\n  createGame(createGameInput: $input) {\n    id\n    name\n  }\n}": types.CreateGameDocument,
+    "mutation CreatePlayer($input: CreatePlayerInput!) {\n  createPlayer(createPlayerInput: $input) {\n    id\n    name\n  }\n}": types.CreatePlayerDocument,
     "mutation CreateResult($input: CreateResultInput!) {\n  createResult(createResultInput: $input) {\n    id\n    createdAt\n    playingTime\n    game {\n      id\n      name\n    }\n    scores {\n      id\n      player {\n        id\n        name\n      }\n      points {\n        id\n        value\n        pointCategory {\n          id\n          name\n        }\n      }\n    }\n  }\n}": types.CreateResultDocument,
     "fragment GameCardData on Game {\n  id\n  name\n  thumbnailUrl\n  latestResult {\n    createdAt\n    scores {\n      player {\n        name\n        id\n      }\n    }\n  }\n}\n\nquery GetGamesForInfiniteScroll($skip: Int!, $take: Int!, $sortBy: GameSortBy!) {\n  games(skip: $skip, take: $take, sortBy: $sortBy) {\n    items {\n      ...GameCardData\n    }\n    total\n  }\n}": types.GameCardDataFragmentDoc,
     "query GetGamesForScoring {\n  games(take: 100, sortBy: ALPHABETICAL) {\n    items {\n      id\n      name\n      thumbnailUrl\n      pointCategories {\n        id\n        name\n      }\n      minPlayers\n      maxPlayers\n    }\n  }\n}": types.GetGamesForScoringDocument,
@@ -39,6 +41,10 @@ const documents: Documents = {
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "mutation CreateGame($input: CreateGameInput!) {\n  createGame(createGameInput: $input) {\n    id\n    name\n  }\n}"): typeof import('./graphql').CreateGameDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation CreatePlayer($input: CreatePlayerInput!) {\n  createPlayer(createPlayerInput: $input) {\n    id\n    name\n  }\n}"): typeof import('./graphql').CreatePlayerDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

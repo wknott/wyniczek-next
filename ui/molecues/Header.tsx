@@ -20,6 +20,12 @@ export const Header = () => (
 				>
 					Dodaj grę
 				</Link>
+				<Link
+					href={"/add-player" as any}
+					className="text-sm font-medium transition-colors hover:text-blue-500"
+				>
+					Dodaj gracza
+				</Link>
 			</nav>
 		</div>
 	</header>
