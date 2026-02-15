@@ -23,7 +23,7 @@ export const ScoringForm = ({ games, players }: ScoringFormProps) => {
 	const [_, action, isPending] = useActionState(async (_prevState: unknown, formData: FormData) => {
 		const { id } = await createResult(formData);
 		toast("Wynik został poprawnie zapisany!", { variant: "success" });
-		router.push(`/result/${id}`);
+		router.push(`/results/${id}`);
 
 		return;
 	}, null);

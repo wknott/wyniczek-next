@@ -9,7 +9,7 @@ export async function createResultAction(input: CreateResultInput) {
 	const result = await executeGraphql(CreateResultDocument, { input });
 
 	revalidatePath("/");
-	revalidatePath("/result/new");
+	revalidatePath("/results/new");
 
 	return result.createResult;
 }

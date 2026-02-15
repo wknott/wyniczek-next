@@ -10,7 +10,7 @@ export const EmptyGamesCard = () => {
 				<p className="text-default-500 mb-6">
 					Nie ma żadnych wyników gier w bazie danych. Zacznij grać i dodaj swoje pierwsze wyniki!
 				</p>
-				<Link href="/result/new">
+				<Link href="/results/new">
 					<Button size="lg" className="bg-blue-500 text-white">
 						Dodaj pierwszy wynik
 					</Button>
