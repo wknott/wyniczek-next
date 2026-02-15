@@ -29,7 +29,7 @@ export const GameCard = ({ id, name, thumbnailUrl, latestResult }: GameCardDataF
 				<Button isIconOnly className="ml-auto shrink-0">
 					<Link
 						href={{
-							pathname: "/result/new/",
+							pathname: "/results/new/",
 							query: {
 								gameId: id,
 								players: latestResult?.scores?.map((s) => s?.player?.id || "") || "",

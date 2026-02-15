@@ -61,7 +61,7 @@ export const GamesList = ({ initialData, onPageChange }: GamesListProps) => {
                                             )}
                                         </div>
                                         <Button size="sm" isIconOnly className="shrink-0">
-                                            <Link href={`/result/new?gameId=${game.id}`}>
+                                            <Link href={`/results/new?gameId=${game.id}`}>
                                                 <Plus className="h-4 w-4" />
                                             </Link>
                                         </Button>

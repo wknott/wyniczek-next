@@ -52,7 +52,7 @@ export const ResultsList = ({ initialData, onPageChange }: ResultsListProps) => 
 			{!isLoading && data.items.length === 0 && <div className="text-center">Brak wyników</div>}
 			{!isLoading &&
 				data.items.map((result) => (
-					<Link key={result.id} href={`/result/${result.id}`} className="block hover:no-underline">
+					<Link key={result.id} href={`/results/${result.id}`} className="block hover:no-underline">
 						<Card className="hover:bg-separator p-4 transition-all hover:shadow-lg">
 							<div className="flex gap-4">
 								<Avatar size="lg">

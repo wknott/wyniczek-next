@@ -9,7 +9,7 @@ export const Header = () => (
 			</Link>
 			<nav className="flex gap-4">
 				<Link
-					href={"/history" as any}
+					href={"/results" as any}
 					className="text-sm font-medium transition-colors hover:text-blue-500"
 				>
 					Historia
@@ -21,13 +21,13 @@ export const Header = () => (
 					Gry
 				</Link>
 				<Link
-					href={"/add-game" as any}
+					href={"/games/new" as any}
 					className="text-sm font-medium transition-colors hover:text-blue-500"
 				>
 					Dodaj grę
 				</Link>
 				<Link
-					href={"/add-player" as any}
+					href={"/players/new" as any}
 					className="text-sm font-medium transition-colors hover:text-blue-500"
 				>
 					Dodaj gracza
