@@ -21,6 +21,7 @@ export const executeGraphql = async <TResult, TVariables>(
 		headers: {
 			"Content-Type": "application/json",
 		},
+		cache: "no-store",
 	});
 
 	const graphqlResponse = (await res.json()) as GraphQLResponse<TResult>;

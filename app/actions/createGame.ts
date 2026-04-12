@@ -23,5 +23,6 @@ export async function createGame(formData: FormData) {
     });
 
     revalidatePath("/");
+    revalidatePath("/results/new");
     redirect("/");
 }
