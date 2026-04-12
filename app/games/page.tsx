@@ -13,7 +13,8 @@ export default async function GamesPage({ searchParams }: PageProps) {
     await connection();
 
     const { sortBy = "POPULARITY" } = await searchParams;
-    const initialData = await getGamesPage(0, sortBy);
+    const initialData = await getGamesPage(sortBy);
+    const fetchPage = getGamesPage.bind(null, sortBy);
 
     return (
         <main className="mx-auto flex min-h-screen max-w-6xl flex-col items-center gap-6 p-2 sm:p-4 md:p-6">
@@ -24,13 +25,7 @@ export default async function GamesPage({ searchParams }: PageProps) {
                 </Suspense>
             </div>
             <div className="w-full">
-                <GamesList
-                    initialData={initialData}
-                    onPageChange={async (skip) => {
-                        "use server";
-                        return getGamesPage(skip, sortBy);
-                    }}
-                />
+                <GamesList initialData={initialData} onPageChange={fetchPage} />
             </div>
         </main>
     );

@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, Avatar, Button, ButtonGroup, Chip } from "@heroui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight, PersonFill, StarFill, LayoutCells, Plus } from "@gravity-ui/icons";
 import Link from "next/link";
 import { GetGamesListQuery } from "@/gql/graphql";
@@ -21,6 +21,12 @@ export const GamesList = ({ initialData, onPageChange }: GamesListProps) => {
     const [data, setData] = useState(initialData);
     const [currentPage, setCurrentPage] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        setData(initialData);
+        setCurrentPage(1);
+    }, [initialData]);
+
     const totalPages = Math.ceil(data.total / itemsPerPage);
 
     const handlePageChange = async (newPage: number) => {

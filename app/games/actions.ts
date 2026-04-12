@@ -5,8 +5,8 @@ import { GetGamesListDocument, GameSortBy, UpdateGameCollectionStatusDocument, S
 import { revalidatePath } from "next/cache";
 
 export async function getGamesPage(
-    skip: number = 0,
     sortBy: GameSortBy = "ALPHABETICAL",
+    skip: number = 0,
     includeNotInCollection: boolean = false,
 ) {
     const { games } = await executeGraphql(GetGamesListDocument, {
