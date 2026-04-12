@@ -8,6 +8,7 @@ const SORT_OPTIONS = [
 	{ id: "LAST_PLAYED", name: "Ostatnio grane" },
 	{ id: "ALPHABETICAL", name: "Alfabetycznie" },
 	{ id: "POPULARITY", name: "Popularność" },
+	{ id: "AVG_PLAYING_TIME_2P", name: "Czas gry (2 osoby)" },
 ] as const;
 
 type SortOption = (typeof SORT_OPTIONS)[number]["id"];
