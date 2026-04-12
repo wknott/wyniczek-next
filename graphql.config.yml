@@ -1,2 +1,2 @@
-schema: http://localhost:3000/graphql
+schema: ../wyniczek-api-nestjs/src/schema.gql
 documents: graphql/*.graphql

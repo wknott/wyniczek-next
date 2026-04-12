@@ -2,6 +2,7 @@ fragment GameCardData on Game {
 	id
 	name
 	thumbnailUrl
+	avgPlayingTime2Players
 	latestResult {
 		createdAt
 		scores {

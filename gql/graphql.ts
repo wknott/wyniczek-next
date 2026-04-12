@@ -69,6 +69,7 @@ export type CreateScoreInput = {
 };
 
 export type Game = {
+  avgPlayingTime2Players?: Maybe<Scalars['Int']['output']>;
   bggId?: Maybe<Scalars['Int']['output']>;
   bggRank?: Maybe<Scalars['Int']['output']>;
   bggWeight?: Maybe<Scalars['Float']['output']>;
@@ -302,7 +303,7 @@ export type GetGameByIdQueryVariables = Exact<{
 
 export type GetGameByIdQuery = { game?: { id: string, name: string, thumbnailUrl?: string | null, minPlayers: number, maxPlayers: number, bggRank?: number | null, bggWeight?: number | null, lastPlayedAt?: unknown | null, inCollection: boolean, pointCategories?: Array<{ id: string, name: string }> | null } | null };
 
-export type GameCardDataFragment = { id: string, name: string, thumbnailUrl?: string | null, inCollection: boolean, latestResult?: { createdAt: unknown, scores?: Array<{ player?: { name: string, id: string } | null }> | null } | null };
+export type GameCardDataFragment = { id: string, name: string, thumbnailUrl?: string | null, avgPlayingTime2Players?: number | null, inCollection: boolean, latestResult?: { createdAt: unknown, scores?: Array<{ player?: { name: string, id: string } | null }> | null } | null };
 
 export type GetGamesForInfiniteScrollQueryVariables = Exact<{
   skip: Scalars['Int']['input'];
@@ -312,7 +313,7 @@ export type GetGamesForInfiniteScrollQueryVariables = Exact<{
 }>;
 
 
-export type GetGamesForInfiniteScrollQuery = { games: { total: number, items: Array<{ id: string, name: string, thumbnailUrl?: string | null, inCollection: boolean, latestResult?: { createdAt: unknown, scores?: Array<{ player?: { name: string, id: string } | null }> | null } | null }> } };
+export type GetGamesForInfiniteScrollQuery = { games: { total: number, items: Array<{ id: string, name: string, thumbnailUrl?: string | null, avgPlayingTime2Players?: number | null, inCollection: boolean, latestResult?: { createdAt: unknown, scores?: Array<{ player?: { name: string, id: string } | null }> | null } | null }> } };
 
 export type GetGamesForScoringQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -395,6 +396,7 @@ export const GameCardDataFragmentDoc = new TypedDocumentString(`
   id
   name
   thumbnailUrl
+  avgPlayingTime2Players
   latestResult {
     createdAt
     scores {
@@ -488,6 +490,7 @@ export const GetGamesForInfiniteScrollDocument = new TypedDocumentString(`
   id
   name
   thumbnailUrl
+  avgPlayingTime2Players
   latestResult {
     createdAt
     scores {

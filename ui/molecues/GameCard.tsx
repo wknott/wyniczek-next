@@ -1,9 +1,15 @@
 import { Avatar, Button, Card, Chip } from "@heroui/react";
 import Link from "next/link";
-import { Plus, Calendar, PersonFill } from "@gravity-ui/icons";
+import { Plus, Calendar, PersonFill, Clock } from "@gravity-ui/icons";
 import { GameCardDataFragment } from "@/gql/graphql";
 
-export const GameCard = ({ id, name, thumbnailUrl, latestResult }: GameCardDataFragment) => {
+export const GameCard = ({
+	id,
+	name,
+	thumbnailUrl,
+	latestResult,
+	avgPlayingTime2Players,
+}: GameCardDataFragment) => {
 	const createdAt = new Date(latestResult?.createdAt as string).toLocaleString("pl-PL", {
 		dateStyle: "short",
 	});
@@ -11,16 +17,22 @@ export const GameCard = ({ id, name, thumbnailUrl, latestResult }: GameCardDataF
 	return (
 		<Card key={id}>
 			<Card.Header className="flex flex-row items-center gap-4">
-				<Link href={{ pathname: `/games/${id}` }} className="shrink-0 transition-transform hover:scale-105 active:scale-95">
+				<Link
+					href={{ pathname: `/games/${id}` }}
+					className="shrink-0 transition-transform hover:scale-105 active:scale-95"
+				>
 					<Avatar size="lg">
 						<Avatar.Image src={thumbnailUrl || ""} />
 					</Avatar>
 				</Link>
 				<div className="flex-1 overflow-hidden">
-					<Link href={{ pathname: `/games/${id}` }} className="block hover:text-primary transition-colors">
+					<Link
+						href={{ pathname: `/games/${id}` }}
+						className="hover:text-primary block transition-colors"
+					>
 						<Card.Title className="truncate text-lg font-bold">{name}</Card.Title>
 					</Link>
-					<Card.Description className="mt-2 flex gap-2">
+					<Card.Description className="mt-2 flex flex-wrap gap-2">
 						<Chip>
 							<Calendar className="mr-1" /> <strong>{createdAt}</strong>
 						</Chip>
@@ -28,6 +40,12 @@ export const GameCard = ({ id, name, thumbnailUrl, latestResult }: GameCardDataF
 							<PersonFill className="mr-1" />
 							<strong>{latestResult?.scores?.[0]?.player?.name}</strong>
 						</Chip>
+						{avgPlayingTime2Players != null && (
+							<Chip>
+								<Clock className="mr-1" />
+								<strong>~{avgPlayingTime2Players} min</strong>
+							</Chip>
+						)}
 					</Card.Description>
 				</div>
 				<Button isIconOnly className="ml-auto shrink-0">
