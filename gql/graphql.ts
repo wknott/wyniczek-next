@@ -88,6 +88,7 @@ export type Game = {
 
 export type GameSortBy =
   | 'ALPHABETICAL'
+  | 'AVG_PLAYING_TIME_2P'
   | 'LAST_PLAYED'
   | 'POPULARITY';
 
@@ -179,6 +180,7 @@ export type PointCategory = {
   gameId: Scalars['String']['output'];
   id: Scalars['String']['output'];
   name: Scalars['String']['output'];
+  order: Scalars['Int']['output'];
 };
 
 export type Query = {
@@ -265,6 +267,7 @@ export type Score = {
 export type UpdatePointCategoryInput = {
   id?: InputMaybe<Scalars['String']['input']>;
   name: Scalars['String']['input'];
+  order: Scalars['Int']['input'];
 };
 
 export type UpdateResultInput = {
@@ -301,7 +304,7 @@ export type GetGameByIdQueryVariables = Exact<{
 }>;
 
 
-export type GetGameByIdQuery = { game?: { id: string, name: string, thumbnailUrl?: string | null, minPlayers: number, maxPlayers: number, bggRank?: number | null, bggWeight?: number | null, lastPlayedAt?: unknown | null, inCollection: boolean, pointCategories?: Array<{ id: string, name: string }> | null } | null };
+export type GetGameByIdQuery = { game?: { id: string, name: string, thumbnailUrl?: string | null, minPlayers: number, maxPlayers: number, bggRank?: number | null, bggWeight?: number | null, lastPlayedAt?: unknown | null, inCollection: boolean, pointCategories?: Array<{ id: string, name: string, order: number }> | null } | null };
 
 export type GameCardDataFragment = { id: string, name: string, thumbnailUrl?: string | null, avgPlayingTime2Players?: number | null, inCollection: boolean, latestResult?: { createdAt: unknown, scores?: Array<{ player?: { name: string, id: string } | null }> | null } | null };
 
@@ -364,6 +367,14 @@ export type SyncGameWithBggMutationVariables = Exact<{
 
 
 export type SyncGameWithBggMutation = { syncGameWithBgg: { id: string, name: string, thumbnailUrl?: string | null, minPlayers: number, maxPlayers: number, bggRank?: number | null, bggWeight?: number | null } };
+
+export type UpdateGameCategoriesMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+  categories: Array<UpdatePointCategoryInput> | UpdatePointCategoryInput;
+}>;
+
+
+export type UpdateGameCategoriesMutation = { updateGameCategories: { id: string, pointCategories?: Array<{ id: string, name: string, order: number }> | null } };
 
 export type UpdateGameCollectionStatusMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -468,6 +479,7 @@ export const GetGameByIdDocument = new TypedDocumentString(`
     pointCategories {
       id
       name
+      order
     }
   }
 }
@@ -626,6 +638,18 @@ export const SyncGameWithBggDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<SyncGameWithBggMutation, SyncGameWithBggMutationVariables>;
+export const UpdateGameCategoriesDocument = new TypedDocumentString(`
+    mutation UpdateGameCategories($id: String!, $categories: [UpdatePointCategoryInput!]!) {
+  updateGameCategories(id: $id, categories: $categories) {
+    id
+    pointCategories {
+      id
+      name
+      order
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<UpdateGameCategoriesMutation, UpdateGameCategoriesMutationVariables>;
 export const UpdateGameCollectionStatusDocument = new TypedDocumentString(`
     mutation UpdateGameCollectionStatus($id: String!, $inCollection: Boolean!) {
   updateGameCollectionStatus(id: $id, inCollection: $inCollection) {

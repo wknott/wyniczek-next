@@ -18,7 +18,7 @@ type Documents = {
     "mutation CreateGame($input: CreateGameInput!) {\n  createGame(createGameInput: $input) {\n    id\n    name\n  }\n}": typeof types.CreateGameDocument,
     "mutation CreatePlayer($input: CreatePlayerInput!) {\n  createPlayer(createPlayerInput: $input) {\n    id\n    name\n  }\n}": typeof types.CreatePlayerDocument,
     "mutation CreateResult($input: CreateResultInput!) {\n  createResult(createResultInput: $input) {\n    id\n    createdAt\n    playingTime\n    game {\n      id\n      name\n    }\n    scores {\n      id\n      player {\n        id\n        name\n      }\n      points {\n        id\n        value\n        pointCategory {\n          id\n          name\n        }\n      }\n    }\n  }\n}": typeof types.CreateResultDocument,
-    "query GetGameById($id: String!) {\n  game(id: $id) {\n    id\n    name\n    thumbnailUrl\n    minPlayers\n    maxPlayers\n    bggRank\n    bggWeight\n    lastPlayedAt\n    inCollection\n    pointCategories {\n      id\n      name\n    }\n  }\n}": typeof types.GetGameByIdDocument,
+    "query GetGameById($id: String!) {\n  game(id: $id) {\n    id\n    name\n    thumbnailUrl\n    minPlayers\n    maxPlayers\n    bggRank\n    bggWeight\n    lastPlayedAt\n    inCollection\n    pointCategories {\n      id\n      name\n      order\n    }\n  }\n}": typeof types.GetGameByIdDocument,
     "fragment GameCardData on Game {\n  id\n  name\n  thumbnailUrl\n  avgPlayingTime2Players\n  latestResult {\n    createdAt\n    scores {\n      player {\n        name\n        id\n      }\n    }\n  }\n  inCollection\n}\n\nquery GetGamesForInfiniteScroll($skip: Int!, $take: Int!, $sortBy: GameSortBy!, $includeNotInCollection: Boolean) {\n  games(\n    skip: $skip\n    take: $take\n    sortBy: $sortBy\n    includeNotInCollection: $includeNotInCollection\n  ) {\n    items {\n      ...GameCardData\n    }\n    total\n  }\n}": typeof types.GameCardDataFragmentDoc,
     "query GetGamesForScoring {\n  games(take: 100, sortBy: ALPHABETICAL) {\n    items {\n      id\n      name\n      thumbnailUrl\n      pointCategories {\n        id\n        name\n      }\n      minPlayers\n      maxPlayers\n    }\n  }\n}": typeof types.GetGamesForScoringDocument,
     "query GetGamesList($skip: Int, $take: Int, $sortBy: GameSortBy, $includeNotInCollection: Boolean) {\n  games(\n    skip: $skip\n    take: $take\n    sortBy: $sortBy\n    includeNotInCollection: $includeNotInCollection\n  ) {\n    items {\n      id\n      name\n      thumbnailUrl\n      minPlayers\n      maxPlayers\n      bggRank\n      bggWeight\n      lastPlayedAt\n      inCollection\n    }\n    total\n  }\n}": typeof types.GetGamesListDocument,
@@ -27,13 +27,14 @@ type Documents = {
     "query ResultsGetList($skip: Int, $take: Int, $gameId: String) {\n  results(skip: $skip, take: $take, gameId: $gameId) {\n    items {\n      id\n      gameId\n      createdAt\n      playingTime\n      game {\n        id\n        name\n        thumbnailUrl\n      }\n      scores {\n        player {\n          name\n        }\n        points {\n          value\n        }\n      }\n    }\n    total\n  }\n}": typeof types.ResultsGetListDocument,
     "query SearchBggGames($query: String!) {\n  searchBggGames(query: $query) {\n    bggId\n    name\n  }\n}": typeof types.SearchBggGamesDocument,
     "mutation SyncGameWithBgg($id: String!) {\n  syncGameWithBgg(id: $id) {\n    id\n    name\n    thumbnailUrl\n    minPlayers\n    maxPlayers\n    bggRank\n    bggWeight\n  }\n}": typeof types.SyncGameWithBggDocument,
+    "mutation UpdateGameCategories($id: String!, $categories: [UpdatePointCategoryInput!]!) {\n  updateGameCategories(id: $id, categories: $categories) {\n    id\n    pointCategories {\n      id\n      name\n      order\n    }\n  }\n}": typeof types.UpdateGameCategoriesDocument,
     "mutation UpdateGameCollectionStatus($id: String!, $inCollection: Boolean!) {\n  updateGameCollectionStatus(id: $id, inCollection: $inCollection) {\n    id\n    inCollection\n  }\n}": typeof types.UpdateGameCollectionStatusDocument,
 };
 const documents: Documents = {
     "mutation CreateGame($input: CreateGameInput!) {\n  createGame(createGameInput: $input) {\n    id\n    name\n  }\n}": types.CreateGameDocument,
     "mutation CreatePlayer($input: CreatePlayerInput!) {\n  createPlayer(createPlayerInput: $input) {\n    id\n    name\n  }\n}": types.CreatePlayerDocument,
     "mutation CreateResult($input: CreateResultInput!) {\n  createResult(createResultInput: $input) {\n    id\n    createdAt\n    playingTime\n    game {\n      id\n      name\n    }\n    scores {\n      id\n      player {\n        id\n        name\n      }\n      points {\n        id\n        value\n        pointCategory {\n          id\n          name\n        }\n      }\n    }\n  }\n}": types.CreateResultDocument,
-    "query GetGameById($id: String!) {\n  game(id: $id) {\n    id\n    name\n    thumbnailUrl\n    minPlayers\n    maxPlayers\n    bggRank\n    bggWeight\n    lastPlayedAt\n    inCollection\n    pointCategories {\n      id\n      name\n    }\n  }\n}": types.GetGameByIdDocument,
+    "query GetGameById($id: String!) {\n  game(id: $id) {\n    id\n    name\n    thumbnailUrl\n    minPlayers\n    maxPlayers\n    bggRank\n    bggWeight\n    lastPlayedAt\n    inCollection\n    pointCategories {\n      id\n      name\n      order\n    }\n  }\n}": types.GetGameByIdDocument,
     "fragment GameCardData on Game {\n  id\n  name\n  thumbnailUrl\n  avgPlayingTime2Players\n  latestResult {\n    createdAt\n    scores {\n      player {\n        name\n        id\n      }\n    }\n  }\n  inCollection\n}\n\nquery GetGamesForInfiniteScroll($skip: Int!, $take: Int!, $sortBy: GameSortBy!, $includeNotInCollection: Boolean) {\n  games(\n    skip: $skip\n    take: $take\n    sortBy: $sortBy\n    includeNotInCollection: $includeNotInCollection\n  ) {\n    items {\n      ...GameCardData\n    }\n    total\n  }\n}": types.GameCardDataFragmentDoc,
     "query GetGamesForScoring {\n  games(take: 100, sortBy: ALPHABETICAL) {\n    items {\n      id\n      name\n      thumbnailUrl\n      pointCategories {\n        id\n        name\n      }\n      minPlayers\n      maxPlayers\n    }\n  }\n}": types.GetGamesForScoringDocument,
     "query GetGamesList($skip: Int, $take: Int, $sortBy: GameSortBy, $includeNotInCollection: Boolean) {\n  games(\n    skip: $skip\n    take: $take\n    sortBy: $sortBy\n    includeNotInCollection: $includeNotInCollection\n  ) {\n    items {\n      id\n      name\n      thumbnailUrl\n      minPlayers\n      maxPlayers\n      bggRank\n      bggWeight\n      lastPlayedAt\n      inCollection\n    }\n    total\n  }\n}": types.GetGamesListDocument,
@@ -42,6 +43,7 @@ const documents: Documents = {
     "query ResultsGetList($skip: Int, $take: Int, $gameId: String) {\n  results(skip: $skip, take: $take, gameId: $gameId) {\n    items {\n      id\n      gameId\n      createdAt\n      playingTime\n      game {\n        id\n        name\n        thumbnailUrl\n      }\n      scores {\n        player {\n          name\n        }\n        points {\n          value\n        }\n      }\n    }\n    total\n  }\n}": types.ResultsGetListDocument,
     "query SearchBggGames($query: String!) {\n  searchBggGames(query: $query) {\n    bggId\n    name\n  }\n}": types.SearchBggGamesDocument,
     "mutation SyncGameWithBgg($id: String!) {\n  syncGameWithBgg(id: $id) {\n    id\n    name\n    thumbnailUrl\n    minPlayers\n    maxPlayers\n    bggRank\n    bggWeight\n  }\n}": types.SyncGameWithBggDocument,
+    "mutation UpdateGameCategories($id: String!, $categories: [UpdatePointCategoryInput!]!) {\n  updateGameCategories(id: $id, categories: $categories) {\n    id\n    pointCategories {\n      id\n      name\n      order\n    }\n  }\n}": types.UpdateGameCategoriesDocument,
     "mutation UpdateGameCollectionStatus($id: String!, $inCollection: Boolean!) {\n  updateGameCollectionStatus(id: $id, inCollection: $inCollection) {\n    id\n    inCollection\n  }\n}": types.UpdateGameCollectionStatusDocument,
 };
 
@@ -60,7 +62,7 @@ export function graphql(source: "mutation CreateResult($input: CreateResultInput
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "query GetGameById($id: String!) {\n  game(id: $id) {\n    id\n    name\n    thumbnailUrl\n    minPlayers\n    maxPlayers\n    bggRank\n    bggWeight\n    lastPlayedAt\n    inCollection\n    pointCategories {\n      id\n      name\n    }\n  }\n}"): typeof import('./graphql').GetGameByIdDocument;
+export function graphql(source: "query GetGameById($id: String!) {\n  game(id: $id) {\n    id\n    name\n    thumbnailUrl\n    minPlayers\n    maxPlayers\n    bggRank\n    bggWeight\n    lastPlayedAt\n    inCollection\n    pointCategories {\n      id\n      name\n      order\n    }\n  }\n}"): typeof import('./graphql').GetGameByIdDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -93,6 +95,10 @@ export function graphql(source: "query SearchBggGames($query: String!) {\n  sear
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "mutation SyncGameWithBgg($id: String!) {\n  syncGameWithBgg(id: $id) {\n    id\n    name\n    thumbnailUrl\n    minPlayers\n    maxPlayers\n    bggRank\n    bggWeight\n  }\n}"): typeof import('./graphql').SyncGameWithBggDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation UpdateGameCategories($id: String!, $categories: [UpdatePointCategoryInput!]!) {\n  updateGameCategories(id: $id, categories: $categories) {\n    id\n    pointCategories {\n      id\n      name\n      order\n    }\n  }\n}"): typeof import('./graphql').UpdateGameCategoriesDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

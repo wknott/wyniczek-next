@@ -12,6 +12,7 @@ query GetGameById($id: String!) {
 		pointCategories {
 			id
 			name
+			order
 		}
 	}
 }

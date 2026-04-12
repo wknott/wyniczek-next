@@ -1,8 +1,9 @@
 import { getGameById, updateGameCollectionStatus, syncGameWithBgg } from "../actions";
 import { notFound } from "next/navigation";
 import { Avatar, Button, Card, Chip } from "@heroui/react";
-import { StarFill, LayoutCells, PersonFill, Archive, ArrowRotateRight, ChevronLeft } from "@gravity-ui/icons";
+import { LayoutCells, PersonFill, Archive, ArrowRotateRight, ChevronLeft } from "@gravity-ui/icons";
 import Link from "next/link";
+import { CategoryManager } from "@/ui/organisms/CategoryManager";
 
 interface PageProps {
     params: Promise<{ id: string }>;
@@ -102,25 +103,16 @@ export default async function GameDetailPage({ params }: PageProps) {
                     </div>
                 </div>
 
-                {game.pointCategories && game.pointCategories.length > 0 && (
-                    <div className="mt-12 space-y-4">
-                        <div className="flex items-center gap-2">
-                            <div className="h-1.5 w-1.5 rounded-full bg-primary" />
-                            <h2 className="text-xl font-bold uppercase tracking-wider text-slate-400">Kategorie punktacji</h2>
-                        </div>
-                        <div className="flex flex-wrap gap-2">
-                            {game.pointCategories.map((cat) => (
-                                <Chip
-                                    key={cat.id}
-                                    variant="tertiary"
-                                    className="border-slate-800 bg-slate-800/20 px-4"
-                                >
-                                    <span className="font-medium">{cat.name}</span>
-                                </Chip>
-                            ))}
-                        </div>
+                <div className="mt-12 space-y-4">
+                    <div className="flex items-center gap-2">
+                        <div className="h-1.5 w-1.5 rounded-full bg-primary" />
+                        <h2 className="text-xl font-bold uppercase tracking-wider text-slate-400">Kategorie punktacji</h2>
                     </div>
-                )}
+                    <CategoryManager
+                        gameId={game.id}
+                        initialCategories={game.pointCategories ?? []}
+                    />
+                </div>
             </Card>
         </main>
     );

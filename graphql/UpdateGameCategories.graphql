@@ -1,0 +1,10 @@
+mutation UpdateGameCategories($id: String!, $categories: [UpdatePointCategoryInput!]!) {
+	updateGameCategories(id: $id, categories: $categories) {
+		id
+		pointCategories {
+			id
+			name
+			order
+		}
+	}
+}

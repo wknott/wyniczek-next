@@ -1,7 +1,7 @@
 "use server";
 
 import { executeGraphql } from "@/api/executeGraphql";
-import { GetGamesListDocument, GameSortBy, UpdateGameCollectionStatusDocument, SyncGameWithBggDocument, GetGameByIdDocument } from "@/gql/graphql";
+import { GetGamesListDocument, GameSortBy, UpdateGameCollectionStatusDocument, SyncGameWithBggDocument, GetGameByIdDocument, UpdateGameCategoriesDocument } from "@/gql/graphql";
 import { revalidatePath } from "next/cache";
 
 export async function getGamesPage(
@@ -39,4 +39,12 @@ export async function syncGameWithBgg(id: string) {
     revalidatePath(`/games/${id}`);
     revalidatePath("/games");
     revalidatePath("/");
+}
+
+export async function updateGameCategories(
+    id: string,
+    categories: { id?: string | null; name: string; order: number }[],
+) {
+    await executeGraphql(UpdateGameCategoriesDocument, { id, categories });
+    revalidatePath(`/games/${id}`);
 }
