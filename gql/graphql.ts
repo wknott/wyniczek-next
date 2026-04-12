@@ -98,6 +98,7 @@ export type Mutation = {
   removeResult: Result;
   syncAllGamesWithBgg: Array<Game>;
   syncGameWithBgg: Game;
+  updateGameCategories: Game;
   updateGameCollectionStatus: Game;
   updateResult: Result;
 };
@@ -129,6 +130,12 @@ export type MutationRemoveResultArgs = {
 
 
 export type MutationSyncGameWithBggArgs = {
+  id: Scalars['String']['input'];
+};
+
+
+export type MutationUpdateGameCategoriesArgs = {
+  categories: Array<UpdatePointCategoryInput>;
   id: Scalars['String']['input'];
 };
 
@@ -226,6 +233,7 @@ export type QueryResultArgs = {
 
 
 export type QueryResultsArgs = {
+  gameId?: InputMaybe<Scalars['String']['input']>;
   skip?: InputMaybe<Scalars['Int']['input']>;
   take?: InputMaybe<Scalars['Int']['input']>;
 };
@@ -251,6 +259,11 @@ export type Score = {
   playerId: Scalars['String']['output'];
   points?: Maybe<Array<Point>>;
   resultId: Scalars['String']['output'];
+};
+
+export type UpdatePointCategoryInput = {
+  id?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
 };
 
 export type UpdateResultInput = {
@@ -331,10 +344,11 @@ export type GetResultByIdQuery = { result?: { id: string, createdAt: unknown, pl
 export type ResultsGetListQueryVariables = Exact<{
   skip?: InputMaybe<Scalars['Int']['input']>;
   take?: InputMaybe<Scalars['Int']['input']>;
+  gameId?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type ResultsGetListQuery = { results: { total: number, items: Array<{ id: string, createdAt: unknown, playingTime?: number | null, game: { name: string, thumbnailUrl?: string | null }, scores?: Array<{ player?: { name: string } | null, points?: Array<{ value?: number | null }> | null }> | null }> } };
+export type ResultsGetListQuery = { results: { total: number, items: Array<{ id: string, gameId: string, createdAt: unknown, playingTime?: number | null, game: { id: string, name: string, thumbnailUrl?: string | null }, scores?: Array<{ player?: { name: string } | null, points?: Array<{ value?: number | null }> | null }> | null }> } };
 
 export type SearchBggGamesQueryVariables = Exact<{
   query: Scalars['String']['input'];
@@ -563,13 +577,15 @@ export const GetResultByIdDocument = new TypedDocumentString(`
 }
     `) as unknown as TypedDocumentString<GetResultByIdQuery, GetResultByIdQueryVariables>;
 export const ResultsGetListDocument = new TypedDocumentString(`
-    query ResultsGetList($skip: Int, $take: Int) {
-  results(skip: $skip, take: $take) {
+    query ResultsGetList($skip: Int, $take: Int, $gameId: String) {
+  results(skip: $skip, take: $take, gameId: $gameId) {
     items {
       id
+      gameId
       createdAt
       playingTime
       game {
+        id
         name
         thumbnailUrl
       }

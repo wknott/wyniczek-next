@@ -1,10 +1,12 @@
-query ResultsGetList($skip: Int, $take: Int) {
-	results(skip: $skip, take: $take) {
+query ResultsGetList($skip: Int, $take: Int, $gameId: String) {
+	results(skip: $skip, take: $take, gameId: $gameId) {
 		items {
 			id
+			gameId
 			createdAt
 			playingTime
 			game {
+				id
 				name
 				thumbnailUrl
 			}

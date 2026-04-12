@@ -1,6 +1,6 @@
 "use client";
 import { Card, Avatar, Button, ButtonGroup, Chip } from "@heroui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight } from "@gravity-ui/icons";
 import Link from "next/link";
 interface ResultsItem {
@@ -32,6 +32,11 @@ export const ResultsList = ({ initialData, onPageChange }: ResultsListProps) => 
 	const [data, setData] = useState(initialData);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [isLoading, setIsLoading] = useState(false);
+
+	useEffect(() => {
+		setData(initialData);
+		setCurrentPage(1);
+	}, [initialData]);
 	const totalPages = Math.ceil(data.total / itemsPerPage);
 
 	const handlePageChange = async (newPage: number) => {

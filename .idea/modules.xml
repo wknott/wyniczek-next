@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../wyniczek-api-nestjs/.idea/wyniczek-api-nestjs.iml" filepath="$PROJECT_DIR$/../wyniczek-api-nestjs/.idea/wyniczek-api-nestjs.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/wyniczek-next.iml" filepath="$PROJECT_DIR$/.idea/wyniczek-next.iml" />
     </modules>
   </component>

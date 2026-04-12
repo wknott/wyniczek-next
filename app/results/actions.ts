@@ -5,10 +5,11 @@ import { ResultsGetListDocument, type ResultsGetListQuery, GetResultByIdDocument
 
 const itemsPerPage = 10;
 
-export async function getResultsPage(skip: number): Promise<ResultsGetListQuery["results"]> {
+export async function getResultsPage(gameId: string | undefined, skip: number): Promise<ResultsGetListQuery["results"]> {
     const data = await executeGraphql(ResultsGetListDocument, {
         skip,
         take: itemsPerPage,
+        gameId,
     });
     return data.results;
 }

@@ -11,9 +11,10 @@ interface Game {
 
 interface GameSelectProps {
 	games: Game[];
+	allowEmpty?: boolean;
 }
 
-export const GameSelect = ({ games }: GameSelectProps) => {
+export const GameSelect = ({ games, allowEmpty = false }: GameSelectProps) => {
 	const router = useRouter();
 	const searchParams = useSearchParams();
 
@@ -21,10 +22,12 @@ export const GameSelect = ({ games }: GameSelectProps) => {
 
 	const handleChange = useCallback(
 		(key: Key | null) => {
-			if (!key) return;
-
 			const params = new URLSearchParams(searchParams.toString());
-			params.set("gameId", String(key));
+			if (!key) {
+				params.delete("gameId");
+			} else {
+				params.set("gameId", String(key));
+			}
 			router.push(`?${params.toString()}`);
 		},
 		[router, searchParams],
@@ -37,7 +40,7 @@ export const GameSelect = ({ games }: GameSelectProps) => {
 			onChange={handleChange}
 			name="gameId"
 			aria-label="gameId"
-			isRequired
+			isRequired={!allowEmpty}
 		>
 			<Select.Trigger>
 				<Select.Value />
@@ -45,6 +48,12 @@ export const GameSelect = ({ games }: GameSelectProps) => {
 			</Select.Trigger>
 			<Select.Popover>
 				<ListBox>
+					{allowEmpty && (
+						<ListBox.Item key="" id="" textValue="Wszystkie gry">
+							Wszystkie gry
+							<ListBox.ItemIndicator />
+						</ListBox.Item>
+					)}
 					{games.map((game) => (
 						<ListBox.Item key={game.id} id={game.id} textValue={game.name}>
 							{game.name}
