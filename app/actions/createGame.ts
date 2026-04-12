@@ -13,7 +13,7 @@ export async function createGame(formData: FormData) {
     const bggId = bggIdStr ? parseInt(bggIdStr, 10) : undefined;
     const userId = "1234";
 
-    await executeGraphql(CreateGameDocument, {
+    const { createGame: newGame } = await executeGraphql(CreateGameDocument, {
         input: {
             name,
             bggId,
@@ -24,5 +24,5 @@ export async function createGame(formData: FormData) {
 
     revalidatePath("/");
     revalidatePath("/results/new");
-    redirect("/");
+    redirect(`/results/new?gameId=${newGame.id}`);
 }
