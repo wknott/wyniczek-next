@@ -38,6 +38,12 @@ export type BggGameStats = {
   weight: Scalars['Float']['output'];
 };
 
+export type CreateExpansionInput = {
+  gameId: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+  pointCategoryNames?: InputMaybe<Array<Scalars['String']['input']>>;
+};
+
 export type CreateGameInput = {
   bggId?: InputMaybe<Scalars['Int']['input']>;
   inCollection?: InputMaybe<Scalars['Boolean']['input']>;
@@ -57,6 +63,7 @@ export type CreatePointInput = {
 };
 
 export type CreateResultInput = {
+  expansionIds?: InputMaybe<Array<Scalars['String']['input']>>;
   gameId: Scalars['String']['input'];
   playingTime?: InputMaybe<Scalars['Int']['input']>;
   scores: Array<CreateScoreInput>;
@@ -68,11 +75,19 @@ export type CreateScoreInput = {
   points?: InputMaybe<Array<InputMaybe<CreatePointInput>>>;
 };
 
+export type Expansion = {
+  gameId: Scalars['String']['output'];
+  id: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+  pointCategories?: Maybe<Array<PointCategory>>;
+};
+
 export type Game = {
   avgPlayingTime2Players?: Maybe<Scalars['Int']['output']>;
   bggId?: Maybe<Scalars['Int']['output']>;
   bggRank?: Maybe<Scalars['Int']['output']>;
   bggWeight?: Maybe<Scalars['Float']['output']>;
+  expansions?: Maybe<Array<Expansion>>;
   id: Scalars['String']['output'];
   imgUrl?: Maybe<Scalars['String']['output']>;
   inCollection: Scalars['Boolean']['output'];
@@ -93,16 +108,24 @@ export type GameSortBy =
   | 'POPULARITY';
 
 export type Mutation = {
+  createExpansion: Expansion;
   createGame: Game;
   createPlayer: Player;
   createResult: Result;
+  deleteExpansion: Expansion;
   removePlayer: Player;
   removeResult: Result;
   syncAllGamesWithBgg: Array<Game>;
   syncGameWithBgg: Game;
+  updateExpansion: Expansion;
   updateGameCategories: Game;
   updateGameCollectionStatus: Game;
   updateResult: Result;
+};
+
+
+export type MutationCreateExpansionArgs = {
+  createExpansionInput: CreateExpansionInput;
 };
 
 
@@ -121,6 +144,11 @@ export type MutationCreateResultArgs = {
 };
 
 
+export type MutationDeleteExpansionArgs = {
+  id: Scalars['String']['input'];
+};
+
+
 export type MutationRemovePlayerArgs = {
   id: Scalars['String']['input'];
 };
@@ -133,6 +161,11 @@ export type MutationRemoveResultArgs = {
 
 export type MutationSyncGameWithBggArgs = {
   id: Scalars['String']['input'];
+};
+
+
+export type MutationUpdateExpansionArgs = {
+  updateExpansionInput: UpdateExpansionInput;
 };
 
 
@@ -177,7 +210,8 @@ export type Point = {
 };
 
 export type PointCategory = {
-  gameId: Scalars['String']['output'];
+  expansionId?: Maybe<Scalars['String']['output']>;
+  gameId?: Maybe<Scalars['String']['output']>;
   id: Scalars['String']['output'];
   name: Scalars['String']['output'];
   order: Scalars['Int']['output'];
@@ -248,6 +282,7 @@ export type QuerySearchBggGamesArgs = {
 
 export type Result = {
   createdAt: Scalars['DateTime']['output'];
+  expansions?: Maybe<Array<Expansion>>;
   game: Game;
   gameId: Scalars['String']['output'];
   id: Scalars['String']['output'];
@@ -264,6 +299,12 @@ export type Score = {
   resultId: Scalars['String']['output'];
 };
 
+export type UpdateExpansionInput = {
+  categories?: InputMaybe<Array<UpdatePointCategoryInput>>;
+  id: Scalars['String']['input'];
+  name?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type UpdatePointCategoryInput = {
   id?: InputMaybe<Scalars['String']['input']>;
   name: Scalars['String']['input'];
@@ -271,12 +312,20 @@ export type UpdatePointCategoryInput = {
 };
 
 export type UpdateResultInput = {
+  expansionIds?: InputMaybe<Array<Scalars['String']['input']>>;
   gameId?: InputMaybe<Scalars['String']['input']>;
   id: Scalars['String']['input'];
   playingTime?: InputMaybe<Scalars['Int']['input']>;
   scores?: InputMaybe<Array<CreateScoreInput>>;
   userId?: InputMaybe<Scalars['String']['input']>;
 };
+
+export type CreateExpansionMutationVariables = Exact<{
+  input: CreateExpansionInput;
+}>;
+
+
+export type CreateExpansionMutation = { createExpansion: { id: string, name: string, gameId: string, pointCategories?: Array<{ id: string, name: string, order: number }> | null } };
 
 export type CreateGameMutationVariables = Exact<{
   input: CreateGameInput;
@@ -299,12 +348,19 @@ export type CreateResultMutationVariables = Exact<{
 
 export type CreateResultMutation = { createResult: { id: string, createdAt: unknown, playingTime?: number | null, game: { id: string, name: string }, scores?: Array<{ id: string, player?: { id: string, name: string } | null, points?: Array<{ id: string, value?: number | null, pointCategory: { id: string, name: string } }> | null }> | null } };
 
+export type DeleteExpansionMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type DeleteExpansionMutation = { deleteExpansion: { id: string, name: string } };
+
 export type GetGameByIdQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
 
 
-export type GetGameByIdQuery = { game?: { id: string, name: string, thumbnailUrl?: string | null, minPlayers: number, maxPlayers: number, bggRank?: number | null, bggWeight?: number | null, lastPlayedAt?: unknown | null, inCollection: boolean, pointCategories?: Array<{ id: string, name: string, order: number }> | null } | null };
+export type GetGameByIdQuery = { game?: { id: string, name: string, thumbnailUrl?: string | null, minPlayers: number, maxPlayers: number, bggRank?: number | null, bggWeight?: number | null, lastPlayedAt?: unknown | null, inCollection: boolean, pointCategories?: Array<{ id: string, name: string, order: number }> | null, expansions?: Array<{ id: string, name: string, pointCategories?: Array<{ id: string, name: string, order: number }> | null }> | null } | null };
 
 export type GameCardDataFragment = { id: string, name: string, thumbnailUrl?: string | null, avgPlayingTime2Players?: number | null, inCollection: boolean, latestResult?: { createdAt: unknown, scores?: Array<{ player?: { name: string, id: string } | null }> | null } | null };
 
@@ -321,7 +377,7 @@ export type GetGamesForInfiniteScrollQuery = { games: { total: number, items: Ar
 export type GetGamesForScoringQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetGamesForScoringQuery = { games: { items: Array<{ id: string, name: string, thumbnailUrl?: string | null, minPlayers: number, maxPlayers: number, pointCategories?: Array<{ id: string, name: string }> | null }> } };
+export type GetGamesForScoringQuery = { games: { items: Array<{ id: string, name: string, thumbnailUrl?: string | null, minPlayers: number, maxPlayers: number, pointCategories?: Array<{ id: string, name: string }> | null, expansions?: Array<{ id: string, name: string, pointCategories?: Array<{ id: string, name: string }> | null }> | null }> } };
 
 export type GetGamesListQueryVariables = Exact<{
   skip?: InputMaybe<Scalars['Int']['input']>;
@@ -343,7 +399,7 @@ export type GetResultByIdQueryVariables = Exact<{
 }>;
 
 
-export type GetResultByIdQuery = { result?: { id: string, createdAt: unknown, playingTime?: number | null, game: { id: string, name: string, thumbnailUrl?: string | null }, scores?: Array<{ id: string, player?: { id: string, name: string } | null, points?: Array<{ id: string, value?: number | null, pointCategory: { id: string, name: string } }> | null }> | null } | null };
+export type GetResultByIdQuery = { result?: { id: string, createdAt: unknown, playingTime?: number | null, game: { id: string, name: string, thumbnailUrl?: string | null }, expansions?: Array<{ id: string, name: string }> | null, scores?: Array<{ id: string, player?: { id: string, name: string } | null, points?: Array<{ id: string, value?: number | null, pointCategory: { id: string, name: string } }> | null }> | null } | null };
 
 export type ResultsGetListQueryVariables = Exact<{
   skip?: InputMaybe<Scalars['Int']['input']>;
@@ -352,7 +408,7 @@ export type ResultsGetListQueryVariables = Exact<{
 }>;
 
 
-export type ResultsGetListQuery = { results: { total: number, items: Array<{ id: string, gameId: string, createdAt: unknown, playingTime?: number | null, game: { id: string, name: string, thumbnailUrl?: string | null }, scores?: Array<{ player?: { name: string } | null, points?: Array<{ value?: number | null }> | null }> | null }> } };
+export type ResultsGetListQuery = { results: { total: number, items: Array<{ id: string, gameId: string, createdAt: unknown, playingTime?: number | null, game: { id: string, name: string, thumbnailUrl?: string | null }, expansions?: Array<{ id: string, name: string }> | null, scores?: Array<{ player?: { name: string } | null, points?: Array<{ value?: number | null }> | null }> | null }> } };
 
 export type SearchBggGamesQueryVariables = Exact<{
   query: Scalars['String']['input'];
@@ -367,6 +423,13 @@ export type SyncGameWithBggMutationVariables = Exact<{
 
 
 export type SyncGameWithBggMutation = { syncGameWithBgg: { id: string, name: string, thumbnailUrl?: string | null, minPlayers: number, maxPlayers: number, bggRank?: number | null, bggWeight?: number | null } };
+
+export type UpdateExpansionMutationVariables = Exact<{
+  input: UpdateExpansionInput;
+}>;
+
+
+export type UpdateExpansionMutation = { updateExpansion: { id: string, name: string, gameId: string, pointCategories?: Array<{ id: string, name: string, order: number }> | null } };
 
 export type UpdateGameCategoriesMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -420,6 +483,20 @@ export const GameCardDataFragmentDoc = new TypedDocumentString(`
   inCollection
 }
     `, {"fragmentName":"GameCardData"}) as unknown as TypedDocumentString<GameCardDataFragment, unknown>;
+export const CreateExpansionDocument = new TypedDocumentString(`
+    mutation CreateExpansion($input: CreateExpansionInput!) {
+  createExpansion(createExpansionInput: $input) {
+    id
+    name
+    gameId
+    pointCategories {
+      id
+      name
+      order
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<CreateExpansionMutation, CreateExpansionMutationVariables>;
 export const CreateGameDocument = new TypedDocumentString(`
     mutation CreateGame($input: CreateGameInput!) {
   createGame(createGameInput: $input) {
@@ -464,6 +541,14 @@ export const CreateResultDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<CreateResultMutation, CreateResultMutationVariables>;
+export const DeleteExpansionDocument = new TypedDocumentString(`
+    mutation DeleteExpansion($id: String!) {
+  deleteExpansion(id: $id) {
+    id
+    name
+  }
+}
+    `) as unknown as TypedDocumentString<DeleteExpansionMutation, DeleteExpansionMutationVariables>;
 export const GetGameByIdDocument = new TypedDocumentString(`
     query GetGameById($id: String!) {
   game(id: $id) {
@@ -480,6 +565,15 @@ export const GetGameByIdDocument = new TypedDocumentString(`
       id
       name
       order
+    }
+    expansions {
+      id
+      name
+      pointCategories {
+        id
+        name
+        order
+      }
     }
   }
 }
@@ -524,6 +618,14 @@ export const GetGamesForScoringDocument = new TypedDocumentString(`
       pointCategories {
         id
         name
+      }
+      expansions {
+        id
+        name
+        pointCategories {
+          id
+          name
+        }
       }
       minPlayers
       maxPlayers
@@ -573,6 +675,10 @@ export const GetResultByIdDocument = new TypedDocumentString(`
       name
       thumbnailUrl
     }
+    expansions {
+      id
+      name
+    }
     scores {
       id
       player {
@@ -603,6 +709,10 @@ export const ResultsGetListDocument = new TypedDocumentString(`
         id
         name
         thumbnailUrl
+      }
+      expansions {
+        id
+        name
       }
       scores {
         player {
@@ -638,6 +748,20 @@ export const SyncGameWithBggDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<SyncGameWithBggMutation, SyncGameWithBggMutationVariables>;
+export const UpdateExpansionDocument = new TypedDocumentString(`
+    mutation UpdateExpansion($input: UpdateExpansionInput!) {
+  updateExpansion(updateExpansionInput: $input) {
+    id
+    name
+    gameId
+    pointCategories {
+      id
+      name
+      order
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<UpdateExpansionMutation, UpdateExpansionMutationVariables>;
 export const UpdateGameCategoriesDocument = new TypedDocumentString(`
     mutation UpdateGameCategories($id: String!, $categories: [UpdatePointCategoryInput!]!) {
   updateGameCategories(id: $id, categories: $categories) {

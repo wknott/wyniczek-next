@@ -77,11 +77,23 @@ export default async function ResultPage({ params }: ResultPageProps) {
                             <Avatar.Image src={result.game.thumbnailUrl} />
                         </Avatar>
                     )}
-                    <div className="flex-1">
+                    <div className="flex-1 space-y-2">
                         <p className="text-lg">
                             <strong>Czas gry:</strong>{" "}
                             {result.playingTime ? `${result.playingTime} minut` : "Nie podano"}
                         </p>
+                        {result.expansions && result.expansions.length > 0 && (
+                            <div>
+                                <p className="text-sm font-semibold text-slate-400 mb-1">Użyte dodatki</p>
+                                <div className="flex flex-wrap gap-2">
+                                    {result.expansions.map((e) => (
+                                        <Chip key={e.id} size="sm" variant="soft" color="accent">
+                                            {e.name}
+                                        </Chip>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             </Card>

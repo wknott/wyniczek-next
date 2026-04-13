@@ -1,0 +1,12 @@
+mutation UpdateExpansion($input: UpdateExpansionInput!) {
+	updateExpansion(updateExpansionInput: $input) {
+		id
+		name
+		gameId
+		pointCategories {
+			id
+			name
+			order
+		}
+	}
+}

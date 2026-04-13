@@ -4,6 +4,7 @@ import { Avatar, Button, Card, Chip } from "@heroui/react";
 import { LayoutCells, PersonFill, Archive, ArrowRotateRight, ChevronLeft } from "@gravity-ui/icons";
 import Link from "next/link";
 import { CategoryManager } from "@/ui/organisms/CategoryManager";
+import { ExpansionManager } from "@/ui/organisms/ExpansionManager";
 
 interface PageProps {
     params: Promise<{ id: string }>;
@@ -111,6 +112,17 @@ export default async function GameDetailPage({ params }: PageProps) {
                     <CategoryManager
                         gameId={game.id}
                         initialCategories={game.pointCategories ?? []}
+                    />
+                </div>
+
+                <div className="mt-8 space-y-4">
+                    <div className="flex items-center gap-2">
+                        <div className="h-1.5 w-1.5 rounded-full bg-accent" />
+                        <h2 className="text-xl font-bold uppercase tracking-wider text-slate-400">Dodatki</h2>
+                    </div>
+                    <ExpansionManager
+                        gameId={game.id}
+                        initialExpansions={game.expansions ?? []}
                     />
                 </div>
             </Card>

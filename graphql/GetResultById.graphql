@@ -8,6 +8,10 @@ query GetResultById($id: String!) {
 			name
 			thumbnailUrl
 		}
+		expansions {
+			id
+			name
+		}
 		scores {
 			id
 			player {

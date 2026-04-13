@@ -11,6 +11,10 @@ interface ResultsItem {
 		name: string;
 		thumbnailUrl?: string | null;
 	};
+	expansions?: Array<{
+		id: string;
+		name: string;
+	}> | null;
 	scores?: Array<{
 		player?: {
 			name: string;
@@ -73,6 +77,15 @@ export const ResultsList = ({ initialData, onPageChange }: ResultsListProps) => 
 											})}
 											{result.playingTime && ` • ${result.playingTime} min`}
 										</p>
+										{result.expansions && result.expansions.length > 0 && (
+											<div className="mt-1 flex flex-wrap gap-1">
+												{result.expansions.map((e) => (
+													<Chip key={e.id} size="sm" variant="soft" color="accent">
+														{e.name}
+													</Chip>
+												))}
+											</div>
+										)}
 									</div>
 									<div className="flex flex-wrap gap-3">
 										{result.scores?.map((score, idx) => (

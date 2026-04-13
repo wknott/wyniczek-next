@@ -1,0 +1,6 @@
+mutation DeleteExpansion($id: String!) {
+	deleteExpansion(id: $id) {
+		id
+		name
+	}
+}

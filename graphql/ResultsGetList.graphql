@@ -10,6 +10,10 @@ query ResultsGetList($skip: Int, $take: Int, $gameId: String) {
 				name
 				thumbnailUrl
 			}
+			expansions {
+				id
+				name
+			}
 			scores {
 				player {
 					name

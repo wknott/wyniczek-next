@@ -14,5 +14,14 @@ query GetGameById($id: String!) {
 			name
 			order
 		}
+		expansions {
+			id
+			name
+			pointCategories {
+				id
+				name
+				order
+			}
+		}
 	}
 }

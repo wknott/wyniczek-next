@@ -8,6 +8,7 @@ const parseFormDataToCreateResultInput = (formData: FormData): CreateResultInput
 	const gameId = formData.get("gameId") as string;
 	const playingTime = formData.get("playingTime");
 	const categories = formData.getAll("categories[]");
+	const expansionIds = formData.getAll("expansionIds[]") as string[];
 
 	const scores: CreateScoreInput[] = players.map((playerId, index) => ({
 		playerId: playerId as string,
@@ -22,6 +23,7 @@ const parseFormDataToCreateResultInput = (formData: FormData): CreateResultInput
 		playingTime: Number(playingTime),
 		scores,
 		userId: "1234",
+		expansionIds: expansionIds.length > 0 ? expansionIds : undefined,
 	};
 };
 
