@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight, PersonFill, StarFill, LayoutCells, Plus } from "@gravity-ui/icons";
 import Link from "next/link";
 import { GetGamesListQuery } from "@/gql/graphql";
+import { GamesListSkeleton } from "@/ui/molecues/Skeletons";
 
 type GameItem = GetGamesListQuery["games"]["items"][number];
 
@@ -43,9 +44,9 @@ export const GamesList = ({ initialData, onPageChange }: GamesListProps) => {
 
     return (
         <div className="flex flex-col gap-6">
-            {isLoading && <div className="text-center text-slate-400">Ładowanie...</div>}
+            {isLoading && <GamesListSkeleton count={itemsPerPage} />}
             {!isLoading && data.items.length === 0 && (
-                <div className="text-center text-slate-400">Brak gier w kolekcji</div>
+                <div className="text-center text-muted">Brak gier w kolekcji</div>
             )}
             {!isLoading && (
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">

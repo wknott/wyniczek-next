@@ -1,12 +1,12 @@
 "use client";
 
 import {
-    Button,
     Input,
     Label,
     Card,
 } from "@heroui/react";
 import { createPlayer } from "@/app/actions/createPlayer";
+import { SubmitButton } from "@/ui/atoms/SubmitButton";
 
 export const AddPlayerForm = () => {
     return (
@@ -26,9 +26,14 @@ export const AddPlayerForm = () => {
                     </div>
                 </Card.Content>
                 <Card.Footer>
-                    <Button type="submit" variant="primary" className="w-full" size="lg">
+                    <SubmitButton
+                        variant="primary"
+                        className="w-full"
+                        size="lg"
+                        pendingLabel="Dodawanie..."
+                    >
                         Dodaj gracza
-                    </Button>
+                    </SubmitButton>
                 </Card.Footer>
             </form>
         </Card>

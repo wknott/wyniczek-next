@@ -16,6 +16,7 @@ import {
 import { Plus, TrashBin, Magnifier } from "@gravity-ui/icons";
 import { searchBgg } from "@/app/actions/searchBgg";
 import { createGame } from "@/app/actions/createGame";
+import { SubmitButton } from "@/ui/atoms/SubmitButton";
 
 interface BggGame {
     bggId: string;
@@ -185,9 +186,14 @@ export const AddGameForm = () => {
                     </div>
                 </Card.Content>
                 <Card.Footer>
-                    <Button type="submit" variant="primary" className="w-full" size="lg">
+                    <SubmitButton
+                        variant="primary"
+                        className="w-full"
+                        size="lg"
+                        pendingLabel="Dodawanie..."
+                    >
                         Dodaj grę do kolekcji
-                    </Button>
+                    </SubmitButton>
                 </Card.Footer>
             </form>
         </Card>

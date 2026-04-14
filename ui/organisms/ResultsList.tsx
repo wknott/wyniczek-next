@@ -3,6 +3,7 @@ import { Card, Avatar, Button, ButtonGroup, Chip } from "@heroui/react";
 import { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight } from "@gravity-ui/icons";
 import Link from "next/link";
+import { ResultsListSkeleton } from "@/ui/molecues/Skeletons";
 interface ResultsItem {
 	id: string;
 	createdAt: unknown;
@@ -57,8 +58,10 @@ export const ResultsList = ({ initialData, onPageChange }: ResultsListProps) => 
 
 	return (
 		<div className="flex flex-col gap-4">
-			{isLoading && <div className="text-center">Ładowanie...</div>}
-			{!isLoading && data.items.length === 0 && <div className="text-center">Brak wyników</div>}
+			{isLoading && <ResultsListSkeleton count={itemsPerPage} />}
+			{!isLoading && data.items.length === 0 && (
+				<div className="text-center text-muted">Brak wyników</div>
+			)}
 			{!isLoading &&
 				data.items.map((result) => (
 					<Link key={result.id} href={`/results/${result.id}`} className="block hover:no-underline">
