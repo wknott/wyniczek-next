@@ -12,6 +12,12 @@ query GetResultById($id: String!) {
 			id
 			name
 		}
+		images {
+			id
+			url
+			key
+			order
+		}
 		scores {
 			id
 			player {

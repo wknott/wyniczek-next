@@ -62,9 +62,16 @@ export type CreatePointInput = {
   value?: InputMaybe<Scalars['Int']['input']>;
 };
 
+export type CreateResultImageInput = {
+  key: Scalars['String']['input'];
+  order: Scalars['Int']['input'];
+  url: Scalars['String']['input'];
+};
+
 export type CreateResultInput = {
   expansionIds?: InputMaybe<Array<Scalars['String']['input']>>;
   gameId: Scalars['String']['input'];
+  images?: InputMaybe<Array<CreateResultImageInput>>;
   playingTime?: InputMaybe<Scalars['Int']['input']>;
   scores: Array<CreateScoreInput>;
   userId: Scalars['String']['input'];
@@ -286,9 +293,18 @@ export type Result = {
   game: Game;
   gameId: Scalars['String']['output'];
   id: Scalars['String']['output'];
+  images?: Maybe<Array<ResultImage>>;
   playingTime?: Maybe<Scalars['Int']['output']>;
   scores?: Maybe<Array<Score>>;
   userId: Scalars['String']['output'];
+};
+
+export type ResultImage = {
+  id: Scalars['String']['output'];
+  key: Scalars['String']['output'];
+  order: Scalars['Int']['output'];
+  resultId: Scalars['String']['output'];
+  url: Scalars['String']['output'];
 };
 
 export type Score = {
@@ -315,6 +331,7 @@ export type UpdateResultInput = {
   expansionIds?: InputMaybe<Array<Scalars['String']['input']>>;
   gameId?: InputMaybe<Scalars['String']['input']>;
   id: Scalars['String']['input'];
+  images?: InputMaybe<Array<CreateResultImageInput>>;
   playingTime?: InputMaybe<Scalars['Int']['input']>;
   scores?: InputMaybe<Array<CreateScoreInput>>;
   userId?: InputMaybe<Scalars['String']['input']>;
@@ -346,7 +363,7 @@ export type CreateResultMutationVariables = Exact<{
 }>;
 
 
-export type CreateResultMutation = { createResult: { id: string, createdAt: unknown, playingTime?: number | null, game: { id: string, name: string }, scores?: Array<{ id: string, player?: { id: string, name: string } | null, points?: Array<{ id: string, value?: number | null, pointCategory: { id: string, name: string } }> | null }> | null } };
+export type CreateResultMutation = { createResult: { id: string, createdAt: unknown, playingTime?: number | null, game: { id: string, name: string }, images?: Array<{ id: string, url: string, key: string, order: number }> | null, scores?: Array<{ id: string, player?: { id: string, name: string } | null, points?: Array<{ id: string, value?: number | null, pointCategory: { id: string, name: string } }> | null }> | null } };
 
 export type DeleteExpansionMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -399,7 +416,7 @@ export type GetResultByIdQueryVariables = Exact<{
 }>;
 
 
-export type GetResultByIdQuery = { result?: { id: string, createdAt: unknown, playingTime?: number | null, game: { id: string, name: string, thumbnailUrl?: string | null }, expansions?: Array<{ id: string, name: string }> | null, scores?: Array<{ id: string, player?: { id: string, name: string } | null, points?: Array<{ id: string, value?: number | null, pointCategory: { id: string, name: string } }> | null }> | null } | null };
+export type GetResultByIdQuery = { result?: { id: string, createdAt: unknown, playingTime?: number | null, game: { id: string, name: string, thumbnailUrl?: string | null }, expansions?: Array<{ id: string, name: string }> | null, images?: Array<{ id: string, url: string, key: string, order: number }> | null, scores?: Array<{ id: string, player?: { id: string, name: string } | null, points?: Array<{ id: string, value?: number | null, pointCategory: { id: string, name: string } }> | null }> | null } | null };
 
 export type ResultsGetListQueryVariables = Exact<{
   skip?: InputMaybe<Scalars['Int']['input']>;
@@ -522,6 +539,12 @@ export const CreateResultDocument = new TypedDocumentString(`
     game {
       id
       name
+    }
+    images {
+      id
+      url
+      key
+      order
     }
     scores {
       id
@@ -678,6 +701,12 @@ export const GetResultByIdDocument = new TypedDocumentString(`
     expansions {
       id
       name
+    }
+    images {
+      id
+      url
+      key
+      order
     }
     scores {
       id

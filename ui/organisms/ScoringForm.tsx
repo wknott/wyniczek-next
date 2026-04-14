@@ -6,6 +6,7 @@ import { Button, Input, Label, Spinner, TextField, toast } from "@heroui/react";
 import type { GetGamesForScoringQuery, GetPlayersQuery } from "@/gql/graphql";
 import { GameSelect } from "@/ui/atoms/GameSelect";
 import { ScoringTable } from "@/ui/molecues/ScoringTable";
+import { ImageUploader, type UploadedImage } from "@/ui/molecues/ImageUploader";
 import { createResult } from "@/app/actions/formSubmit";
 
 type Game = GetGamesForScoringQuery["games"]["items"][number];
@@ -20,6 +21,7 @@ export const ScoringForm = ({ games, players }: ScoringFormProps) => {
 	const searchParams = useSearchParams();
 	const router = useRouter();
 	const [selectedExpansionIds, setSelectedExpansionIds] = useState<string[]>([]);
+	const [images, setImages] = useState<UploadedImage[]>([]);
 
 	const [_, action, isPending] = useActionState(async (_prevState: unknown, formData: FormData) => {
 		const { id } = await createResult(formData);
@@ -68,6 +70,9 @@ export const ScoringForm = ({ games, players }: ScoringFormProps) => {
 			{selectedExpansionIds.map((id) => (
 				<Input type="hidden" name="expansionIds[]" value={id} key={id} />
 			))}
+			<Input type="hidden" name="images" value={JSON.stringify(images)} />
+
+			<ImageUploader value={images} onChange={setImages} />
 
 			{expansions.length > 0 && (
 				<div className="space-y-2">

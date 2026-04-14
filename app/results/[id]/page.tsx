@@ -4,6 +4,7 @@ import { Avatar, Card, Chip } from "@heroui/react";
 import Link from "next/link";
 import { ChevronLeft } from "@gravity-ui/icons";
 import { ResultDetailSkeleton } from "@/ui/molecues/Skeletons";
+import { ImageCarousel } from "@/ui/molecues/ImageCarousel";
 
 interface ResultPageProps {
 	params: Promise<{
@@ -65,6 +66,10 @@ async function ResultDetail({ id }: { id: string }) {
 					<p>{createdAt}</p>
 				</div>
 			</div>
+
+			{result.images && result.images.length > 0 && (
+				<ImageCarousel images={result.images} />
+			)}
 
 			<Card className="p-6">
 				<div className="flex items-start gap-6">

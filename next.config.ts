@@ -2,6 +2,12 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
 	typedRoutes: true,
+	images: {
+		remotePatterns: [
+			{ protocol: "https", hostname: "*.ufs.sh" },
+			{ protocol: "https", hostname: "utfs.io" },
+		],
+	},
 	async redirects() {
 		return [
 			{

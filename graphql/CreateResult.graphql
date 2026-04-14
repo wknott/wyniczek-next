@@ -7,6 +7,12 @@ mutation CreateResult($input: CreateResultInput!) {
 			id
 			name
 		}
+		images {
+			id
+			url
+			key
+			order
+		}
 		scores {
 			id
 			player {
