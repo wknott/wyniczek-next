@@ -30,7 +30,7 @@ export default async function ResultsPage({ searchParams }: PageProps) {
 			<div className="flex w-full flex-col gap-2 md:flex-row md:items-center md:justify-between">
 				<h1 className="text-4xl font-bold">Historia wyników</h1>
 				<Suspense fallback={<Skeleton className="h-10 w-full rounded-md md:w-48" />}>
-					<ResultsFilter gameId={gameId} />
+					<ResultsFilter />
 				</Suspense>
 			</div>
 			<div className="w-full">
