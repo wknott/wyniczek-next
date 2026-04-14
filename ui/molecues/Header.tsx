@@ -16,6 +16,7 @@ import {
 	Label,
 } from "@heroui/react";
 import { Route } from "next";
+import { ThemeSwitch } from "@/ui/atoms/ThemeSwitch";
 
 const menuItems = [
 	{
@@ -76,7 +77,12 @@ export const Header = () => {
 					))}
 				</nav>
 
-				<div className="flex md:hidden">
+				<div className="hidden md:flex">
+					<ThemeSwitch />
+				</div>
+
+				<div className="flex items-center gap-1 md:hidden">
+					<ThemeSwitch />
 					<Dropdown>
 						<Dropdown.Trigger>
 							<Bars className="size-6 outline-none" />
