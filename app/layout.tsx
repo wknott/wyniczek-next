@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/ui/molecues/Header";
+import { BottomNav } from "@/ui/molecues/BottomNav";
 import { Toast } from "@heroui/react";
 import { Providers } from "./providers";
 
@@ -39,12 +40,13 @@ export default function RootLayout({
 	return (
 		<html lang="en" suppressHydrationWarning>
 			<body
-				className={`${geistSans.variable} ${geistMono.variable} bg-background text-foreground antialiased`}
+				className={`${geistSans.variable} ${geistMono.variable} bg-background text-foreground antialiased pb-[calc(4rem+env(safe-area-inset-bottom))] md:pb-0`}
 			>
 				<Providers>
 					<Toast.Provider />
 					<Header />
 					{children}
+					<BottomNav />
 				</Providers>
 			</body>
 		</html>
