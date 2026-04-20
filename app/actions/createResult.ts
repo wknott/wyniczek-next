@@ -10,6 +10,7 @@ export async function createResultAction(input: CreateResultInput) {
 
 	revalidatePath("/");
 	revalidatePath("/results/new");
+	revalidatePath(`/games/${input.gameId}`);
 
 	return result.createResult;
 }

@@ -104,8 +104,17 @@ export type Game = {
   minPlayers: Scalars['Int']['output'];
   name: Scalars['String']['output'];
   pointCategories?: Maybe<Array<PointCategory>>;
+  records: Array<GameRecord>;
   thumbnailUrl?: Maybe<Scalars['String']['output']>;
   userId: Scalars['String']['output'];
+};
+
+export type GameRecord = {
+  createdAt: Scalars['DateTime']['output'];
+  expansions: Array<Expansion>;
+  player: Player;
+  resultId: Scalars['String']['output'];
+  totalPoints: Scalars['Int']['output'];
 };
 
 export type GameSortBy =
@@ -377,7 +386,7 @@ export type GetGameByIdQueryVariables = Exact<{
 }>;
 
 
-export type GetGameByIdQuery = { game?: { id: string, name: string, thumbnailUrl?: string | null, minPlayers: number, maxPlayers: number, bggRank?: number | null, bggWeight?: number | null, lastPlayedAt?: unknown | null, inCollection: boolean, pointCategories?: Array<{ id: string, name: string, order: number }> | null, expansions?: Array<{ id: string, name: string, pointCategories?: Array<{ id: string, name: string, order: number }> | null }> | null } | null };
+export type GetGameByIdQuery = { game?: { id: string, name: string, thumbnailUrl?: string | null, minPlayers: number, maxPlayers: number, bggRank?: number | null, bggWeight?: number | null, lastPlayedAt?: unknown | null, inCollection: boolean, pointCategories?: Array<{ id: string, name: string, order: number }> | null, expansions?: Array<{ id: string, name: string, pointCategories?: Array<{ id: string, name: string, order: number }> | null }> | null, records: Array<{ totalPoints: number, createdAt: unknown, resultId: string, player: { id: string, name: string }, expansions: Array<{ id: string, name: string }> }> } | null };
 
 export type GameCardDataFragment = { id: string, name: string, thumbnailUrl?: string | null, avgPlayingTime2Players?: number | null, inCollection: boolean, latestResult?: { createdAt: unknown, scores?: Array<{ player?: { name: string, id: string } | null }> | null } | null };
 
@@ -596,6 +605,19 @@ export const GetGameByIdDocument = new TypedDocumentString(`
         id
         name
         order
+      }
+    }
+    records {
+      totalPoints
+      createdAt
+      resultId
+      player {
+        id
+        name
+      }
+      expansions {
+        id
+        name
       }
     }
   }

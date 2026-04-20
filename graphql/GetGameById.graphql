@@ -23,5 +23,18 @@ query GetGameById($id: String!) {
 				order
 			}
 		}
+		records {
+			totalPoints
+			createdAt
+			resultId
+			player {
+				id
+				name
+			}
+			expansions {
+				id
+				name
+			}
+		}
 	}
 }
