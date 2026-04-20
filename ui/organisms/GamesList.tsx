@@ -1,6 +1,7 @@
 "use client";
 
 import { Card, Avatar, Button, ButtonGroup, Chip } from "@heroui/react";
+import { buttonVariants } from "@heroui/styles";
 import { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight, PersonFill, StarFill, LayoutCells, Plus } from "@gravity-ui/icons";
 import Link from "next/link";
@@ -51,58 +52,52 @@ export const GamesList = ({ initialData, onPageChange }: GamesListProps) => {
             {!isLoading && (
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
                     {data.items.map((game) => (
-                        <Card key={game.id} className="p-4 transition-all hover:bg-slate-800/40 hover:shadow-xl">
-                            <div className="flex gap-4">
-                                <Link href={{ pathname: `/games/${game.id}` }} className="shrink-0 transition-transform hover:scale-105 active:scale-95">
-                                    <Avatar size="lg">
+                        <Card key={game.id}>
+                            <Card.Header className="flex flex-row items-center gap-4">
+                                <Link
+                                    href={{ pathname: `/games/${game.id}` }}
+                                    className="flex flex-1 items-start gap-4 overflow-hidden"
+                                >
+                                    <Avatar size="lg" className="shrink-0">
                                         <Avatar.Image src={game.thumbnailUrl || ""} />
                                     </Avatar>
-                                </Link>
-                                <div className="flex flex-1 flex-col gap-2 overflow-hidden">
-                                    <div className="flex items-start justify-between gap-2">
-                                        <div className="overflow-hidden">
-                                            <Link href={{ pathname: `/games/${game.id}` }} className="block hover:text-accent transition-colors">
-                                                <h3 className="truncate text-lg font-bold leading-tight">{game.name}</h3>
-                                            </Link>
-                                            {!!game.lastPlayedAt && (
-                                                <p className="text-xs text-slate-400">
-                                                    Ostatnio grane:{" "}
-                                                    {new Date(game.lastPlayedAt as string).toLocaleDateString("pl-PL")}
-                                                </p>
+                                    <div className="flex flex-1 flex-col gap-2 overflow-hidden">
+                                        <Card.Title className="truncate text-lg font-bold leading-tight">
+                                            {game.name}
+                                        </Card.Title>
+                                        {!!game.lastPlayedAt && (
+                                            <Card.Description>
+                                                Ostatnio grane:{" "}
+                                                {new Date(game.lastPlayedAt as string).toLocaleDateString("pl-PL")}
+                                            </Card.Description>
+                                        )}
+                                        <div className="flex flex-wrap gap-2">
+                                            <Chip size="sm" color="success">
+                                                <PersonFill className="mr-1" />
+                                                {game.minPlayers}-{game.maxPlayers}
+                                            </Chip>
+                                            {game.bggRank && (
+                                                <Chip size="sm" color="warning">
+                                                    <StarFill className="mr-1" />
+                                                    Rank: {game.bggRank}
+                                                </Chip>
+                                            )}
+                                            {game.bggWeight && (
+                                                <Chip size="sm" color="accent">
+                                                    <LayoutCells className="mr-1" />
+                                                    Waga: {game.bggWeight.toFixed(2)}
+                                                </Chip>
                                             )}
                                         </div>
-                                        <Button size="sm" isIconOnly className="shrink-0">
-                                            <Link href={`/results/new?gameId=${game.id}`}>
-                                                <Plus className="h-4 w-4" />
-                                            </Link>
-                                        </Button>
                                     </div>
-                                    <div className="flex flex-wrap gap-2">
-                                        <Chip size="sm" color="success">
-                                            <div className="flex items-center gap-1">
-                                                <PersonFill className="h-3 w-3" />
-                                                {game.minPlayers}-{game.maxPlayers}
-                                            </div>
-                                        </Chip>
-                                        {game.bggRank && (
-                                            <Chip size="sm" color="warning">
-                                                <div className="flex items-center gap-1">
-                                                    <StarFill className="h-3 w-3" />
-                                                    Rank: {game.bggRank}
-                                                </div>
-                                            </Chip>
-                                        )}
-                                        {game.bggWeight && (
-                                            <Chip size="sm" color="accent">
-                                                <div className="flex items-center gap-1">
-                                                    <LayoutCells className="h-3 w-3" />
-                                                    Waga: {game.bggWeight.toFixed(2)}
-                                                </div>
-                                            </Chip>
-                                        )}
-                                    </div>
-                                </div>
-                            </div>
+                                </Link>
+                                <Link
+                                    href={`/results/new?gameId=${game.id}`}
+                                    className={buttonVariants({ variant: "secondary", isIconOnly: true, size: "sm" })}
+                                >
+                                    <Plus />
+                                </Link>
+                            </Card.Header>
                         </Card>
                     ))}
                 </div>

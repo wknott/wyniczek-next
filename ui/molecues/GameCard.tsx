@@ -1,4 +1,5 @@
-import { Avatar, Button, Card, Chip } from "@heroui/react";
+import { Avatar, Card, Chip } from "@heroui/react";
+import { buttonVariants } from "@heroui/styles";
 import Link from "next/link";
 import { Plus, Calendar, PersonFill, Clock } from "@gravity-ui/icons";
 import { GameCardDataFragment } from "@/gql/graphql";
@@ -19,48 +20,42 @@ export const GameCard = ({
 			<Card.Header className="flex flex-row items-center gap-4">
 				<Link
 					href={{ pathname: `/games/${id}` }}
-					className="shrink-0 transition-transform hover:scale-105 active:scale-95"
+					className="flex flex-1 items-center gap-4 overflow-hidden"
 				>
-					<Avatar size="lg">
+					<Avatar size="lg" className="shrink-0">
 						<Avatar.Image src={thumbnailUrl || ""} />
 					</Avatar>
-				</Link>
-				<div className="flex-1 overflow-hidden">
-					<Link
-						href={{ pathname: `/games/${id}` }}
-						className="hover:text-primary block transition-colors"
-					>
+					<div className="flex-1 overflow-hidden">
 						<Card.Title className="truncate text-lg font-bold">{name}</Card.Title>
-					</Link>
-					<Card.Description className="mt-2 flex flex-wrap gap-2">
-						<Chip>
-							<Calendar className="mr-1" /> <strong>{createdAt}</strong>
-						</Chip>
-						<Chip>
-							<PersonFill className="mr-1" />
-							<strong>{latestResult?.scores?.[0]?.player?.name}</strong>
-						</Chip>
-						{avgPlayingTime2Players != null && (
+						<Card.Description className="mt-2 flex flex-wrap gap-2">
 							<Chip>
-								<Clock className="mr-1" />
-								<strong>~{avgPlayingTime2Players} min</strong>
+								<Calendar className="mr-1" /> <strong>{createdAt}</strong>
 							</Chip>
-						)}
-					</Card.Description>
-				</div>
-				<Button isIconOnly className="ml-auto shrink-0">
-					<Link
-						href={{
-							pathname: "/results/new/",
-							query: {
-								gameId: id,
-								players: latestResult?.scores?.map((s) => s?.player?.id || "") || "",
-							},
-						}}
-					>
-						<Plus />
-					</Link>
-				</Button>
+							<Chip>
+								<PersonFill className="mr-1" />
+								<strong>{latestResult?.scores?.[0]?.player?.name}</strong>
+							</Chip>
+							{avgPlayingTime2Players != null && (
+								<Chip>
+									<Clock className="mr-1" />
+									<strong>~{avgPlayingTime2Players} min</strong>
+								</Chip>
+							)}
+						</Card.Description>
+					</div>
+				</Link>
+				<Link
+					href={{
+						pathname: "/results/new/",
+						query: {
+							gameId: id,
+							players: latestResult?.scores?.map((s) => s?.player?.id || "") || "",
+						},
+					}}
+					className={buttonVariants({ variant: "secondary", isIconOnly: true })}
+				>
+					<Plus />
+				</Link>
 			</Card.Header>
 		</Card>
 	);
