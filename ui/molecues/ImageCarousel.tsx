@@ -38,13 +38,14 @@ export const ImageCarousel = ({ images }: ImageCarouselProps) => {
 
 	if (images.length === 1) {
 		return (
-			<div className="relative aspect-video w-full overflow-hidden rounded-lg">
+			<div className="w-full overflow-hidden rounded-lg">
 				<Image
 					src={images[0].url}
 					alt=""
-					fill
+					width={0}
+					height={0}
 					sizes="(max-width: 768px) 100vw, 768px"
-					className="object-cover"
+					className="h-auto w-full"
 					priority
 				/>
 			</div>
@@ -57,13 +58,14 @@ export const ImageCarousel = ({ images }: ImageCarouselProps) => {
 				<div className="overflow-hidden rounded-lg" ref={emblaRef}>
 					<div className="flex">
 						{images.map((img) => (
-							<div key={img.id} className="relative aspect-video min-w-0 flex-[0_0_100%]">
+							<div key={img.id} className="min-w-0 flex-[0_0_100%]">
 								<Image
 									src={img.url}
 									alt=""
-									fill
+									width={0}
+									height={0}
 									sizes="(max-width: 768px) 100vw, 768px"
-									className="object-cover"
+									className="h-auto w-full"
 								/>
 							</div>
 						))}
