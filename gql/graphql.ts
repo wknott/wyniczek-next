@@ -214,7 +214,16 @@ export type PaginatedResults = {
 export type Player = {
   id: Scalars['String']['output'];
   name: Scalars['String']['output'];
+  records: Array<PlayerRecord>;
   userId: Scalars['String']['output'];
+};
+
+export type PlayerRecord = {
+  createdAt: Scalars['DateTime']['output'];
+  expansions: Array<Expansion>;
+  game: Game;
+  resultId: Scalars['String']['output'];
+  totalPoints: Scalars['Int']['output'];
 };
 
 export type Point = {
@@ -414,6 +423,13 @@ export type GetGamesListQueryVariables = Exact<{
 
 
 export type GetGamesListQuery = { games: { total: number, items: Array<{ id: string, name: string, thumbnailUrl?: string | null, minPlayers: number, maxPlayers: number, bggRank?: number | null, bggWeight?: number | null, lastPlayedAt?: unknown | null, inCollection: boolean }> } };
+
+export type GetPlayerByIdQueryVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type GetPlayerByIdQuery = { player?: { id: string, name: string, records: Array<{ totalPoints: number, createdAt: unknown, resultId: string, game: { id: string, name: string, thumbnailUrl?: string | null }, expansions: Array<{ id: string, name: string }> }> } | null };
 
 export type GetPlayersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -701,6 +717,28 @@ export const GetGamesListDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<GetGamesListQuery, GetGamesListQueryVariables>;
+export const GetPlayerByIdDocument = new TypedDocumentString(`
+    query GetPlayerById($id: String!) {
+  player(id: $id) {
+    id
+    name
+    records {
+      totalPoints
+      createdAt
+      resultId
+      game {
+        id
+        name
+        thumbnailUrl
+      }
+      expansions {
+        id
+        name
+      }
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<GetPlayerByIdQuery, GetPlayerByIdQueryVariables>;
 export const GetPlayersDocument = new TypedDocumentString(`
     query GetPlayers {
   players {

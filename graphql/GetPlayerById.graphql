@@ -1,0 +1,20 @@
+query GetPlayerById($id: String!) {
+	player(id: $id) {
+		id
+		name
+		records {
+			totalPoints
+			createdAt
+			resultId
+			game {
+				id
+				name
+				thumbnailUrl
+			}
+			expansions {
+				id
+				name
+			}
+		}
+	}
+}

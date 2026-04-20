@@ -12,6 +12,7 @@ import {
 	Ellipsis,
 	SquarePlus,
 	PersonPlus,
+	Persons,
 } from "@gravity-ui/icons";
 import { Dropdown, Description, Label } from "@heroui/react";
 
@@ -33,6 +34,12 @@ const rightItems: TabItem[] = [
 ];
 
 const moreItems = [
+	{
+		label: "Gracze",
+		href: "/players" as Route,
+		icon: Persons,
+		description: "Lista graczy i rekordy",
+	},
 	{
 		label: "Dodaj grę",
 		href: "/games/new" as Route,
