@@ -7,6 +7,7 @@ import Link from "next/link";
 import { CategoryManager } from "@/ui/organisms/CategoryManager";
 import { ExpansionManager } from "@/ui/organisms/ExpansionManager";
 import { GameRecords } from "@/ui/organisms/GameRecords";
+import { GamePlayerStats } from "@/ui/organisms/GamePlayerStats";
 import { GameDetailSkeleton } from "@/ui/molecues/Skeletons";
 import { SubmitButton } from "@/ui/atoms/SubmitButton";
 
@@ -135,6 +136,16 @@ async function GameDetail({ id }: { id: string }) {
 					<h2 className="text-xl font-bold uppercase tracking-wider text-muted">Rekordy</h2>
 				</div>
 				<GameRecords records={game.records ?? []} />
+			</div>
+
+			<div className="mt-8 space-y-4">
+				<div className="flex items-center gap-2">
+					<div className="h-1.5 w-1.5 rounded-full bg-success" />
+					<h2 className="text-xl font-bold uppercase tracking-wider text-muted">
+						Ranking graczy
+					</h2>
+				</div>
+				<GamePlayerStats stats={game.playerStats ?? []} />
 			</div>
 		</Card>
 	);

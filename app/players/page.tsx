@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { buttonVariants } from "@heroui/styles";
-import { Avatar, Card } from "@heroui/react";
-import { PersonPlus } from "@gravity-ui/icons";
+import { Avatar, Card, Chip } from "@heroui/react";
+import { PersonPlus, CrownDiamond } from "@gravity-ui/icons";
 import { getPlayers } from "./actions";
 
 function getInitials(name: string) {
@@ -38,19 +38,21 @@ export default async function PlayersPage() {
 			) : (
 				<div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
 					{sorted.map((player) => (
-						<Link
-							key={player.id}
-							href={{ pathname: `/players/${player.id}` }}
-							className="block"
-						>
+						<Link key={player.id} href={{ pathname: `/players/${player.id}` }} className="block">
 							<Card className="hover:bg-separator h-full transition-colors">
 								<Card.Header className="flex flex-row items-center gap-4">
 									<Avatar size="lg" className="shrink-0">
 										<Avatar.Fallback>{getInitials(player.name)}</Avatar.Fallback>
 									</Avatar>
-									<Card.Title className="truncate text-lg font-bold">
+									<Card.Title className="flex-1 truncate text-lg font-bold">
 										{player.name}
 									</Card.Title>
+									<Chip size="sm" variant="soft" color="warning" className="shrink-0">
+										<div className="flex items-center gap-1">
+											<CrownDiamond className="h-3.5 w-3.5" />
+											<strong>{player.totalWins}</strong>
+										</div>
+									</Chip>
 								</Card.Header>
 							</Card>
 						</Link>

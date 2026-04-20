@@ -36,5 +36,13 @@ query GetGameById($id: String!) {
 				name
 			}
 		}
+		playerStats {
+			wins
+			totalGames
+			player {
+				id
+				name
+			}
+		}
 	}
 }

@@ -103,10 +103,17 @@ export type Game = {
   maxPlayers: Scalars['Int']['output'];
   minPlayers: Scalars['Int']['output'];
   name: Scalars['String']['output'];
+  playerStats: Array<GamePlayerStats>;
   pointCategories?: Maybe<Array<PointCategory>>;
   records: Array<GameRecord>;
   thumbnailUrl?: Maybe<Scalars['String']['output']>;
   userId: Scalars['String']['output'];
+};
+
+export type GamePlayerStats = {
+  player: Player;
+  totalGames: Scalars['Int']['output'];
+  wins: Scalars['Int']['output'];
 };
 
 export type GameRecord = {
@@ -215,6 +222,7 @@ export type Player = {
   id: Scalars['String']['output'];
   name: Scalars['String']['output'];
   records: Array<PlayerRecord>;
+  totalWins: Scalars['Int']['output'];
   userId: Scalars['String']['output'];
 };
 
@@ -395,7 +403,7 @@ export type GetGameByIdQueryVariables = Exact<{
 }>;
 
 
-export type GetGameByIdQuery = { game?: { id: string, name: string, thumbnailUrl?: string | null, minPlayers: number, maxPlayers: number, bggRank?: number | null, bggWeight?: number | null, lastPlayedAt?: unknown | null, inCollection: boolean, pointCategories?: Array<{ id: string, name: string, order: number }> | null, expansions?: Array<{ id: string, name: string, pointCategories?: Array<{ id: string, name: string, order: number }> | null }> | null, records: Array<{ totalPoints: number, createdAt: unknown, resultId: string, player: { id: string, name: string }, expansions: Array<{ id: string, name: string }> }> } | null };
+export type GetGameByIdQuery = { game?: { id: string, name: string, thumbnailUrl?: string | null, minPlayers: number, maxPlayers: number, bggRank?: number | null, bggWeight?: number | null, lastPlayedAt?: unknown | null, inCollection: boolean, pointCategories?: Array<{ id: string, name: string, order: number }> | null, expansions?: Array<{ id: string, name: string, pointCategories?: Array<{ id: string, name: string, order: number }> | null }> | null, records: Array<{ totalPoints: number, createdAt: unknown, resultId: string, player: { id: string, name: string }, expansions: Array<{ id: string, name: string }> }>, playerStats: Array<{ wins: number, totalGames: number, player: { id: string, name: string } }> } | null };
 
 export type GameCardDataFragment = { id: string, name: string, thumbnailUrl?: string | null, avgPlayingTime2Players?: number | null, inCollection: boolean, latestResult?: { createdAt: unknown, scores?: Array<{ player?: { name: string, id: string } | null }> | null } | null };
 
@@ -434,7 +442,7 @@ export type GetPlayerByIdQuery = { player?: { id: string, name: string, records:
 export type GetPlayersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetPlayersQuery = { players: Array<{ id: string, name: string }> };
+export type GetPlayersQuery = { players: Array<{ id: string, name: string, totalWins: number }> };
 
 export type GetResultByIdQueryVariables = Exact<{
   id: Scalars['String']['input'];
@@ -636,6 +644,14 @@ export const GetGameByIdDocument = new TypedDocumentString(`
         name
       }
     }
+    playerStats {
+      wins
+      totalGames
+      player {
+        id
+        name
+      }
+    }
   }
 }
     `) as unknown as TypedDocumentString<GetGameByIdQuery, GetGameByIdQueryVariables>;
@@ -744,6 +760,7 @@ export const GetPlayersDocument = new TypedDocumentString(`
   players {
     id
     name
+    totalWins
   }
 }
     `) as unknown as TypedDocumentString<GetPlayersQuery, GetPlayersQueryVariables>;
