@@ -9,6 +9,7 @@ query GetGameById($id: String!) {
 		bggWeight
 		lastPlayedAt
 		inCollection
+		manualUrl
 		pointCategories {
 			id
 			name

@@ -6,6 +6,7 @@ import { LayoutCells, PersonFill, Archive, ArrowRotateRight, ChevronLeft } from 
 import Link from "next/link";
 import { CategoryManager } from "@/ui/organisms/CategoryManager";
 import { ExpansionManager } from "@/ui/organisms/ExpansionManager";
+import { GameManualUrl } from "@/ui/organisms/GameManualUrl";
 import { GameRecords } from "@/ui/organisms/GameRecords";
 import { GamePlayerStats } from "@/ui/organisms/GamePlayerStats";
 import { GameDetailSkeleton } from "@/ui/molecues/Skeletons";
@@ -113,6 +114,16 @@ async function GameDetail({ id }: { id: string }) {
 			</div>
 
 			<div className="mt-12 space-y-4">
+				<div className="flex items-center gap-2">
+					<div className="h-1.5 w-1.5 rounded-full bg-primary" />
+					<h2 className="text-xl font-bold uppercase tracking-wider text-muted">
+						Instrukcja
+					</h2>
+				</div>
+				<GameManualUrl gameId={game.id} initialUrl={game.manualUrl} />
+			</div>
+
+			<div className="mt-8 space-y-4">
 				<div className="flex items-center gap-2">
 					<div className="h-1.5 w-1.5 rounded-full bg-primary" />
 					<h2 className="text-xl font-bold uppercase tracking-wider text-muted">

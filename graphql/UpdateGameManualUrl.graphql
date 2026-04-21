@@ -1,0 +1,6 @@
+mutation UpdateGameManualUrl($id: String!, $url: String) {
+	updateGameManualUrl(id: $id, url: $url) {
+		id
+		manualUrl
+	}
+}

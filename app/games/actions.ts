@@ -11,6 +11,7 @@ import {
     CreateExpansionDocument,
     UpdateExpansionDocument,
     DeleteExpansionDocument,
+    UpdateGameManualUrlDocument,
 } from "@/gql/graphql";
 import { revalidatePath } from "next/cache";
 
@@ -85,5 +86,10 @@ export async function updateExpansion(
 
 export async function deleteExpansion(gameId: string, id: string) {
     await executeGraphql(DeleteExpansionDocument, { id });
+    revalidatePath(`/games/${gameId}`);
+}
+
+export async function updateGameManualUrl(gameId: string, url: string | null) {
+    await executeGraphql(UpdateGameManualUrlDocument, { id: gameId, url });
     revalidatePath(`/games/${gameId}`);
 }

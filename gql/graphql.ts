@@ -100,6 +100,7 @@ export type Game = {
   inCollection: Scalars['Boolean']['output'];
   lastPlayedAt?: Maybe<Scalars['DateTime']['output']>;
   latestResult?: Maybe<Result>;
+  manualUrl?: Maybe<Scalars['String']['output']>;
   maxPlayers: Scalars['Int']['output'];
   minPlayers: Scalars['Int']['output'];
   name: Scalars['String']['output'];
@@ -143,6 +144,7 @@ export type Mutation = {
   updateExpansion: Expansion;
   updateGameCategories: Game;
   updateGameCollectionStatus: Game;
+  updateGameManualUrl: Game;
   updateResult: Result;
 };
 
@@ -201,6 +203,12 @@ export type MutationUpdateGameCategoriesArgs = {
 export type MutationUpdateGameCollectionStatusArgs = {
   id: Scalars['String']['input'];
   inCollection: Scalars['Boolean']['input'];
+};
+
+
+export type MutationUpdateGameManualUrlArgs = {
+  id: Scalars['String']['input'];
+  url?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -403,7 +411,7 @@ export type GetGameByIdQueryVariables = Exact<{
 }>;
 
 
-export type GetGameByIdQuery = { game?: { id: string, name: string, thumbnailUrl?: string | null, minPlayers: number, maxPlayers: number, bggRank?: number | null, bggWeight?: number | null, lastPlayedAt?: unknown | null, inCollection: boolean, pointCategories?: Array<{ id: string, name: string, order: number }> | null, expansions?: Array<{ id: string, name: string, pointCategories?: Array<{ id: string, name: string, order: number }> | null }> | null, records: Array<{ totalPoints: number, createdAt: unknown, resultId: string, player: { id: string, name: string }, expansions: Array<{ id: string, name: string }> }>, playerStats: Array<{ wins: number, totalGames: number, player: { id: string, name: string } }> } | null };
+export type GetGameByIdQuery = { game?: { id: string, name: string, thumbnailUrl?: string | null, minPlayers: number, maxPlayers: number, bggRank?: number | null, bggWeight?: number | null, lastPlayedAt?: unknown | null, inCollection: boolean, manualUrl?: string | null, pointCategories?: Array<{ id: string, name: string, order: number }> | null, expansions?: Array<{ id: string, name: string, pointCategories?: Array<{ id: string, name: string, order: number }> | null }> | null, records: Array<{ totalPoints: number, createdAt: unknown, resultId: string, player: { id: string, name: string }, expansions: Array<{ id: string, name: string }> }>, playerStats: Array<{ wins: number, totalGames: number, player: { id: string, name: string } }> } | null };
 
 export type GameCardDataFragment = { id: string, name: string, thumbnailUrl?: string | null, avgPlayingTime2Players?: number | null, inCollection: boolean, latestResult?: { createdAt: unknown, scores?: Array<{ player?: { name: string, id: string } | null }> | null } | null };
 
@@ -496,6 +504,14 @@ export type UpdateGameCollectionStatusMutationVariables = Exact<{
 
 
 export type UpdateGameCollectionStatusMutation = { updateGameCollectionStatus: { id: string, inCollection: boolean } };
+
+export type UpdateGameManualUrlMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+  url?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type UpdateGameManualUrlMutation = { updateGameManualUrl: { id: string, manualUrl?: string | null } };
 
 export class TypedDocumentString<TResult, TVariables>
   extends String
@@ -617,6 +633,7 @@ export const GetGameByIdDocument = new TypedDocumentString(`
     bggWeight
     lastPlayedAt
     inCollection
+    manualUrl
     pointCategories {
       id
       name
@@ -888,3 +905,11 @@ export const UpdateGameCollectionStatusDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<UpdateGameCollectionStatusMutation, UpdateGameCollectionStatusMutationVariables>;
+export const UpdateGameManualUrlDocument = new TypedDocumentString(`
+    mutation UpdateGameManualUrl($id: String!, $url: String) {
+  updateGameManualUrl(id: $id, url: $url) {
+    id
+    manualUrl
+  }
+}
+    `) as unknown as TypedDocumentString<UpdateGameManualUrlMutation, UpdateGameManualUrlMutationVariables>;
