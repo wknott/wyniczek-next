@@ -7,14 +7,12 @@ import { CreatePlayerDocument, GetPlayersDocument, GetPlayerByIdDocument } from 
 
 export async function createPlayer(formData: FormData) {
 	const name = formData.get("name") as string;
-	const userId = "1234";
 
 	if (!name) return;
 
 	await executeGraphql(CreatePlayerDocument, {
 		input: {
 			name,
-			userId,
 		},
 	});
 

@@ -49,12 +49,10 @@ export type CreateGameInput = {
   inCollection?: InputMaybe<Scalars['Boolean']['input']>;
   name: Scalars['String']['input'];
   pointCategoryNames?: InputMaybe<Array<Scalars['String']['input']>>;
-  userId: Scalars['String']['input'];
 };
 
 export type CreatePlayerInput = {
   name: Scalars['String']['input'];
-  userId: Scalars['String']['input'];
 };
 
 export type CreatePointInput = {
@@ -74,7 +72,6 @@ export type CreateResultInput = {
   images?: InputMaybe<Array<CreateResultImageInput>>;
   playingTime?: InputMaybe<Scalars['Int']['input']>;
   scores: Array<CreateScoreInput>;
-  userId: Scalars['String']['input'];
 };
 
 export type CreateScoreInput = {
@@ -368,7 +365,6 @@ export type UpdateResultInput = {
   images?: InputMaybe<Array<CreateResultImageInput>>;
   playingTime?: InputMaybe<Scalars['Int']['input']>;
   scores?: InputMaybe<Array<CreateScoreInput>>;
-  userId?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type CreateExpansionMutationVariables = Exact<{

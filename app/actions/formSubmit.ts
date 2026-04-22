@@ -31,7 +31,6 @@ const parseFormDataToCreateResultInput = (formData: FormData): CreateResultInput
 		gameId,
 		playingTime: Number(playingTime),
 		scores,
-		userId: "1234",
 		expansionIds: expansionIds.length > 0 ? expansionIds : undefined,
 		images,
 	};

@@ -11,13 +11,11 @@ export async function createGame(formData: FormData) {
     const categories = formData.getAll("categories") as string[];
 
     const bggId = bggIdStr ? parseInt(bggIdStr, 10) : undefined;
-    const userId = "1234";
 
     const { createGame: newGame } = await executeGraphql(CreateGameDocument, {
         input: {
             name,
             bggId,
-            userId,
             pointCategoryNames: categories.filter(Boolean),
         },
     });
