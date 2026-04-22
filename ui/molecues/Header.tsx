@@ -7,13 +7,18 @@ import {
 	Dice2,
 	SquarePlus,
 	PersonPlus,
+	Persons,
+	Plus,
 } from "@gravity-ui/icons";
 import { Route } from "next";
+import { UserButton } from "@clerk/nextjs";
 import { ThemeSwitch } from "@/ui/atoms/ThemeSwitch";
 
 const menuItems = [
-	{ label: "Historia", href: "/results" as Route, icon: SquareListUl },
 	{ label: "Gry", href: "/games" as Route, icon: Dice2 },
+	{ label: "Historia", href: "/results" as Route, icon: SquareListUl },
+	{ label: "Gracze", href: "/players" as Route, icon: Persons },
+	{ label: "Dodaj wynik", href: "/results/new" as Route, icon: Plus },
 	{ label: "Dodaj grę", href: "/games/new" as Route, icon: SquarePlus },
 	{ label: "Dodaj gracza", href: "/players/new" as Route, icon: PersonPlus },
 ];
@@ -50,7 +55,10 @@ export const Header = () => {
 					))}
 				</nav>
 
-				<ThemeSwitch />
+				<div className="flex items-center gap-3">
+					<ThemeSwitch />
+					<UserButton />
+				</div>
 			</div>
 		</header>
 	);

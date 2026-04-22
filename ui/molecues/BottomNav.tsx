@@ -13,9 +13,14 @@ import {
 	SquarePlus,
 	PersonPlus,
 	Persons,
+	PersonGear,
+	ArrowRightFromSquare,
 } from "@gravity-ui/icons";
 import { Dropdown, Description, Label } from "@heroui/react";
-import { UserButton } from "@clerk/nextjs";
+import { useClerk } from "@clerk/nextjs";
+
+const ACCOUNT_KEY = "__account";
+const SIGN_OUT_KEY = "__sign-out";
 
 type IconComponent = ComponentType<SVGProps<SVGSVGElement>>;
 
@@ -94,6 +99,7 @@ const NavTab = ({
 export const BottomNav = () => {
 	const router = useRouter();
 	const pathname = usePathname();
+	const clerk = useClerk();
 	const isCenterActive = pathname === CENTER_HREF;
 
 	return (
@@ -145,7 +151,17 @@ export const BottomNav = () => {
 							>
 								<Dropdown.Menu
 									aria-label="Dodatkowe akcje"
-									onAction={(key) => router.push(key as unknown as Route)}
+									onAction={(key) => {
+										if (key === ACCOUNT_KEY) {
+											clerk.openUserProfile();
+											return;
+										}
+										if (key === SIGN_OUT_KEY) {
+											void clerk.signOut({ redirectUrl: "/sign-in" });
+											return;
+										}
+										router.push(key as unknown as Route);
+									}}
 								>
 									<Dropdown.Section>
 										{moreItems.map((item) => (
@@ -167,18 +183,34 @@ export const BottomNav = () => {
 											</Dropdown.Item>
 										))}
 										<Dropdown.Item
-											key="user-button"
-											id="user-button"
-											textValue="Konto"
+											key={ACCOUNT_KEY}
+											id={ACCOUNT_KEY}
+											textValue="Zarządzaj kontem"
 											className="py-2"
 										>
 											<div className="flex items-center gap-3">
-												<div className="flex size-9 shrink-0 items-center justify-center">
-													<UserButton />
+												<div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-accent-soft text-accent">
+													<PersonGear className="size-4" />
 												</div>
 												<div className="flex flex-col">
-													<Label className="cursor-pointer">Konto</Label>
-													<Description>Zarządzaj kontem i wyloguj się</Description>
+													<Label className="cursor-pointer">Zarządzaj kontem</Label>
+													<Description>Profil i ustawienia konta</Description>
+												</div>
+											</div>
+										</Dropdown.Item>
+										<Dropdown.Item
+											key={SIGN_OUT_KEY}
+											id={SIGN_OUT_KEY}
+											textValue="Wyloguj się"
+											className="py-2"
+										>
+											<div className="flex items-center gap-3">
+												<div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-accent-soft text-accent">
+													<ArrowRightFromSquare className="size-4" />
+												</div>
+												<div className="flex flex-col">
+													<Label className="cursor-pointer">Wyloguj się</Label>
+													<Description>Zakończ sesję</Description>
 												</div>
 											</div>
 										</Dropdown.Item>
