@@ -15,6 +15,7 @@ import {
 	Persons,
 } from "@gravity-ui/icons";
 import { Dropdown, Description, Label } from "@heroui/react";
+import { UserButton } from "@clerk/nextjs";
 
 type IconComponent = ComponentType<SVGProps<SVGSVGElement>>;
 
@@ -165,6 +166,22 @@ export const BottomNav = () => {
 												</div>
 											</Dropdown.Item>
 										))}
+										<Dropdown.Item
+											key="user-button"
+											id="user-button"
+											textValue="Konto"
+											className="py-2"
+										>
+											<div className="flex items-center gap-3">
+												<div className="flex size-9 shrink-0 items-center justify-center">
+													<UserButton />
+												</div>
+												<div className="flex flex-col">
+													<Label className="cursor-pointer">Konto</Label>
+													<Description>Zarządzaj kontem i wyloguj się</Description>
+												</div>
+											</div>
+										</Dropdown.Item>
 									</Dropdown.Section>
 								</Dropdown.Menu>
 							</Dropdown.Popover>

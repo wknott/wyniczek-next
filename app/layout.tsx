@@ -5,6 +5,8 @@ import { Header } from "@/ui/molecues/Header";
 import { BottomNav } from "@/ui/molecues/BottomNav";
 import { Toast } from "@heroui/react";
 import { Providers } from "./providers";
+import { ClerkProvider } from "@clerk/nextjs";
+import { plPL } from "@clerk/localizations";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -38,17 +40,19 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en" suppressHydrationWarning>
-			<body
-				className={`${geistSans.variable} ${geistMono.variable} bg-background text-foreground antialiased pb-[calc(4rem+env(safe-area-inset-bottom))] md:pb-0`}
-			>
-				<Providers>
-					<Toast.Provider />
-					<Header />
-					{children}
-					<BottomNav />
-				</Providers>
-			</body>
-		</html>
+		<ClerkProvider localization={plPL} afterSignOutUrl="/sign-in">
+			<html lang="en" suppressHydrationWarning>
+				<body
+					className={`${geistSans.variable} ${geistMono.variable} bg-background text-foreground antialiased pb-[calc(4rem+env(safe-area-inset-bottom))] md:pb-0`}
+				>
+					<Providers>
+						<Toast.Provider />
+						<Header />
+						{children}
+						<BottomNav />
+					</Providers>
+				</body>
+			</html>
+		</ClerkProvider>
 	);
 }

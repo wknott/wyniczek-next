@@ -1,4 +1,5 @@
 import { type TypedDocumentString } from "@/gql/graphql";
+import { auth } from "@clerk/nextjs/server";
 
 type GraphQLResponse<T> =
 	| { data?: undefined; errors: { message: string }[] }
@@ -12,6 +13,9 @@ export const executeGraphql = async <TResult, TVariables>(
 		throw TypeError("GRAPHQL_URL is not defined");
 	}
 
+	const { getToken } = await auth();
+	const token = await getToken();
+
 	const res = await fetch(process.env.GRAPHQL_URL, {
 		method: "POST",
 		body: JSON.stringify({
@@ -20,6 +24,7 @@ export const executeGraphql = async <TResult, TVariables>(
 		}),
 		headers: {
 			"Content-Type": "application/json",
+			...(token && { Authorization: `Bearer ${token}` }),
 		},
 		cache: "no-store",
 	});
