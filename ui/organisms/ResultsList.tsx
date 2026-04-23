@@ -1,5 +1,5 @@
 "use client";
-import { Card, Avatar, Button, ButtonGroup, Chip } from "@heroui/react";
+import { Card, Avatar, Button, ButtonGroup, Chip, toast } from "@heroui/react";
 import { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight } from "@gravity-ui/icons";
 import Link from "next/link";
@@ -51,6 +51,9 @@ export const ResultsList = ({ initialData, onPageChange }: ResultsListProps) => 
 		try {
 			const newData = await onPageChange(skip);
 			setData(newData);
+		} catch {
+			toast("Nie udało się załadować wyników", { variant: "danger" });
+			setCurrentPage((prev) => prev);
 		} finally {
 			setIsLoading(false);
 		}

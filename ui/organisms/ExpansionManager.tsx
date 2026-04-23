@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { Button, Input, Spinner } from "@heroui/react";
+import { Button, Input, Spinner, toast } from "@heroui/react";
 import { Plus, TrashBin, ChevronUp, ChevronDown, ChevronDown as ExpandIcon } from "@gravity-ui/icons";
 import {
     createExpansion,
@@ -69,14 +69,23 @@ function ExpansionRow({
 
     const save = () => {
         startTransition(async () => {
-            await updateExpansion(gameId, expansion.id, undefined, categories);
+            try {
+                await updateExpansion(gameId, expansion.id, undefined, categories);
+                toast("Dodatek został zaktualizowany", { variant: "success" });
+            } catch {
+                toast("Nie udało się zaktualizować dodatku", { variant: "danger" });
+            }
         });
     };
 
     const handleDelete = () => {
         startDeleteTransition(async () => {
-            await deleteExpansion(gameId, expansion.id);
-            onDeleted(expansion.id);
+            try {
+                await deleteExpansion(gameId, expansion.id);
+                onDeleted(expansion.id);
+            } catch {
+                toast("Nie udało się usunąć dodatku", { variant: "danger" });
+            }
         });
     };
 
@@ -193,9 +202,13 @@ export const ExpansionManager = ({
     const handleCreate = () => {
         if (!newName.trim()) return;
         startCreateTransition(async () => {
-            const created = await createExpansion(gameId, newName.trim());
-            setExpansions((prev) => [...prev, created]);
-            setNewName("");
+            try {
+                const created = await createExpansion(gameId, newName.trim());
+                setExpansions((prev) => [...prev, created]);
+                setNewName("");
+            } catch {
+                toast("Nie udało się dodać dodatku", { variant: "danger" });
+            }
         });
     };
 

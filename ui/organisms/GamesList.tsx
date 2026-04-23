@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, Avatar, Button, ButtonGroup, Chip } from "@heroui/react";
+import { Card, Avatar, Button, ButtonGroup, Chip, toast } from "@heroui/react";
 import { buttonVariants } from "@heroui/styles";
 import { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight, PersonFill, StarFill, LayoutCells, Plus } from "@gravity-ui/icons";
@@ -38,6 +38,9 @@ export const GamesList = ({ initialData, onPageChange }: GamesListProps) => {
         try {
             const newData = await onPageChange(skip);
             setData(newData);
+        } catch {
+            toast("Nie udało się załadować gier", { variant: "danger" });
+            setCurrentPage((prev) => prev);
         } finally {
             setIsLoading(false);
         }

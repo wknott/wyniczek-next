@@ -24,9 +24,13 @@ export const ScoringForm = ({ games, players }: ScoringFormProps) => {
 	const [images, setImages] = useState<UploadedImage[]>([]);
 
 	const [_, action, isPending] = useActionState(async (_prevState: unknown, formData: FormData) => {
-		const { id } = await createResult(formData);
-		toast("Wynik został poprawnie zapisany!", { variant: "success" });
-		router.push(`/results/${id}`);
+		try {
+			const { id } = await createResult(formData);
+			toast("Wynik został poprawnie zapisany!", { variant: "success" });
+			router.push(`/results/${id}`);
+		} catch {
+			toast("Nie udało się zapisać wyniku", { variant: "danger" });
+		}
 		return;
 	}, null);
 
@@ -37,14 +41,11 @@ export const ScoringForm = ({ games, players }: ScoringFormProps) => {
 		[games, selectedGameId],
 	);
 
-	console.log(selectedGame);
-
 	useEffect(() => {
 		setSelectedExpansionIds([]);
 	}, [selectedGameId]);
 
 	const expansions = selectedGame?.expansions ?? [];
-	console.log(expansions);
 
 	const toggleExpansion = (id: string) => {
 		setSelectedExpansionIds((prev) =>

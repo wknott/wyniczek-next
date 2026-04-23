@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { Button, Card, Spinner } from "@heroui/react";
+import { Button, Card, Spinner, toast } from "@heroui/react";
 import { updateGameManualUrl } from "@/app/games/actions";
 
 interface GameManualUrlProps {
@@ -16,16 +16,24 @@ export const GameManualUrl = ({ gameId, initialUrl }: GameManualUrlProps) => {
 
 	const handleSave = () => {
 		startTransition(async () => {
-			await updateGameManualUrl(gameId, url.trim() || null);
-			setEditing(false);
+			try {
+				await updateGameManualUrl(gameId, url.trim() || null);
+				setEditing(false);
+			} catch {
+				toast("Nie udało się zapisać linku do instrukcji", { variant: "danger" });
+			}
 		});
 	};
 
 	const handleDelete = () => {
 		startTransition(async () => {
-			await updateGameManualUrl(gameId, null);
-			setUrl("");
-			setEditing(false);
+			try {
+				await updateGameManualUrl(gameId, null);
+				setUrl("");
+				setEditing(false);
+			} catch {
+				toast("Nie udało się usunąć linku do instrukcji", { variant: "danger" });
+			}
 		});
 	};
 

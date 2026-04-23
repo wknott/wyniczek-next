@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { Button, Input, Spinner } from "@heroui/react";
+import { Button, Input, Spinner, toast } from "@heroui/react";
 import { Plus, TrashBin, ChevronUp, ChevronDown } from "@gravity-ui/icons";
 import { updateGameCategories } from "@/app/games/actions";
 
@@ -51,7 +51,12 @@ export const CategoryManager = ({ gameId, initialCategories }: CategoryManagerPr
 
     const save = () => {
         startTransition(async () => {
-            await updateGameCategories(gameId, categories);
+            try {
+                await updateGameCategories(gameId, categories);
+                toast("Kategorie zostały zapisane", { variant: "success" });
+            } catch {
+                toast("Nie udało się zapisać kategorii", { variant: "danger" });
+            }
         });
     };
 
