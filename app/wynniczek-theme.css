@@ -1,0 +1,99 @@
+/* ============================================================
+   Wynniczek Design System — HeroUI v3 Custom Theme
+   Paleta: Amber / Stone
+   
+   Użycie:
+     app/globals.css:
+       @import "tailwindcss";
+       @import "@heroui/styles";
+       @import "./wynniczek-theme.css" layer(theme);
+   ============================================================ */
+
+@layer base {
+
+  /* ── Dark theme (default) ─────────────────────────────────── */
+  .dark,
+  [data-theme="dark"] {
+    color-scheme: dark;
+
+    /* Backgrounds */
+    --background:          oklch(11%  0.010 50);   /* #0c0a09 */
+    --foreground:          oklch(97%  0.003 50);   /* #fafaf9 */
+    --surface:             oklch(17%  0.009 50);   /* #1c1917 */
+    --overlay:             oklch(21%  0.010 50);   /* #292524 — dropdowns, popovers */
+
+    /* Accent = Amber (primary action color) */
+    --accent:              oklch(75%  0.160 75);   /* #f59e0b */
+    --accent-foreground:   oklch(11%  0.010 50);   /* #0c0a09 — dark text on amber */
+
+    /* Status colors */
+    --success:             oklch(78%  0.180 148);  /* #4ade80 */
+    --success-foreground:  oklch(11%  0.010 50);
+    --warning:             oklch(82%  0.150 75);   /* #fbbf24 */
+    --warning-foreground:  oklch(11%  0.010 50);
+    --danger:              oklch(72%  0.200 10);   /* #fb7185 */
+    --danger-foreground:   oklch(11%  0.010 50);
+
+    /* Borders & dividers */
+    --border:              oklch(22%  0.015 50);   /* #2a2418 */
+    --separator:           oklch(19%  0.012 50);   /* #1f1f1f */
+
+    /* Muted text */
+    --muted:               oklch(55%  0.008 50);   /* #888888 */
+
+    /* Focus ring — amber */
+    --focus-ring:          oklch(75%  0.160 75);
+  }
+
+  /* ── Light theme ──────────────────────────────────────────── */
+  .light,
+  [data-theme="light"] {
+    color-scheme: light;
+
+    --background:          oklch(98%  0.003 50);   /* #fafaf9 */
+    --foreground:          oklch(15%  0.010 50);   /* #1c1917 */
+    --surface:             oklch(95%  0.005 50);   /* #f5f5f4 */
+    --overlay:             oklch(90%  0.006 50);   /* #e7e5e4 */
+
+    /* Accent = Amber (darker for contrast on light bg) */
+    --accent:              oklch(62%  0.170 75);   /* #d97706 */
+    --accent-foreground:   oklch(100% 0     0);    /* white */
+
+    --success:             oklch(52%  0.160 148);  /* #16a34a */
+    --success-foreground:  oklch(100% 0     0);
+    --warning:             oklch(75%  0.160 75);   /* #f59e0b */
+    --warning-foreground:  oklch(11%  0.010 50);
+    --danger:              oklch(52%  0.220 10);   /* #e11d48 */
+    --danger-foreground:   oklch(100% 0     0);
+
+    --border:              oklch(82%  0.008 50);   /* #d6d3d1 */
+    --separator:           oklch(88%  0.006 50);   /* #f0f0f0 */
+    --muted:               oklch(48%  0.008 50);   /* #666666 */
+
+    --focus-ring:          oklch(62%  0.170 75);
+  }
+
+}
+
+/* ── Expose variables to Tailwind utilities ───────────────────
+   Pozwala używać bg-accent, text-foreground, itp.            */
+@theme inline {
+  --color-background:        var(--background);
+  --color-foreground:        var(--foreground);
+  --color-surface:           var(--surface);
+  --color-overlay:           var(--overlay);
+
+  --color-accent:            var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-success:           var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning:           var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-danger:            var(--danger);
+  --color-danger-foreground: var(--danger-foreground);
+
+  --color-border:            var(--border);
+  --color-separator:         var(--separator);
+  --color-muted:             var(--muted);
+}
