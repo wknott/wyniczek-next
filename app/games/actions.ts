@@ -3,6 +3,7 @@
 import { executeGraphql } from "@/api/executeGraphql";
 import {
     GetGamesListDocument,
+    GetGamesMainViewDocument,
     GameSortBy,
     UpdateGameCollectionStatusDocument,
     SyncGameWithBggDocument,
@@ -14,6 +15,11 @@ import {
     UpdateGameManualUrlDocument,
 } from "@/gql/graphql";
 import { revalidatePath } from "next/cache";
+
+export async function getGamesForMainView() {
+    const { games } = await executeGraphql(GetGamesMainViewDocument);
+    return games.items;
+}
 
 export async function getGamesPage(
     sortBy: GameSortBy = "ALPHABETICAL",

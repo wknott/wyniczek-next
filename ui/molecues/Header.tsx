@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import {
 	SquareListUl,
-	Dice2,
+	ChartBar,
 	SquarePlus,
 	PersonPlus,
 	Persons,
@@ -15,7 +15,7 @@ import { UserButton } from "@clerk/nextjs";
 import { ThemeSwitch } from "@/ui/atoms/ThemeSwitch";
 
 const menuItems = [
-	{ label: "Gry", href: "/games" as Route, icon: Dice2 },
+	{ label: "Statystyki", href: "/stats" as Route, icon: ChartBar },
 	{ label: "Historia", href: "/results" as Route, icon: SquareListUl },
 	{ label: "Gracze", href: "/players" as Route, icon: Persons },
 	{ label: "Dodaj wynik", href: "/results/new" as Route, icon: Plus },

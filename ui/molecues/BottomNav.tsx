@@ -6,7 +6,7 @@ import type { Route } from "next";
 import type { ComponentType, SVGProps } from "react";
 import {
 	House,
-	Dice2,
+	ChartBar,
 	Plus,
 	SquareListUl,
 	Ellipsis,
@@ -32,7 +32,7 @@ interface TabItem {
 
 const leftItems: TabItem[] = [
 	{ label: "Dom", href: "/" as Route, icon: House },
-	{ label: "Gry", href: "/games" as Route, icon: Dice2 },
+	{ label: "Statystyki", href: "/stats" as Route, icon: ChartBar },
 ];
 
 const rightItems: TabItem[] = [

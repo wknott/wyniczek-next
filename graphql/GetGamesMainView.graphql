@@ -1,0 +1,28 @@
+query GetGamesMainView {
+  games(skip: 0, take: 200, sortBy: LAST_PLAYED) {
+    items {
+      id
+      name
+      thumbnailUrl
+      bggRank
+      avgPlayingTime2Players
+      lastPlayedAt
+      inCollection
+      latestResult {
+        id
+        createdAt
+        playingTime
+        scores {
+          player {
+            id
+            name
+          }
+        }
+      }
+      records {
+        resultId
+      }
+    }
+    total
+  }
+}
