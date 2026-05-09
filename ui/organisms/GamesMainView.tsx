@@ -1,7 +1,9 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { Magnifier, Xmark } from "@gravity-ui/icons";
+import { Magnifier, Xmark, LayoutList } from "@gravity-ui/icons";
+import { buttonVariants } from "@heroui/styles";
+import Link from "next/link";
 import { GameRow } from "@/ui/molecues/GameRow";
 import type { GameItem } from "@/ui/molecues/GameRow";
 
@@ -102,9 +104,29 @@ export function GamesMainView({ games }: GamesMainViewProps) {
 			</div>
 
 			{sorted.length === 0 ? (
-				<p className="px-3 py-10 text-center text-sm text-muted">
-					{query ? `Brak wyników dla „${query}"` : "Brak gier w kolekcji"}
-				</p>
+				query ? (
+					<p className="px-3 py-10 text-center text-sm text-muted">
+						Brak wyników dla „{query}"
+					</p>
+				) : (
+					<div className="flex flex-col items-center gap-4 px-6 py-16 text-center">
+						<div className="flex size-14 items-center justify-center rounded-2xl bg-default-100 text-default-400">
+							<LayoutList className="size-7" />
+						</div>
+						<div className="space-y-1">
+							<p className="text-sm font-semibold text-foreground">Brak gier w kolekcji</p>
+							<p className="text-xs text-muted">
+								Zacznij grać i dodaj swoje pierwsze wyniki!
+							</p>
+						</div>
+						<Link
+							href="/results/new"
+							className={buttonVariants({ size: "sm", variant: "primary" })}
+						>
+							Dodaj pierwszy wynik
+						</Link>
+					</div>
+				)
 			) : (
 				<ul className="divide-y divide-separator">
 					{sorted.map((game) => (
