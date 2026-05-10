@@ -1,5 +1,5 @@
-query GetGamesMainView {
-  games(skip: 0, take: 200, sortBy: LAST_PLAYED) {
+query GetGamesMainView($sortBy: GameSortBy = LAST_PLAYED) {
+  games(skip: 0, take: 200, sortBy: $sortBy) {
     items {
       id
       name
@@ -8,6 +8,7 @@ query GetGamesMainView {
       avgPlayingTime2Players
       lastPlayedAt
       inCollection
+      resultsCount
       latestResult {
         id
         createdAt
@@ -18,9 +19,6 @@ query GetGamesMainView {
             name
           }
         }
-      }
-      records {
-        resultId
       }
     }
     total

@@ -16,8 +16,10 @@ import {
 } from "@/gql/graphql";
 import { revalidatePath } from "next/cache";
 
-export async function getGamesForMainView() {
-    const { games } = await executeGraphql(GetGamesMainViewDocument);
+export async function getGamesForMainView(
+    sortBy: GameSortBy = "LAST_PLAYED",
+) {
+    const { games } = await executeGraphql(GetGamesMainViewDocument, { sortBy });
     return games.items;
 }
 

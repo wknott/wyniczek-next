@@ -104,6 +104,7 @@ export type Game = {
   playerStats: Array<GamePlayerStats>;
   pointCategories?: Maybe<Array<PointCategory>>;
   records: Array<GameRecord>;
+  resultsCount: Scalars['Int']['output'];
   thumbnailUrl?: Maybe<Scalars['String']['output']>;
   userId: Scalars['String']['output'];
 };
@@ -436,9 +437,12 @@ export type GetGamesListQueryVariables = Exact<{
 
 export type GetGamesListQuery = { games: { total: number, items: Array<{ id: string, name: string, thumbnailUrl?: string | null, minPlayers: number, maxPlayers: number, bggRank?: number | null, bggWeight?: number | null, lastPlayedAt?: unknown | null, inCollection: boolean }> } };
 
-export type GetGamesMainViewQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetGamesMainViewQueryVariables = Exact<{
+  sortBy?: InputMaybe<GameSortBy>;
+}>;
 
-export type GetGamesMainViewQuery = { games: { total: number, items: Array<{ id: string, name: string, thumbnailUrl?: string | null, bggRank?: number | null, avgPlayingTime2Players?: number | null, lastPlayedAt?: unknown | null, inCollection: boolean, latestResult?: { id: string, createdAt: unknown, playingTime?: number | null, scores?: Array<{ player?: { id: string, name: string } | null }> | null } | null, records: Array<{ resultId: string }> }> } };
+
+export type GetGamesMainViewQuery = { games: { total: number, items: Array<{ id: string, name: string, thumbnailUrl?: string | null, bggRank?: number | null, avgPlayingTime2Players?: number | null, lastPlayedAt?: unknown | null, inCollection: boolean, resultsCount: number, latestResult?: { id: string, createdAt: unknown, playingTime?: number | null, scores?: Array<{ player?: { id: string, name: string } | null }> | null } | null }> } };
 
 export type GetPlayerByIdQueryVariables = Exact<{
   id: Scalars['String']['input'];
@@ -727,36 +731,6 @@ export const GetGamesForScoringDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<GetGamesForScoringQuery, GetGamesForScoringQueryVariables>;
-export const GetGamesMainViewDocument = new TypedDocumentString(`
-    query GetGamesMainView {
-  games(skip: 0, take: 200, sortBy: LAST_PLAYED) {
-    items {
-      id
-      name
-      thumbnailUrl
-      bggRank
-      avgPlayingTime2Players
-      lastPlayedAt
-      inCollection
-      latestResult {
-        id
-        createdAt
-        playingTime
-        scores {
-          player {
-            id
-            name
-          }
-        }
-      }
-      records {
-        resultId
-      }
-    }
-    total
-  }
-}
-    `) as unknown as TypedDocumentString<GetGamesMainViewQuery, GetGamesMainViewQueryVariables>;
 export const GetGamesListDocument = new TypedDocumentString(`
     query GetGamesList($skip: Int, $take: Int, $sortBy: GameSortBy, $includeNotInCollection: Boolean) {
   games(
@@ -780,6 +754,34 @@ export const GetGamesListDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<GetGamesListQuery, GetGamesListQueryVariables>;
+export const GetGamesMainViewDocument = new TypedDocumentString(`
+    query GetGamesMainView($sortBy: GameSortBy = LAST_PLAYED) {
+  games(skip: 0, take: 200, sortBy: $sortBy) {
+    items {
+      id
+      name
+      thumbnailUrl
+      bggRank
+      avgPlayingTime2Players
+      lastPlayedAt
+      inCollection
+      resultsCount
+      latestResult {
+        id
+        createdAt
+        playingTime
+        scores {
+          player {
+            id
+            name
+          }
+        }
+      }
+    }
+    total
+  }
+}
+    `) as unknown as TypedDocumentString<GetGamesMainViewQuery, GetGamesMainViewQueryVariables>;
 export const GetPlayerByIdDocument = new TypedDocumentString(`
     query GetPlayerById($id: String!) {
   player(id: $id) {
