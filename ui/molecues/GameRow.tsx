@@ -1,7 +1,4 @@
-"use client";
-
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { Plus } from "@gravity-ui/icons";
 import { buttonVariants } from "@heroui/styles";
 import { formatDate } from "@/lib/dates";
@@ -10,22 +7,13 @@ import type { GetGamesMainViewQuery } from "@/gql/graphql";
 export type GameItem = GetGamesMainViewQuery["games"]["items"][number];
 
 export function GameRow({ game }: { game: GameItem }) {
-	const router = useRouter();
 	const { latestResult, resultsCount } = game;
 	const winner = latestResult?.scores?.[0]?.player;
 
-	function handleRowClick() {
-		if (latestResult?.id) {
-			router.push(`/results/${latestResult.id}`);
-		} else {
-			router.push(`/results/new?gameId=${game.id}`);
-		}
-	}
-
 	return (
 		<li className="flex items-center">
-			<button
-				onClick={handleRowClick}
+			<Link
+				href={`/games/${game.id}`}
 				className="flex min-w-0 flex-1 items-center gap-2 py-1.5 pl-2.5 text-left"
 			>
 				{game.thumbnailUrl ? (
@@ -42,7 +30,7 @@ export function GameRow({ game }: { game: GameItem }) {
 							{game.name}
 						</span>
 						{game.bggRank != null && game.bggRank <= 10 && (
-							<span className="bg-accent/15 text-accent shrink-0 rounded px-[5px] py-[1px] text-[9px] leading-none font-extrabold">
+							<span className="bg-accent-soft text-accent shrink-0 rounded px-[5px] py-px text-[9px] leading-none font-extrabold">
 								Top 10
 							</span>
 						)}
@@ -75,7 +63,7 @@ export function GameRow({ game }: { game: GameItem }) {
 						)}
 					</div>
 				</div>
-			</button>
+			</Link>
 
 			<Link
 				href={`/results/new?gameId=${game.id}`}

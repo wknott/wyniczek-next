@@ -24,14 +24,14 @@ async function GameDetail({ id }: { id: string }) {
 	}
 
 	return (
-		<Card className="overflow-hidden border-border bg-surface p-4 backdrop-blur-xl md:p-10">
+		<Card className="border-border bg-surface overflow-hidden p-4 backdrop-blur-xl md:p-10">
 			<div className="flex flex-col gap-8 md:flex-row md:items-start">
 				<div className="relative shrink-0 self-center md:self-start">
 					<Avatar className="h-40 w-40 rounded-3xl shadow-2xl md:h-56 md:w-56" size="lg">
 						<Avatar.Image src={game.thumbnailUrl || ""} />
 					</Avatar>
 					{game.bggRank && (
-						<div className="absolute -right-2 -top-2 flex h-12 w-12 items-center justify-center rounded-full bg-warning font-bold text-warning-foreground shadow-lg">
+						<div className="bg-warning text-warning-foreground absolute -top-2 -right-2 flex h-12 w-12 items-center justify-center rounded-full font-bold shadow-lg">
 							#{game.bggRank}
 						</div>
 					)}
@@ -59,11 +59,7 @@ async function GameDetail({ id }: { id: string }) {
 									</div>
 								</Chip>
 							)}
-							<Chip
-								size="md"
-								variant="soft"
-								color={game.inCollection ? "accent" : "default"}
-							>
+							<Chip size="md" variant="soft" color={game.inCollection ? "accent" : "default"}>
 								<span className="font-bold">
 									{game.inCollection ? "W kolekcji" : "Poza kolekcją"}
 								</span>
@@ -71,7 +67,7 @@ async function GameDetail({ id }: { id: string }) {
 						</div>
 					</div>
 
-					<div className="h-px w-full bg-separator" />
+					<div className="bg-separator h-px w-full" />
 
 					<div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
 						<form
@@ -115,18 +111,16 @@ async function GameDetail({ id }: { id: string }) {
 
 			<div className="mt-12 space-y-4">
 				<div className="flex items-center gap-2">
-					<div className="h-1.5 w-1.5 rounded-full bg-primary" />
-					<h2 className="text-xl font-bold uppercase tracking-wider text-muted">
-						Instrukcja
-					</h2>
+					<div className="bg-primary h-1.5 w-1.5 rounded-full" />
+					<h2 className="text-muted text-xl font-bold tracking-wider uppercase">Instrukcja</h2>
 				</div>
 				<GameManualUrl gameId={game.id} initialUrl={game.manualUrl} />
 			</div>
 
 			<div className="mt-8 space-y-4">
 				<div className="flex items-center gap-2">
-					<div className="h-1.5 w-1.5 rounded-full bg-primary" />
-					<h2 className="text-xl font-bold uppercase tracking-wider text-muted">
+					<div className="bg-primary h-1.5 w-1.5 rounded-full" />
+					<h2 className="text-muted text-xl font-bold tracking-wider uppercase">
 						Kategorie punktacji
 					</h2>
 				</div>
@@ -135,26 +129,24 @@ async function GameDetail({ id }: { id: string }) {
 
 			<div className="mt-8 space-y-4">
 				<div className="flex items-center gap-2">
-					<div className="h-1.5 w-1.5 rounded-full bg-accent" />
-					<h2 className="text-xl font-bold uppercase tracking-wider text-muted">Dodatki</h2>
+					<div className="bg-accent h-1.5 w-1.5 rounded-full" />
+					<h2 className="text-muted text-xl font-bold tracking-wider uppercase">Dodatki</h2>
 				</div>
 				<ExpansionManager gameId={game.id} initialExpansions={game.expansions ?? []} />
 			</div>
 
 			<div className="mt-8 space-y-4">
 				<div className="flex items-center gap-2">
-					<div className="h-1.5 w-1.5 rounded-full bg-warning" />
-					<h2 className="text-xl font-bold uppercase tracking-wider text-muted">Rekordy</h2>
+					<div className="bg-warning h-1.5 w-1.5 rounded-full" />
+					<h2 className="text-muted text-xl font-bold tracking-wider uppercase">Rekordy</h2>
 				</div>
 				<GameRecords records={game.records ?? []} />
 			</div>
 
 			<div className="mt-8 space-y-4">
 				<div className="flex items-center gap-2">
-					<div className="h-1.5 w-1.5 rounded-full bg-success" />
-					<h2 className="text-xl font-bold uppercase tracking-wider text-muted">
-						Ranking graczy
-					</h2>
+					<div className="bg-success h-1.5 w-1.5 rounded-full" />
+					<h2 className="text-muted text-xl font-bold tracking-wider uppercase">Ranking graczy</h2>
 				</div>
 				<GamePlayerStats stats={game.playerStats ?? []} />
 			</div>
@@ -168,8 +160,8 @@ export default async function GameDetailPage({ params }: PageProps) {
 	return (
 		<main className="mx-auto flex min-h-screen max-w-4xl flex-col gap-6 p-4 md:p-8">
 			<Link
-				href={{ pathname: "/games" }}
-				className="flex items-center gap-2 text-muted transition-colors duration-200 hover:text-foreground"
+				href={{ pathname: "/" }}
+				className="text-muted hover:text-foreground flex items-center gap-2 transition-colors duration-200"
 			>
 				<ChevronLeft /> Powrót do listy
 			</Link>
